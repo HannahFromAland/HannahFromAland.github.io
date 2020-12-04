@@ -23,16 +23,17 @@
   <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quic">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2020/10/31/hello-world/index.html">
+<meta property="og:url" content="http://example.com/2020/10/31/%E3%80%90Hexo%E3%80%91Hello-world,%20Keep%20tracking/index.html">
 <meta property="og:site_name" content="Hanniverse！">
 <meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quic">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-10-31T00:51:26.946Z">
-<meta property="article:modified_time" content="2020-10-31T00:51:26.946Z">
+<meta property="article:modified_time" content="2020-12-04T02:14:40.178Z">
 <meta property="article:author" content="Hannah">
+<meta property="article:tag" content="Hexo">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2020/10/31/hello-world/">
+<link rel="canonical" href="http://example.com/2020/10/31/%E3%80%90Hexo%E3%80%91Hello-world,%20Keep%20tracking/">
 
 
 <script id="page-configurations">
@@ -164,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/31/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/31/%E3%80%90Hexo%E3%80%91Hello-world,%20Keep%20tracking/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -188,6 +189,22 @@
               <span class="post-meta-item-text">Posted on</span>
 
               <time title="Created: 2020-10-31 08:51:26" itemprop="dateCreated datePublished" datetime="2020-10-31T08:51:26+08:00">2020-10-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-04 10:14:40" itemprop="dateModified" datetime="2020-12-04T10:14:40+08:00">2020-12-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Doodle/" itemprop="url" rel="index"><span itemprop="name">Doodle</span></a>
+                </span>
             </span>
 
           
@@ -215,6 +232,11 @@
 <h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<h2 id="不断摸索的hexo配置持续更新">不断摸索的Hexo配置（持续更新）</h2>
+<h3 id="修改post内部代码段字体大小">修改Post内部代码段字体大小</h3>
+<p>在<code>_config.yml</code>中直接修改fonts参数发现没有变化，直接修改样式文件 <code>\source\css\_common\scaffolding\highlight\highlight.styl</code></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$code</span>-block</span><br><span class="line">  <span class="attribute">background</span>: highlight-background</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">20px</span> <span class="number">0</span></span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">15px</span></span><br><span class="line">  <span class="attribute">overflow</span>: auto</span><br><span class="line">  <span class="attribute">font-size</span> <span class="number">13px</span>    // 改这里</span><br><span class="line">  <span class="attribute">color</span>: highlight-foreground</span><br><span class="line">  <span class="attribute">line-height</span>:  <span class="variable">$line</span>-height-code-block</span><br></pre></td></tr></table></figure>
+<p>deploy之后生效.</p>
 
     </div>
 
@@ -223,6 +245,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+          </div>
 
         
 
@@ -292,7 +317,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#quick-start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#quick-start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E6%96%AD%E6%91%B8%E7%B4%A2%E7%9A%84hexo%E9%85%8D%E7%BD%AE%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0"><span class="nav-number">2.</span> <span class="nav-text">不断摸索的Hexo配置（持续更新）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9post%E5%86%85%E9%83%A8%E4%BB%A3%E7%A0%81%E6%AE%B5%E5%AD%97%E4%BD%93%E5%A4%A7%E5%B0%8F"><span class="nav-number">2.1.</span> <span class="nav-text">修改Post内部代码段字体大小</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -313,13 +338,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
