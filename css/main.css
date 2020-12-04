@@ -431,7 +431,7 @@ td {
 pre {
   background: #2d2d2d;
   color: #ccc;
-  font-size: 10px;
+  font-size: 8px;
   line-height: 1.6;
   margin: 0 auto 20px;
 }
@@ -1214,7 +1214,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #0a613b;
+  background: #9d0b65;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
