@@ -27,11 +27,13 @@
 <meta property="og:site_name" content="Hanniverse！">
 <meta property="og:description" content="二叉排序树 定义：二叉排序树或者是一棵空树；或是具有如下特性的二叉树：  若左子树不为空，则左子树上所有节点值均小于根节点； 若右子树不为空，则右子树上所有节点值均大于根节点； 左、右子树均为二叉排序树.  核心算法：查找算法、插入算法、删除算法">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/12/05/dTDy8WrcR3q4kfO.png">
 <meta property="article:published_time" content="2020-12-04T00:47:43.000Z">
-<meta property="article:modified_time" content="2020-12-04T05:48:53.833Z">
+<meta property="article:modified_time" content="2020-12-05T03:18:08.114Z">
 <meta property="article:author" content="Hannah">
 <meta property="article:tag" content="Search">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/12/05/dTDy8WrcR3q4kfO.png">
 
 <link rel="canonical" href="http://example.com/2020/12/04/%E3%80%90Data-Structure%E3%80%91Tree-BinarySearchTree/">
 
@@ -187,10 +189,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-12-04 08:47:43 / Modified: 13:48:53" itemprop="dateCreated datePublished" datetime="2020-12-04T08:47:43+08:00">2020-12-04</time>
+              <time title="Created: 2020-12-04 08:47:43" itemprop="dateCreated datePublished" datetime="2020-12-04T08:47:43+08:00">2020-12-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-05 11:18:08" itemprop="dateModified" datetime="2020-12-05T11:18:08+08:00">2020-12-05</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -245,7 +253,9 @@
 <li>若不为空，找到查找算法中返回的最后一个父节点的位置，若插入元素值&gt;父节点值关键字，则成为其右子树；若小于则为左子树</li>
 </ol>
 <p><strong>Notice：</strong>插入顺序优先于元素值的排序，for example</p>
-<p>（缺一个配图）</p>
+<figure>
+<img src="https://i.loli.net/2020/12/05/dTDy8WrcR3q4kfO.png" alt="image.png" /><figcaption aria-hidden="true">image.png</figcaption>
+</figure>
 <h4 id="删除算法">删除算法</h4>
 <p>和插入相反，删除在<strong>查找成功</strong>之后进行，并且要求在删除二叉排序树上某个结点之后，<strong>仍然保持二叉排序树的特性</strong>。</p>
 <p>首先判断需删除的元素是否在二叉树内，</p>
