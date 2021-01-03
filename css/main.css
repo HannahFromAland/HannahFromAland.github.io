@@ -438,6 +438,7 @@ pre {
 pre,
 code {
   font-family: 'Roboto Mono', consolas, Menlo, monospace, "PingFang SC", "Microsoft YaHei";
+  font-size: 9px;
 }
 code {
   background: #eee;
@@ -1215,7 +1216,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff817f;
+  background: #71ff06;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
