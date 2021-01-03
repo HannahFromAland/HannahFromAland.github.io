@@ -30,7 +30,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.loli.net/2021/01/03/zKHGbFpdWmnRorP.png">
 <meta property="article:published_time" content="2021-01-03T07:36:26.000Z">
-<meta property="article:modified_time" content="2021-01-03T09:01:56.986Z">
+<meta property="article:modified_time" content="2021-01-03T12:07:01.443Z">
 <meta property="article:author" content="Hannah">
 <meta property="article:tag" content="MapReduce">
 <meta property="article:tag" content="BigData">
@@ -193,7 +193,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-01-03 15:36:26 / Modified: 17:01:56" itemprop="dateCreated datePublished" datetime="2021-01-03T15:36:26+08:00">2021-01-03</time>
+              <time title="Created: 2021-01-03 15:36:26 / Modified: 20:07:01" itemprop="dateCreated datePublished" datetime="2021-01-03T15:36:26+08:00">2021-01-03</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -237,7 +237,7 @@
 <ul>
 <li>实现方式：继承<code>partitioner</code></li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IntWritable;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.Partitioner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FirstPartitioner</span> </span></span><br><span class="line"><span class="class">    <span class="keyword">extends</span> <span class="title">Partitioner</span>&lt;<span class="title">PairWritable</span>, <span class="title">IntWritable</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPartition</span><span class="params">(PairWritable key, IntWritable value, </span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">int</span> numPartitions)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//确保分区数为非负</span></span><br><span class="line">        <span class="keyword">return</span> math.abs(String.valueOf(key.getFirst()).hashCode() % numPartitions;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IntWritable;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.Partitioner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FirstPartitioner</span> </span></span><br><span class="line"><span class="class">    <span class="keyword">extends</span> <span class="title">Partitioner</span>&lt;<span class="title">PairWritable</span>, <span class="title">IntWritable</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPartition</span><span class="params">(PairWritable key, IntWritable value, </span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">int</span> numPartitions)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//default: (key.hashcode() &amp; Integer_MAX_VALUE) % numPartitions</span></span><br><span class="line">        <span class="keyword">return</span> ((String.valueOf(key.getFirst()).hashCode() &amp; Integer_MAX_VALUE) </span><br><span class="line">                % numPartitions;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>之后需要在<code>main</code>中自定义分区器:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.Job;</span><br><span class="line">...</span><br><span class="line">Job job = ...;</span><br><span class="line">...</span><br><span class="line">job.setPartitionerClass(FirstPartitioner.class);</span><br></pre></td></tr></table></figure>
 <h3 id="自定义comparator分组类"><strong>自定义Comparator（分组）类：</strong></h3>
@@ -281,7 +281,10 @@
     <a href="/2021/01/02/%E3%80%90BDP%E3%80%91MapReduce-RelationAlgebra/" rel="prev" title="【BDP】MapReduce-RelationAlgebra">
       <i class="fa fa-chevron-left"></i> 【BDP】MapReduce-RelationAlgebra
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/01/03/%E3%80%90BDP%E3%80%91MapReduce-WordConCurrence/" rel="next" title="【BDP】MapReduce WordConCurrence">
+      【BDP】MapReduce WordConCurrence <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -356,7 +359,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
