@@ -21,20 +21,27 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="记录完美解决虚拟机安装VM tools之后仅能实现屏幕自适应，无法进行物理机和虚拟机之间复制粘贴+文件拖拽功能的方法。">
+  <meta name="description" content="对Hive中四种排序方式进行整理和区分。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【Ubuntu】VM tools drag file realization">
-<meta property="og:url" content="http://example.com/2020/12/10/%E3%80%90Ubuntu%E3%80%91VM-tools-drag-file-realization/index.html">
+<meta property="og:title" content="【Hive】order by, sort by, distribute by, cluster by">
+<meta property="og:url" content="http://example.com/2021/03/17/%E3%80%90Hive%E3%80%91order-by-sort-by-distribute-by-cluster-by/index.html">
 <meta property="og:site_name" content="Hanniverse！">
-<meta property="og:description" content="记录完美解决虚拟机安装VM tools之后仅能实现屏幕自适应，无法进行物理机和虚拟机之间复制粘贴+文件拖拽功能的方法。">
+<meta property="og:description" content="对Hive中四种排序方式进行整理和区分。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-12-10T09:52:42.000Z">
-<meta property="article:modified_time" content="2021-01-14T11:28:28.362Z">
+<meta property="og:image" content="https://i.loli.net/2021/03/17/Qy13xmCwWYUViGA.png">
+<meta property="og:image" content="https://i.loli.net/2021/03/17/nFIL5ZMCdYpyl8O.png">
+<meta property="og:image" content="https://i.loli.net/2021/03/17/9SoRf1MQYuWhJyc.png">
+<meta property="og:image" content="https://i.loli.net/2021/03/17/kvUAbh4S7MHNKBo.png">
+<meta property="og:image" content="https://i.loli.net/2021/03/17/aNI3vc4FeKVAjpE.png">
+<meta property="article:published_time" content="2021-03-17T01:28:14.000Z">
+<meta property="article:modified_time" content="2021-03-17T06:14:42.315Z">
 <meta property="article:author" content="Hannah">
-<meta property="article:tag" content="Ubuntu">
+<meta property="article:tag" content="BigData">
+<meta property="article:tag" content="Hive">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/03/17/Qy13xmCwWYUViGA.png">
 
-<link rel="canonical" href="http://example.com/2020/12/10/%E3%80%90Ubuntu%E3%80%91VM-tools-drag-file-realization/">
+<link rel="canonical" href="http://example.com/2021/03/17/%E3%80%90Hive%E3%80%91order-by-sort-by-distribute-by-cluster-by/">
 
 
 <script id="page-configurations">
@@ -47,7 +54,7 @@
   };
 </script>
 
-  <title>【Ubuntu】VM tools drag file realization | Hanniverse！</title>
+  <title>【Hive】order by, sort by, distribute by, cluster by | Hanniverse！</title>
   
 
 
@@ -166,7 +173,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/10/%E3%80%90Ubuntu%E3%80%91VM-tools-drag-file-realization/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/17/%E3%80%90Hive%E3%80%91order-by-sort-by-distribute-by-cluster-by/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
@@ -179,7 +186,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          【Ubuntu】VM tools drag file realization
+          【Hive】order by, sort by, distribute by, cluster by
         </h1>
 
         <div class="post-meta">
@@ -188,23 +195,21 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2020-12-10 17:52:42" itemprop="dateCreated datePublished" datetime="2020-12-10T17:52:42+08:00">2020-12-10</time>
+              <time title="Created: 2021-03-17 09:28:14 / Modified: 14:14:42" itemprop="dateCreated datePublished" datetime="2021-03-17T09:28:14+08:00">2021-03-17</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-14 19:28:28" itemprop="dateModified" datetime="2021-01-14T19:28:28+08:00">2021-01-14</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Debug/" itemprop="url" rel="index"><span itemprop="name">Debug</span></a>
+                  <a href="/categories/Big-Data-Processing/" itemprop="url" rel="index"><span itemprop="name">Big Data Processing</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Big-Data-Processing/Data-Analysis/" itemprop="url" rel="index"><span itemprop="name">Data Analysis</span></a>
                 </span>
             </span>
 
@@ -219,37 +224,63 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>记录完美解决虚拟机安装VM tools之后仅能实现屏幕自适应，无法进行物理机和虚拟机之间复制粘贴+文件拖拽功能的方法。</p>
+        <p>对Hive中四种排序方式进行整理和区分。</p>
 <a id="more"></a>
-<blockquote>
-<p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_28912651/article/details/82848761?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control">针对VMware的拖拽文件问题的终极解决方案！！</a></p>
-</blockquote>
-<p>首先要区分VM tools及Open VM Tools，在Ubuntu16.04之后官方推荐的应该是Open VM Tools，安装虚拟机系统时会有自带（但是会出现开头所说的bug），这也是为什么在虚拟机系统外<code>安装 VM Tools</code> 及虚拟机系统内<code>重新安装VM Tools</code>的选项均是灰色的.</p>
-<p>补全原有Open VM Tools无法实现的两个功能的操作步骤如下：</p>
+<h3 id="order-by">Order by</h3>
+<p>与传统SQL中的Order by效果一致，即对查询结果进行全局排序。由于Hive通过MapReduce实现数据查询，因此全局排序要求所有数据必须集中在<strong>一个Reducer</strong>上进行处理。</p>
 <ul>
-<li><h3 id="uninstall-just-open-vm-tools">Uninstall just open-vm-tools</h3></li>
+<li>除此之外，如果指定了<code>hive.mapred.mode=strict</code>（默认是<code>nonstrict</code>）时，就必须指定limit来限制输出条数。</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove open-vm-tools</span><br></pre></td></tr></table></figure>
+<p>示例如下，表中列为<code>id</code> ，<code>group</code>， <code>grade</code>，共20条数据</p>
+<p>直接进行order by操作：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> user_id,<span class="string">`group`</span>,grade</span><br><span class="line">    &gt; <span class="keyword">from</span> test_log</span><br><span class="line">    &gt; <span class="keyword">order</span> <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
+<h3 id="image.png"><img src="https://i.loli.net/2021/03/17/Qy13xmCwWYUViGA.png" alt="image.png" /></h3>
 <ul>
-<li><h3 id="uninstall-open-vm-tools-and-its-dependencies">Uninstall open-vm-tools and its dependencies</h3></li>
+<li>数据结果按照grade正序排列。</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove --auto-remove open-vm-tools</span><br></pre></td></tr></table></figure>
+<h3 id="sort-by">Sort by</h3>
+<p>Sort by的数据是局部有序的，其排序作用发挥在数据分别进入各个Reducer之前，因此只会对每个Reducer上的数据进行局部排序。</p>
 <ul>
-<li><h3 id="purging-your-configdata">Purging your config/data</h3></li>
+<li>使用sort by时，可以通过指定执行的reducer个数（<code>set mapred.reduce.tasks=n</code>），对输出的数据再执行归并排序，即可得到全部结果。</li>
+<li>sort by排序顺序将取决于列类型。如果该列是数字类型，那么排序顺序也是按数字顺序排列的。如果该列是字符串类型，那么排序顺序将是字典顺序。</li>
+<li>sort by不保证相同参数被分配到同一reducer（即若某个参数的数据量较大，可能会被分配到不同的reducer，且只能保证各个reducer的结果是有序的）</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get purge open-vm-tools</span><br><span class="line">sudo apt-get purge --auto-remove open-vm-tools</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> mapreduce.job.reduces=<span class="number">3</span>;</span><br><span class="line"><span class="keyword">set</span> hive.cli.print.header=<span class="literal">true</span>;</span><br><span class="line"><span class="comment">-- 将reducer个数设为3，观察各个分区上的排序结果</span></span><br><span class="line"><span class="keyword">select</span> *</span><br><span class="line">    &gt; <span class="keyword">from</span> test_log</span><br><span class="line">    &gt; <span class="keyword">sort</span> <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="https://i.loli.net/2021/03/17/nFIL5ZMCdYpyl8O.png" alt="image.png" /><figcaption aria-hidden="true">image.png</figcaption>
+</figure>
 <ul>
-<li><h3 id="download-patches">download patches</h3></li>
+<li>在三个分区中的数据记录均按照升序排列，但对于相同参数可能存在重合的排序区间</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/rasa/vmware-tools-patches.git</span><br></pre></td></tr></table></figure>
+<h3 id="distribute-by">Distribute by</h3>
+<p>Distribute by控制map端数据如何拆分和分发给reduce端。Distribute by指定的参数相同的数据将被分配到同一个Reducer上。</p>
 <ul>
-<li><h3 id="reinstall-open-vm-tools">Reinstall open-vm-tools</h3></li>
+<li><p>分发Reducer采用的是Hash算法，因此相同参数的记录只会被分发到一个reducer，但同一reducer上可能会出现多个参数的记录。</p></li>
+<li><p>在各个reducer中的数据不保证有序排列</p></li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install open-vm-tools</span><br><span class="line">sudo apt-get install open-vm-tools-desktop</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> *</span><br><span class="line">    &gt; <span class="keyword">from</span> test_log</span><br><span class="line">    &gt; <span class="keyword">distribute</span> <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="https://i.loli.net/2021/03/17/9SoRf1MQYuWhJyc.png" alt="image.png" /><figcaption aria-hidden="true">image.png</figcaption>
+</figure>
 <ul>
-<li><h3 id="reboot-the-system">Reboot the system</h3></li>
+<li><p>grade为9的数据全部进入reducer1，5和8的数据均在reducer2，而1、4、7分布在reducer3上，但是各个reducer内并没有按照grade大小进行排序</p></li>
+<li><p>将distribute by和sort by连用，即可将指定字段的记录分发到不同的reduce中，且在每个reduce内部会根据指定字段值来排序</p></li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> *</span><br><span class="line">    &gt; <span class="keyword">from</span> test_log</span><br><span class="line">    &gt; <span class="keyword">distribute</span> <span class="keyword">by</span> grade</span><br><span class="line">    &gt; <span class="keyword">sort</span> <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="https://i.loli.net/2021/03/17/kvUAbh4S7MHNKBo.png" alt="image.png" /><figcaption aria-hidden="true">image.png</figcaption>
+</figure>
+<h3 id="cluster-by">Cluster by</h3>
+<p>CLUSTER BY与DISTRIBUTE BY和SORT BY连用的执行结果相同。即当distribute by的字段与sort by字段相同时，使用cluster by与其等价。</p>
+<p>Notice：cluster by 不能指定升降序排列，默认升序。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; select *</span><br><span class="line">    &gt; from test_log</span><br><span class="line">    &gt; cluster by grade;</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="https://i.loli.net/2021/03/17/aNI3vc4FeKVAjpE.png" alt="image.png" /><figcaption aria-hidden="true">image.png</figcaption>
+</figure>
+<h4 id="reference">Reference</h4>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u012369535/article/details/89639434?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control">Hive的Order by、Sort by、Distribute by和Cluster by的区别</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUyMDA4OTY3MQ==&amp;mid=2247487481&amp;idx=1&amp;sn=1f707a3cada10e06f6d4c4f4293e752b&amp;source=41#wechat_redirect">Hive : SORT BY vs ORDER BY vs DISTRIBUTE BY vs CLUSTER BY</a></p>
+<p>鸣谢：CYS Macbook</p>
 
     </div>
 
@@ -259,7 +290,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Ubuntu/" rel="tag"># Ubuntu</a>
+              <a href="/tags/BigData/" rel="tag"># BigData</a>
+              <a href="/tags/Hive/" rel="tag"># Hive</a>
           </div>
 
         
@@ -268,13 +300,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/12/05/%E3%80%90Java%E3%80%91Override%20&%20Overload/" rel="prev" title="【Java】Override & Overload">
-      <i class="fa fa-chevron-left"></i> 【Java】Override & Overload
+    <a href="/2021/01/13/%E3%80%90Java%E3%80%91Interface-Inheritance-Implementation-Inheritance/" rel="prev" title="【Java】Interface Inheritance & Implementation Inheritance">
+      <i class="fa fa-chevron-left"></i> 【Java】Interface Inheritance & Implementation Inheritance
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/12/22/%E3%80%90Dynamic-Programming%E3%80%91Knapsack-Problem/" rel="next" title="【Dynamic Programming】Knapsack Problem">
-      【Dynamic Programming】Knapsack Problem <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -333,7 +362,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#uninstall-just-open-vm-tools"><span class="nav-number">1.</span> <span class="nav-text">Uninstall just open-vm-tools</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#uninstall-open-vm-tools-and-its-dependencies"><span class="nav-number">2.</span> <span class="nav-text">Uninstall open-vm-tools and its dependencies</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#purging-your-configdata"><span class="nav-number">3.</span> <span class="nav-text">Purging your config&#x2F;data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#download-patches"><span class="nav-number">4.</span> <span class="nav-text">download patches</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reinstall-open-vm-tools"><span class="nav-number">5.</span> <span class="nav-text">Reinstall open-vm-tools</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reboot-the-system"><span class="nav-number">6.</span> <span class="nav-text">Reboot the system</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#order-by"><span class="nav-number">1.</span> <span class="nav-text">Order by</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#image.png"><span class="nav-number">2.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sort-by"><span class="nav-number">3.</span> <span class="nav-text">Sort by</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#distribute-by"><span class="nav-number">4.</span> <span class="nav-text">Distribute by</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cluster-by"><span class="nav-number">5.</span> <span class="nav-text">Cluster by</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#reference"><span class="nav-number">5.1.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
