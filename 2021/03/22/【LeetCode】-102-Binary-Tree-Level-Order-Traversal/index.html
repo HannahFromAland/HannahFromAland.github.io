@@ -216,7 +216,7 @@
       
         <p>整理剑指 Offer 32 - I &amp; II （主站102题），实现二叉树层次遍历。（为面试攒人品）</p>
 <a id="more"></a>
-<h3 id="无层记录要求的32-I"><a class="header-anchor" href="#无层记录要求的32-I"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof/">无层记录要求的32- I</a></h3>
+<h3 id="无层记录要求的32-i"><a class="markdownIt-Anchor" href="#无层记录要求的32-i"></a> <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof/">无层记录要求的32- I</a></h3>
 <ul>
 <li>只需要按以int[]数组按序返回层次遍历结果即可，利用队列实现</li>
 </ul>
@@ -224,12 +224,12 @@
 <ul>
 <li>复杂度分析：
 <ul>
-<li>时间复杂度 $O(N)$ ：<em>N</em> 为二叉树的节点数量</li>
-<li>空间复杂度 $O(N)$ ： 最差情况下，即当树为平衡二叉树时，最多有$N/2$个树节点<strong>同时</strong>在 <code>queue</code> 中，使用 $O(N)$ 大小的额外空间</li>
+<li>时间复杂度 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>N</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span> ：<em>N</em> 为二叉树的节点数量</li>
+<li>空间复杂度 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>N</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span> ： 最差情况下，即当树为平衡二叉树时，最多有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>N</mi><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">N/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord">/</span><span class="mord">2</span></span></span></span>个树节点<strong>同时</strong>在 <code>queue</code> 中，使用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>N</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span> 大小的额外空间</li>
 </ul>
 </li>
 </ul>
-<h3 id="有层数记录的32-II"><a class="header-anchor" href="#有层数记录的32-II"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/">有层数记录的32 - II </a></h3>
+<h3 id="有层数记录的32-ii"><a class="markdownIt-Anchor" href="#有层数记录的32-ii"></a> <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/">有层数记录的32 - II </a></h3>
 <ul>
 <li>要求返回类型为<code>List&lt;List&lt;Integer&gt;&gt;</code> ，且分层存入内部List中</li>
 <li>初始想到的方法是利用flag存当前层数，其余遍历方式与I题相同，但需要在队列中同时存入树的节点和其所在层数，可以通过javafx包的Pair实现，但leetcode没有（😰,需要自己构造class</li>
@@ -242,8 +242,8 @@
 <ul>
 <li>复杂度分析：
 <ul>
-<li>时间复杂度 $O(N)$ ：<em>N</em> 为二叉树的节点数量</li>
-<li>空间复杂度 $O(N)$ ： 最差情况下，即当树为平衡二叉树时，最多有$N/2$个树节点<strong>同时</strong>在 <code>queue</code> 中，使用 $O(N)$ 大小的额外空间</li>
+<li>时间复杂度 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>N</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span> ：<em>N</em> 为二叉树的节点数量</li>
+<li>空间复杂度 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>N</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span> ： 最差情况下，即当树为平衡二叉树时，最多有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>N</mi><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">N/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord">/</span><span class="mord">2</span></span></span></span>个树节点<strong>同时</strong>在 <code>queue</code> 中，使用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>N</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span> 大小的额外空间</li>
 </ul>
 </li>
 </ul>
@@ -328,7 +328,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E5%B1%82%E8%AE%B0%E5%BD%95%E8%A6%81%E6%B1%82%E7%9A%8432-I"><span class="nav-number">1.</span> <span class="nav-text">无层记录要求的32- I</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%B1%82%E6%95%B0%E8%AE%B0%E5%BD%95%E7%9A%8432-II"><span class="nav-number">2.</span> <span class="nav-text">有层数记录的32 - II </span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E5%B1%82%E8%AE%B0%E5%BD%95%E8%A6%81%E6%B1%82%E7%9A%8432-i"><span class="nav-number">1.</span> <span class="nav-text"> 无层记录要求的32- I</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%B1%82%E6%95%B0%E8%AE%B0%E5%BD%95%E7%9A%8432-ii"><span class="nav-number">2.</span> <span class="nav-text"> 有层数记录的32 - II </span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

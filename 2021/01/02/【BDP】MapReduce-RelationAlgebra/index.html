@@ -216,7 +216,7 @@
       
         <p>利用MapReduce并行化实现选择、投影、并、交、差及自然连接的关系代数操作。</p>
 <a id="more"></a>
-<h3 id="Selection"><a class="header-anchor" href="#Selection"></a>Selection</h3>
+<h3 id="selection"><a class="markdownIt-Anchor" href="#selection"></a> Selection</h3>
 <p>**Description：**获得某属性满足某一条件的所有记录</p>
 <ul>
 <li>**Map操作：**对输入记录的条件属性进行判断，若满足条件则输出该键值对</li>
@@ -234,7 +234,7 @@
 <ul>
 <li>**Reducer操作实现：**无需进行额外操作，<code>setNumReduceTasks(0)</code>即可</li>
 </ul>
-<h3 id="Projection"><a class="header-anchor" href="#Projection"></a>Projection</h3>
+<h3 id="projection"><a class="markdownIt-Anchor" href="#projection"></a> Projection</h3>
 <p>投影运算：选择列col的全部值并输出</p>
 <ul>
 <li>**Mapper操作：**选择所有的列col值并输出</li>
@@ -244,7 +244,7 @@
 <li>**Reducer操作：**若直接输出全部结果，则和选择操作一样将Reducer个数设置为0即可；若需要对全部列值进行去重，则需要创建Reducer对NullWritable进行遍历，调用该Reducer即可输出去重后的全部列值（代码实现如下）</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ProjectionReduce</span> </span></span><br><span class="line"><span class="class"><span class="keyword">extends</span> <span class="title">Reducer</span>&lt;<span class="title">Text</span>, <span class="title">NullWritable</span>, <span class="title">Text</span>, <span class="title">NullWritable</span>&gt;</span>&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reduce</span><span class="params">(Text key, Iterable&lt;NullWritable&gt; value, Context context)</span> <span class="keyword">throws</span> </span></span><br><span class="line"><span class="function">	IOException,InterruptedException</span>&#123;</span><br><span class="line">		context.write(key, NullWritable.get());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="InterSection"><a class="header-anchor" href="#InterSection"></a>InterSection</h3>
+<h3 id="intersection"><a class="markdownIt-Anchor" href="#intersection"></a> InterSection</h3>
 <p>对相同模式的关系表R和关系表T求交集</p>
 <ul>
 <li>**Mapper操作：**读取R和T中每一条记录r，输入&lt;r,1&gt;</li>
@@ -266,14 +266,14 @@
 </li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">17</span>;</span><br><span class="line">    result = <span class="number">31</span> * result + id;</span><br><span class="line">    result = <span class="number">31</span> * result + name.hashcode();</span><br><span class="line">    result = <span class="number">31</span> * result + age;</span><br><span class="line">    result = <span class="number">31</span> * result + grade;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Difference"><a class="header-anchor" href="#Difference"></a>Difference</h3>
+<h3 id="difference"><a class="markdownIt-Anchor" href="#difference"></a> Difference</h3>
 <p>同一个模式的R和T求差集，基本处理逻辑和交运算相同</p>
 <ul>
 <li>**Mapper操作：**输入R中记录为&lt;r, R&gt;，T中记录为&lt;r,T&gt;（也可以直接按照并集的处理方式，在Reducer端进行相减操作，返回value=1的值即可）</li>
 <li>**Reducer操作：**若某键的对应值只有R没有T，将该条记录输出</li>
 <li>同样需要重写hashCode()或限制reducer数量为1</li>
 </ul>
-<h3 id="NaturalJoin"><a class="header-anchor" href="#NaturalJoin"></a>NaturalJoin</h3>
+<h3 id="naturaljoin"><a class="markdownIt-Anchor" href="#naturaljoin"></a> NaturalJoin</h3>
 <p>以某属性为主键做关系表R和关系表S的自然连接</p>
 <ul>
 <li>Mapper操作：将主键作为key，其余属性作为value（需包括两表名称）</li>
@@ -367,7 +367,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Selection"><span class="nav-number">1.</span> <span class="nav-text">Selection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Projection"><span class="nav-number">2.</span> <span class="nav-text">Projection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InterSection"><span class="nav-number">3.</span> <span class="nav-text">InterSection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Difference"><span class="nav-number">4.</span> <span class="nav-text">Difference</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NaturalJoin"><span class="nav-number">5.</span> <span class="nav-text">NaturalJoin</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#selection"><span class="nav-number">1.</span> <span class="nav-text"> Selection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#projection"><span class="nav-number">2.</span> <span class="nav-text"> Projection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#intersection"><span class="nav-number">3.</span> <span class="nav-text"> InterSection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#difference"><span class="nav-number">4.</span> <span class="nav-text"> Difference</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#naturaljoin"><span class="nav-number">5.</span> <span class="nav-text"> NaturalJoin</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

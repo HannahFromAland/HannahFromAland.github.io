@@ -227,8 +227,8 @@
 </li>
 </ul>
 <a id="more"></a>
-<h2 id="Interface-Inheritance"><a class="header-anchor" href="#Interface-Inheritance"></a>Interface Inheritance</h2>
-<h3 id="Definition"><a class="header-anchor" href="#Definition"></a>Definition</h3>
+<h2 id="interface-inheritance"><a class="markdownIt-Anchor" href="#interface-inheritance"></a> Interface Inheritance</h2>
+<h3 id="definition"><a class="markdownIt-Anchor" href="#definition"></a> Definition</h3>
 <ul>
 <li>Specifying the capabilities of a subclass using the <strong>implements</strong> keyword is known as <strong>interface inheritance</strong>.</li>
 </ul>
@@ -242,8 +242,8 @@
 <ul>
 <li>When it runs, an <code>SLList</code> is created and its address is stored in the <code>someList</code> variable. Then the <code>string</code> “elk” is inserted into the <code>SLList</code> referred to by <code>addFirst</code>.</li>
 </ul>
-<h2 id="Implementation-Inheritance"><a class="header-anchor" href="#Implementation-Inheritance"></a>Implementation Inheritance</h2>
-<h3 id="Definition-v2"><a class="header-anchor" href="#Definition-v2"></a>Definition</h3>
+<h2 id="implementation-inheritance"><a class="markdownIt-Anchor" href="#implementation-inheritance"></a> Implementation Inheritance</h2>
+<h3 id="definition-2"><a class="markdownIt-Anchor" href="#definition-2"></a> Definition</h3>
 <ul>
 <li>Use the <strong>default</strong> keyword to specify a method that subclasses should inherit from an <strong>interface.</strong></li>
 </ul>
@@ -254,8 +254,8 @@
 <p><strong>Question:</strong> Which print method do you think will run when the code below executes?</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SLList</span>&lt;<span class="title">Item</span>&gt; <span class="keyword">implements</span>  </span>&#123;</span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">for</span> (Node p = sentinel.next; p != <span class="keyword">null</span>; p = p.next) &#123;</span><br><span class="line">   	      System.out.print(p.item + <span class="string">&quot; &quot;</span>);     	</span><br><span class="line">	   &#125;</span><br><span class="line"> </span><br><span class="line">	   System.out.println();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">   List61B&lt;String&gt; someList = <span class="keyword">new</span> SLList&lt;String&gt;();</span><br><span class="line">   someList.addLast(<span class="string">&quot;elk&quot;</span>);</span><br><span class="line">   someList.addLast(<span class="string">&quot;are&quot;</span>);</span><br><span class="line">   someList.addLast(<span class="string">&quot;watching&quot;</span>);</span><br><span class="line">   someList.print();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>The type specified at <strong>declaration</strong> is called <strong>static type</strong> (In example, the static type of <code>someList </code> is <code>List61B</code>).</li>
-<li>The type specified at <strong>implementation</strong> (when using <code>new</code>) is called <strong>dynamic type</strong>  (In example, the static type of <code>someList </code> is <code>SLList</code>).</li>
+<li>The type specified at <strong>declaration</strong> is called <strong>static type</strong> (In example, the static type of <code>someList</code> is <code>List61B</code>).</li>
+<li>The type specified at <strong>implementation</strong> (when using <code>new</code>) is called <strong>dynamic type</strong>  (In example, the static type of <code>someList</code> is <code>SLList</code>).</li>
 <li>In overriding, if the method has been specified by subclasses, the compiler will choose to record the method through dynamic type(which is subclass in the example).</li>
 <li>However, in overloading, the compiler doesn’t have the <code>dynamic type selection</code>, so if the method has been implemented in the interface, it will be recorded even if there exists more specified method in subclass.</li>
 </ul>
@@ -342,7 +342,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Interface-Inheritance"><span class="nav-number">1.</span> <span class="nav-text">Interface Inheritance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Definition"><span class="nav-number">1.1.</span> <span class="nav-text">Definition</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation-Inheritance"><span class="nav-number">2.</span> <span class="nav-text">Implementation Inheritance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Definition-v2"><span class="nav-number">2.1.</span> <span class="nav-text">Definition</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#interface-inheritance"><span class="nav-number">1.</span> <span class="nav-text"> Interface Inheritance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#definition"><span class="nav-number">1.1.</span> <span class="nav-text"> Definition</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#implementation-inheritance"><span class="nav-number">2.</span> <span class="nav-text"> Implementation Inheritance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#definition-2"><span class="nav-number">2.1.</span> <span class="nav-text"> Definition</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
