@@ -21,12 +21,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Interface Inheritance and Implementation Inheritance are two different type of Interface method definition.  Interface inheritance (what): Simply tells what the subclasses should be able to do.  E">
+  <meta name="description" content="Interface Inheritance and Implementation Inheritance are two different type of Interface method definition.  Interface inheritance (what): Simply tells what the subclasses should be able to do.  EX) a">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Java】Interface Inheritance &amp; Implementation Inheritance">
 <meta property="og:url" content="http://example.com/2021/01/13/%E3%80%90Java%E3%80%91Interface-Inheritance-Implementation-Inheritance/index.html">
 <meta property="og:site_name" content="Hanniverse！">
-<meta property="og:description" content="Interface Inheritance and Implementation Inheritance are two different type of Interface method definition.  Interface inheritance (what): Simply tells what the subclasses should be able to do.  E">
+<meta property="og:description" content="Interface Inheritance and Implementation Inheritance are two different type of Interface method definition.  Interface inheritance (what): Simply tells what the subclasses should be able to do.  EX) a">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-01-13T01:51:54.000Z">
 <meta property="article:modified_time" content="2021-01-13T03:22:33.263Z">
@@ -218,21 +218,23 @@
 <li><strong>Interface inheritance</strong> (what): Simply tells what the subclasses should be able to do.
 <ul>
 <li>EX) all lists should be able to print themselves, how they do it is up to them.</li>
-</ul></li>
+</ul>
+</li>
 <li><strong>Implementation inheritance</strong> (how): Tells the subclasses how they should behave.
 <ul>
 <li>EX) Lists should print themselves exactly this way: by getting each element in order and then printing them.</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <a id="more"></a>
-<h2 id="interface-inheritance">Interface Inheritance</h2>
-<h3 id="definition">Definition</h3>
+<h2 id="Interface-Inheritance"><a class="header-anchor" href="#Interface-Inheritance"></a>Interface Inheritance</h2>
+<h3 id="Definition"><a class="header-anchor" href="#Definition"></a>Definition</h3>
 <ul>
 <li>Specifying the capabilities of a subclass using the <strong>implements</strong> keyword is known as <strong>interface inheritance</strong>.</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">List61B</span>&lt;<span class="title">Item</span>&gt; </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addFirst</span><span class="params">(Item x)</span></span>;</span><br><span class="line">   ...</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">proo</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>Interface has the list of all methods signatures, which specifies what the subclass can do, but not how.</li>
+<li>Interface has the list of all methods signatures, which  specifies what the subclass can do, but not how.</li>
 <li>If the subclass is not abstract, it must override all of these methods being specified in interface, otherwise it will not compile.</li>
 </ul>
 <p><strong>Question:</strong> Will the code below compile? If so, what happens when it runs?</p>
@@ -240,8 +242,8 @@
 <ul>
 <li>When it runs, an <code>SLList</code> is created and its address is stored in the <code>someList</code> variable. Then the <code>string</code> “elk” is inserted into the <code>SLList</code> referred to by <code>addFirst</code>.</li>
 </ul>
-<h2 id="implementation-inheritance">Implementation Inheritance</h2>
-<h3 id="definition-1">Definition</h3>
+<h2 id="Implementation-Inheritance"><a class="header-anchor" href="#Implementation-Inheritance"></a>Implementation Inheritance</h2>
+<h3 id="Definition-v2"><a class="header-anchor" href="#Definition-v2"></a>Definition</h3>
 <ul>
 <li>Use the <strong>default</strong> keyword to specify a method that subclasses should inherit from an <strong>interface.</strong></li>
 </ul>
@@ -252,10 +254,10 @@
 <p><strong>Question:</strong> Which print method do you think will run when the code below executes?</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SLList</span>&lt;<span class="title">Item</span>&gt; <span class="keyword">implements</span>  </span>&#123;</span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">for</span> (Node p = sentinel.next; p != <span class="keyword">null</span>; p = p.next) &#123;</span><br><span class="line">   	      System.out.print(p.item + <span class="string">&quot; &quot;</span>);     	</span><br><span class="line">	   &#125;</span><br><span class="line"> </span><br><span class="line">	   System.out.println();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">   List61B&lt;String&gt; someList = <span class="keyword">new</span> SLList&lt;String&gt;();</span><br><span class="line">   someList.addLast(<span class="string">&quot;elk&quot;</span>);</span><br><span class="line">   someList.addLast(<span class="string">&quot;are&quot;</span>);</span><br><span class="line">   someList.addLast(<span class="string">&quot;watching&quot;</span>);</span><br><span class="line">   someList.print();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>The type specified at <strong>declaration</strong> is called <strong>static type</strong> (In example, the static type of <code>someList</code> is <code>List61B</code>).</li>
-<li>The type specified at <strong>implementation</strong> (when using <code>new</code>) is called <strong>dynamic type</strong> (In example, the static type of <code>someList</code> is <code>SLList</code>).</li>
+<li>The type specified at <strong>declaration</strong> is called <strong>static type</strong> (In example, the static type of <code>someList </code> is <code>List61B</code>).</li>
+<li>The type specified at <strong>implementation</strong> (when using <code>new</code>) is called <strong>dynamic type</strong>  (In example, the static type of <code>someList </code> is <code>SLList</code>).</li>
 <li>In overriding, if the method has been specified by subclasses, the compiler will choose to record the method through dynamic type(which is subclass in the example).</li>
-<li>However, in overloading, the compiler doesn't have the <code>dynamic type selection</code>, so if the method has been implemented in the interface, it will be recorded even if there exists more specified method in subclass.</li>
+<li>However, in overloading, the compiler doesn’t have the <code>dynamic type selection</code>, so if the method has been implemented in the interface, it will be recorded even if there exists more specified method in subclass.</li>
 </ul>
 
     </div>
@@ -340,7 +342,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#interface-inheritance"><span class="nav-number">1.</span> <span class="nav-text">Interface Inheritance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#definition"><span class="nav-number">1.1.</span> <span class="nav-text">Definition</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#implementation-inheritance"><span class="nav-number">2.</span> <span class="nav-text">Implementation Inheritance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#definition-1"><span class="nav-number">2.1.</span> <span class="nav-text">Definition</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Interface-Inheritance"><span class="nav-number">1.</span> <span class="nav-text">Interface Inheritance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Definition"><span class="nav-number">1.1.</span> <span class="nav-text">Definition</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation-Inheritance"><span class="nav-number">2.</span> <span class="nav-text">Implementation Inheritance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Definition-v2"><span class="nav-number">2.1.</span> <span class="nav-text">Definition</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

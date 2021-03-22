@@ -215,18 +215,19 @@
       
         <p>方法的重写(Overriding)和重载(Overloading)是java多态性的不同表现，重写是父类与子类之间多态性的一种表现，重载可以理解成多态的具体表现形式。</p>
 <a id="more"></a>
-<h3 id="override重写">Override（重写）</h3>
+<h3 id="Override（重写）"><a class="header-anchor" href="#Override（重写）"></a>Override（重写）</h3>
 <p>重写是子类对父类的允许访问的方法的实现过程进行重新编写, 返回值和形参都不能改变。<strong>即外壳不变，核心重写！</strong></p>
 <p>重写的好处在于子类可以根据需要，定义特定于自己的行为。 即子类能够根据需要实现父类的方法。</p>
-<p>重写方法不能抛出新的检查异常或者比被重写方法申明更加宽泛的异常。 例如： 父类的一个方法申明了一个检查异常 IOException，但是在重写这个方法的时候不能抛出 Exception 异常，因为 Exception 是 IOException 的父类，只能抛出 IOException 的子类异常。</p>
+<p>重写方法不能抛出新的检查异常或者比被重写方法申明更加宽泛的异常。<br>
+例如： 父类的一个方法申明了一个检查异常 IOException，但是在重写这个方法的时候不能抛出 Exception 异常，因为 Exception 是 IOException 的父类，只能抛出 IOException 的子类异常。</p>
 <p>为了满足里式替换原则，重写有有以下两个限制:</p>
 <ul>
 <li>子类方法的访问权限必须大于等于父类方法；</li>
 <li>子类方法的返回类型必须是父类方法返回类型或为其子类型。</li>
 </ul>
-<p><strong>Notice：</strong>重写方法时使用<code>@Override</code>注解，可以让编译器帮忙检查是否满足上面的两个限制条件。</p>
+<p>**Notice：**重写方法时使用<code>@Override </code>注解，可以让编译器帮忙检查是否满足上面的两个限制条件。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">move</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;动物可以移动&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span> <span class="keyword">extends</span> <span class="title">Animal</span></span>&#123;</span><br><span class="line">    <span class="comment">/** dog作为animal的子类重写move()方法*/</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">move</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;狗可以跑和走&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDog</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</span><br><span class="line">        Animal a = <span class="keyword">new</span> Animal(); <span class="comment">// Animal 对象</span></span><br><span class="line">        Animal b = <span class="keyword">new</span> Dog(); <span class="comment">// Dog 对象</span></span><br><span class="line"></span><br><span class="line">        a.move();<span class="comment">// 执行 Animal 类的方法</span></span><br><span class="line"></span><br><span class="line">        b.move();<span class="comment">//执行 Dog 类的方法</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="overloading重载">Overloading（重载）</h3>
+<h3 id="Overloading（重载）"><a class="header-anchor" href="#Overloading（重载）"></a>Overloading（重载）</h3>
 <p>重载(overloading) 是在一个类里面，方法名字相同，而参数不同。返回类型可以相同也可以不同。</p>
 <p>每个重载的方法（或者构造函数）都必须有一个独一无二的参数类型列表。</p>
 <p>最常用的地方就是构造器的重载。</p>
@@ -241,42 +242,46 @@
 </ul>
 <p>常用的一种Overloading的形式：在类中使用private static进行函数定义，调用类内部的参数并给出返回值，再构建同名的private函数对已有private method进行调用，使得使用时可以依赖具体实例实现method功能。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SLList</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IntNode</span> </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">int</span> item;</span><br><span class="line">        <span class="keyword">public</span> IntNode next;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">IntNode</span><span class="params">(<span class="keyword">int</span> i, IntNode n)</span></span>&#123;</span><br><span class="line">            item = i;</span><br><span class="line">            next = n;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> IntNode first;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SLList</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">        first = <span class="keyword">new</span> IntNode(x,<span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/** Adds x to the front of the list */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addFirst</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">        first = <span class="keyword">new</span> IntNode(x, first);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** returns the first item in the list */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getFirst</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> first.item;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Adds x to the last of the list*/</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addLast</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">        IntNode p = first;</span><br><span class="line">        <span class="keyword">while</span>(p.next!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            p = p.next;</span><br><span class="line">        &#125;</span><br><span class="line">        IntNode q = <span class="keyword">new</span> IntNode(x,<span class="keyword">null</span>);</span><br><span class="line">        p.next = q;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Returns the size of the list that starts at IntNode p*/</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">(IntNode p)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(p.next ==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>+size(p.next);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Returns the size of a given instance of the SLList */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> size(first);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SLList L = <span class="keyword">new</span> SLList(<span class="number">15</span>);</span><br><span class="line">        L.addFirst(<span class="number">10</span>);</span><br><span class="line">        L.addFirst(<span class="number">5</span>);</span><br><span class="line">        L.addLast(<span class="number">20</span>);</span><br><span class="line">        System.out.println(L.size());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="二者的区别与联系">二者的区别与联系</h3>
+<h3 id="二者的区别与联系"><a class="header-anchor" href="#二者的区别与联系"></a>二者的区别与联系</h3>
 <table>
 <thead>
-<tr class="header">
-<th style="text-align: center;">区别</th>
-<th style="text-align: center;">Overloading</th>
-<th style="text-align: center;">Overriding</th>
+<tr>
+<th style="text-align:center">区别</th>
+<th style="text-align:center">Overloading</th>
+<th style="text-align:center">Overriding</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: center;">参数列表</td>
-<td style="text-align: center;"><strong>必须修改</strong></td>
-<td style="text-align: center;">一定不能修改</td>
+<tr>
+<td style="text-align:center">参数列表</td>
+<td style="text-align:center"><strong>必须修改</strong></td>
+<td style="text-align:center">一定不能修改</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">返回类型</td>
-<td style="text-align: center;">可以修改</td>
-<td style="text-align: center;">一定不能修改</td>
+<tr>
+<td style="text-align:center">返回类型</td>
+<td style="text-align:center">可以修改</td>
+<td style="text-align:center">一定不能修改</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">异常</td>
-<td style="text-align: center;">可以修改</td>
-<td style="text-align: center;">可以减少或删除，一定不能抛出新的或者更广的异常</td>
+<tr>
+<td style="text-align:center">异常</td>
+<td style="text-align:center">可以修改</td>
+<td style="text-align:center">可以减少或删除，一定不能抛出新的或者更广的异常</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">访问</td>
-<td style="text-align: center;">可以修改</td>
-<td style="text-align: center;">一定不能做更严格的限制（可以降低限制）</td>
+<tr>
+<td style="text-align:center">访问</td>
+<td style="text-align:center">可以修改</td>
+<td style="text-align:center">一定不能做更严格的限制（可以降低限制）</td>
 </tr>
 </tbody>
 </table>
-<h3 id="reference">Reference</h3>
+<h3 id="Reference"><a class="header-anchor" href="#Reference"></a>Reference</h3>
 <ul>
-<li><p><a target="_blank" rel="noopener" href="https://www.pdai.tech/md/java/basic/java-basic-lan-basic.html#%e9%87%8d%e5%86%99%e4%b8%8e%e9%87%8d%e8%bd%bd">Java全栈知识体系-重写与重载</a></p></li>
-<li><p><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-override-overload.html">Java重写与重载</a></p></li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://www.pdai.tech/md/java/basic/java-basic-lan-basic.html#%e9%87%8d%e5%86%99%e4%b8%8e%e9%87%8d%e8%bd%bd">Java全栈知识体系-重写与重载</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-override-overload.html">Java重写与重载</a></p>
+</li>
 </ul>
 
     </div>
@@ -361,7 +366,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#override%E9%87%8D%E5%86%99"><span class="nav-number">1.</span> <span class="nav-text">Override（重写）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#overloading%E9%87%8D%E8%BD%BD"><span class="nav-number">2.</span> <span class="nav-text">Overloading（重载）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%80%85%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E8%81%94%E7%B3%BB"><span class="nav-number">3.</span> <span class="nav-text">二者的区别与联系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Override%EF%BC%88%E9%87%8D%E5%86%99%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">Override（重写）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Overloading%EF%BC%88%E9%87%8D%E8%BD%BD%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">Overloading（重载）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%80%85%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E8%81%94%E7%B3%BB"><span class="nav-number">3.</span> <span class="nav-text">二者的区别与联系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

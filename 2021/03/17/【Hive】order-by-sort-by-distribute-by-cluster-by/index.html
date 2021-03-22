@@ -226,19 +226,19 @@
       
         <p>对Hive中四种排序方式进行整理和区分。</p>
 <a id="more"></a>
-<h3 id="order-by">Order by</h3>
+<h3 id="Order-by"><a class="header-anchor" href="#Order-by"></a>Order by</h3>
 <p>与传统SQL中的Order by效果一致，即对查询结果进行全局排序。由于Hive通过MapReduce实现数据查询，因此全局排序要求所有数据必须集中在<strong>一个Reducer</strong>上进行处理。</p>
 <ul>
 <li>除此之外，如果指定了<code>hive.mapred.mode=strict</code>（默认是<code>nonstrict</code>）时，就必须指定limit来限制输出条数。</li>
 </ul>
-<p>示例如下，表中列为<code>id</code> ，<code>group</code>， <code>grade</code>，共20条数据</p>
+<p>示例如下，表中列为<code>id</code>  ，<code>group</code>， <code>grade</code>，共20条数据</p>
 <p>直接进行order by操作：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> user_id,<span class="string">`group`</span>,grade</span><br><span class="line">    &gt; <span class="keyword">from</span> test_log</span><br><span class="line">    &gt; <span class="keyword">order</span> <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
-<h3 id="section"><img src="https://i.loli.net/2021/03/17/Qy13xmCwWYUViGA.png" /></h3>
+<h3 id=""><a class="header-anchor" href="#"></a><img src="https://i.loli.net/2021/03/17/Qy13xmCwWYUViGA.png" alt=""></h3>
 <ul>
 <li>数据结果按照grade正序排列。</li>
 </ul>
-<h3 id="sort-by">Sort by</h3>
+<h3 id="Sort-by"><a class="header-anchor" href="#Sort-by"></a>Sort by</h3>
 <p>Sort by的数据是局部有序的，其排序作用发挥在数据分别进入各个Reducer之前，因此只会对每个Reducer上的数据进行局部排序。</p>
 <ul>
 <li>使用sort by时，可以通过指定执行的reducer个数（<code>set mapred.reduce.tasks=n</code>），对输出的数据再执行归并排序，即可得到全部结果。</li>
@@ -246,30 +246,38 @@
 <li>sort by不保证相同参数被分配到同一reducer（即若某个参数的数据量较大，可能会被分配到不同的reducer，且只能保证各个reducer的结果是有序的）</li>
 </ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> mapreduce.job.reduces=<span class="number">3</span>;</span><br><span class="line"><span class="keyword">set</span> hive.cli.print.header=<span class="literal">true</span>;</span><br><span class="line"><span class="comment">-- 将reducer个数设为3，观察各个分区上的排序结果</span></span><br><span class="line"><span class="keyword">select</span> *</span><br><span class="line">    &gt; <span class="keyword">from</span> test_log</span><br><span class="line">    &gt; <span class="keyword">sort</span> <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/17/nFIL5ZMCdYpyl8O.png" /></p>
+<p><img src="https://i.loli.net/2021/03/17/nFIL5ZMCdYpyl8O.png" alt=""></p>
 <ul>
 <li>在三个分区中的数据记录均按照升序排列，但对于相同参数可能存在重合的排序区间</li>
 </ul>
-<h3 id="distribute-by">Distribute by</h3>
+<h3 id="Distribute-by"><a class="header-anchor" href="#Distribute-by"></a>Distribute by</h3>
 <p>Distribute by控制map端数据如何拆分和分发给reduce端。Distribute by指定的参数相同的数据将被分配到同一个Reducer上。</p>
 <ul>
-<li><p>分发Reducer采用的是Hash算法，因此相同参数的记录只会被分发到一个reducer，但同一reducer上可能会出现多个参数的记录。</p></li>
-<li><p>在各个reducer中的数据不保证有序排列</p></li>
+<li>
+<p>分发Reducer采用的是Hash算法，因此相同参数的记录只会被分发到一个reducer，但同一reducer上可能会出现多个参数的记录。</p>
+</li>
+<li>
+<p>在各个reducer中的数据不保证有序排列</p>
+</li>
 </ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> *</span><br><span class="line">    &gt; <span class="keyword">from</span> test_log</span><br><span class="line">    &gt; <span class="keyword">distribute</span> <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/17/9SoRf1MQYuWhJyc.png" /></p>
+<p><img src="https://i.loli.net/2021/03/17/9SoRf1MQYuWhJyc.png" alt=""></p>
 <ul>
-<li><p>grade为9的数据全部进入reducer1，5和8的数据均在reducer2，而1、4、7分布在reducer3上，但是各个reducer内并没有按照grade大小进行排序</p></li>
-<li><p>将distribute by和sort by连用，即可将指定字段的记录分发到不同的reduce中，且在每个reduce内部会根据指定字段值来排序</p></li>
+<li>
+<p>grade为9的数据全部进入reducer1，5和8的数据均在reducer2，而1、4、7分布在reducer3上，但是各个reducer内并没有按照grade大小进行排序</p>
+</li>
+<li>
+<p>将distribute by和sort by连用，即可将指定字段的记录分发到不同的reduce中，且在每个reduce内部会根据指定字段值来排序</p>
+</li>
 </ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> *</span><br><span class="line">    &gt; <span class="keyword">from</span> test_log</span><br><span class="line">    &gt; <span class="keyword">distribute</span> <span class="keyword">by</span> grade</span><br><span class="line">    &gt; <span class="keyword">sort</span> <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/17/kvUAbh4S7MHNKBo.png" /></p>
-<h3 id="cluster-by">Cluster by</h3>
+<p><img src="https://i.loli.net/2021/03/17/kvUAbh4S7MHNKBo.png" alt=""></p>
+<h3 id="Cluster-by"><a class="header-anchor" href="#Cluster-by"></a>Cluster by</h3>
 <p>CLUSTER BY与DISTRIBUTE BY和SORT BY连用的执行结果相同。即当distribute by的字段与sort by字段相同时，使用cluster by与其等价。</p>
 <p>Notice：cluster by 不能指定升降序排列，默认升序。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; select *</span><br><span class="line">    &gt; from test_log</span><br><span class="line">    &gt; cluster by grade;</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/17/aNI3vc4FeKVAjpE.png" /></p>
-<h4 id="reference">Reference</h4>
+<p><img src="https://i.loli.net/2021/03/17/aNI3vc4FeKVAjpE.png" alt=""></p>
+<h4 id="Reference"><a class="header-anchor" href="#Reference"></a>Reference</h4>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u012369535/article/details/89639434?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control">Hive的Order by、Sort by、Distribute by和Cluster by的区别</a></p>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUyMDA4OTY3MQ==&amp;mid=2247487481&amp;idx=1&amp;sn=1f707a3cada10e06f6d4c4f4293e752b&amp;source=41#wechat_redirect">Hive : SORT BY vs ORDER BY vs DISTRIBUTE BY vs CLUSTER BY</a></p>
 <p>鸣谢：CYS Macbook</p>
@@ -357,7 +365,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#order-by"><span class="nav-number">1.</span> <span class="nav-text">Order by</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#section"><span class="nav-number">2.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sort-by"><span class="nav-number">3.</span> <span class="nav-text">Sort by</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#distribute-by"><span class="nav-number">4.</span> <span class="nav-text">Distribute by</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cluster-by"><span class="nav-number">5.</span> <span class="nav-text">Cluster by</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#reference"><span class="nav-number">5.1.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Order-by"><span class="nav-number">1.</span> <span class="nav-text">Order by</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sort-by"><span class="nav-number">3.</span> <span class="nav-text">Sort by</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Distribute-by"><span class="nav-number">4.</span> <span class="nav-text">Distribute by</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cluster-by"><span class="nav-number">5.</span> <span class="nav-text">Cluster by</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference"><span class="nav-number">5.1.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -216,14 +216,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="二叉排序树">二叉排序树</h3>
-<p><strong>定义：</strong>二叉排序树或者是一棵空树；或是具有如下特性的二叉树：</p>
+          <h3 id="二叉排序树"><a class="header-anchor" href="#二叉排序树"></a>二叉排序树</h3>
+<p>**定义：**二叉排序树或者是一棵空树；或是具有如下特性的二叉树：</p>
 <ul>
 <li>若左子树不为空，则左子树上所有节点值均小于根节点；</li>
 <li>若右子树不为空，则右子树上所有节点值均大于根节点；</li>
 <li>左、右子树均为二叉排序树.</li>
 </ul>
-<p><strong>核心算法：</strong>查找算法、插入算法、删除算法</p>
+<p>**核心算法：**查找算法、插入算法、删除算法</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/12/04/%E3%80%90Data-Structure%E3%80%91Tree-BinarySearchTree/#more" rel="contents">
@@ -304,12 +304,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="相关名词">相关名词</h3>
+          <h3 id="相关名词"><a class="header-anchor" href="#相关名词"></a>相关名词</h3>
 <ul>
-<li><strong>连通图(无向图)：</strong> 在无向图中，若任意两个顶点<span class="math inline">\(V_i\)</span>与<span class="math inline">\(V_j\)</span>都有路径相通，则称该无向图为连通图。</li>
-<li><strong>强连通图(有向图)：</strong>有向图中，若任意两个顶点<span class="math inline">\(V_i\)</span>与<span class="math inline">\(V_j\)</span>都有路径相通，则称该有向图为强连通图。</li>
-<li><strong>生成树：</strong>含有图中全部n个顶点的一个连通子图，只有足以构成一棵树的n-1条边。即若生成树中再添加一条边，则必定成环。</li>
-<li><strong>最小生成树：</strong>在连通网的所有生成树中，所有边的代价和最小的生成树，称为最小生成树。</li>
+<li><strong>连通图(无向图)：</strong> 在无向图中，若任意两个顶点$V_i$与$V_j$都有路径相通，则称该无向图为连通图。</li>
+<li>**强连通图(有向图)：**有向图中，若任意两个顶点$V_i$与$V_j$都有路径相通，则称该有向图为强连通图。</li>
+<li>**生成树：**含有图中全部n个顶点的一个连通子图，只有足以构成一棵树的n-1条边。即若生成树中再添加一条边，则必定成环。</li>
+<li>**最小生成树：**在连通网的所有生成树中，所有边的代价和最小的生成树，称为最小生成树。</li>
 </ul>
           <!--noindex-->
             <div class="post-button">
@@ -391,14 +391,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="定义及名词解释">定义及名词解释</h2>
-<h3 id="树">树</h3>
+          <h2 id="定义及名词解释"><a class="header-anchor" href="#定义及名词解释"></a>定义及名词解释</h2>
+<h3 id="树"><a class="header-anchor" href="#树"></a>树</h3>
 <p><strong>1.节点的度：</strong></p>
 <ul>
-<li><p>树的度是各节点度的最大值</p></li>
-<li><p>节点的度是节点拥有的子树个数</p>
+<li>
+<p>树的度是各节点度的最大值</p>
+</li>
+<li>
+<p>节点的度是节点拥有的子树个数</p>
 <ul>
-<li><p>树中的叶子结点的个数计算方法：</p>
+<li>
+<p>树中的叶子结点的个数计算方法：</p>
 <p>若一棵度为4的树中度为1、2、3、4的节点的个数分别为4、3、2、2，则该树叶子节点的个数是多少？总节点个数是多少？</p>
 <p>设树T中的结点个数为n，度为0的结点的个数为n0，度为1的结点的个数为n1，度为2的结点的个数为n2，度为3的结点的个数为n3，度为4的结点的个数为n4，则有：</p>
 <p><strong>n = n0 + n1 + n2 + n3 + n4</strong></p>
@@ -407,8 +411,10 @@
 <p><strong>e = n0 + n1 + n2 + n3 + n4 - 1</strong></p>
 <p>又因为，n0的出度为0，n1的出度为1，n2的出度为2，n3的出度为3，n4的出度为4，所以：</p>
 <p><strong>e = n0 * 0 + n1 * 1+ n2 * 2 + n3 * 3 + n4 * 4</strong></p>
-<p>代入即可得n0的值.</p></li>
-</ul></li>
+<p>代入即可得n0的值.</p>
+</li>
+</ul>
+</li>
 </ul>
 <p><strong>2. 树的深度：</strong> 树的层数</p>
           <!--noindex-->
@@ -491,8 +497,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="problem">Problem</h2>
-<p>Due to recent rains, water has pooled in various places in Farmer John's field, which is represented by a rectangle of N x M (1 &lt;= N &lt;= 100; 1 &lt;= M &lt;= 100) squares. Each square contains either water ('W') or dry land ('.'). Farmer John would like to figure out how many ponds have formed in his field. A pond is a connected set of squares with water in them, where a square is considered adjacent to all eight of its neighbors. Given a diagram of Farmer John's field, determine how many ponds he has. 由于近期的降雨，雨水汇集在农民约翰的田地不同的地方。我们用一个NxM(1&lt;=N&lt;=100;1&lt;=M&lt;=100)网格图表示。每个网格中有水('W') 或是旱地('.')。一个网格与其周围的八个网格相连，而一组相连的网格视为一个水坑。约翰想弄清楚他的田地已经形成了多少水坑。给出约翰田地的示意图，确定当中有多少水坑。</p>
+          <h2 id="Problem"><a class="header-anchor" href="#Problem"></a>Problem</h2>
+<p>Due to recent rains, water has pooled in various places in Farmer John’s field, which is represented by a rectangle of N x M (1 &lt;= N &lt;= 100; 1 &lt;= M &lt;= 100) squares. Each square contains either water (‘W’) or dry land (‘.’). Farmer John would like to figure out how many ponds have formed in his field. A pond is a connected set of squares with water in them, where a square is considered adjacent to all eight of its neighbors. Given a diagram of Farmer John’s field, determine how many ponds he has.<br>
+由于近期的降雨，雨水汇集在农民约翰的田地不同的地方。我们用一个NxM(1&lt;=N&lt;=100;1&lt;=M&lt;=100)网格图表示。每个网格中有水(‘W’) 或是旱地(‘.’)。一个网格与其周围的八个网格相连，而一组相连的网格视为一个水坑。约翰想弄清楚他的田地已经形成了多少水坑。给出约翰田地的示意图，确定当中有多少水坑。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/10/31/%E3%80%90DFS-BFS%E3%80%91P1596-Lake-Counting/#more" rel="contents">
@@ -574,25 +581,26 @@
 
       
           <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
+<h2 id="Quick-Start"><a class="header-anchor" href="#Quick-Start"></a>Quick Start</h2>
+<h3 id="Create-a-new-post"><a class="header-anchor" href="#Create-a-new-post"></a>Create a new post</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
+<h3 id="Run-server"><a class="header-anchor" href="#Run-server"></a>Run server</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
+<h3 id="Generate-static-files"><a class="header-anchor" href="#Generate-static-files"></a>Generate static files</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<h3 id="Deploy-to-remote-sites"><a class="header-anchor" href="#Deploy-to-remote-sites"></a>Deploy to remote sites</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<h2 id="不断摸索的hexo配置持续更新">不断摸索的Hexo配置（持续更新）</h2>
-<h3 id="修改post内部代码段字体大小">修改Post内部代码段字体大小</h3>
-<p>在<code>_config.yml</code>中直接修改fonts参数发现没有变化，直接修改样式文件 <code>\source\css\_common\scaffolding\highlight\highlight.styl</code></p>
+<h2 id="不断摸索的Hexo配置（持续更新）"><a class="header-anchor" href="#不断摸索的Hexo配置（持续更新）"></a>不断摸索的Hexo配置（持续更新）</h2>
+<h3 id="修改Post内部代码段字体大小"><a class="header-anchor" href="#修改Post内部代码段字体大小"></a>修改Post内部代码段字体大小</h3>
+<p>在<code>_config.yml</code>中直接修改fonts参数发现没有变化，直接修改样式文件<br>
+<code>\source\css\_common\scaffolding\highlight\highlight.styl</code></p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$code</span>-block</span><br><span class="line">  <span class="attribute">background</span>: highlight-background</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">20px</span> <span class="number">0</span></span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">15px</span></span><br><span class="line">  <span class="attribute">overflow</span>: auto</span><br><span class="line">  <span class="attribute">font-size</span> <span class="number">13px</span>    // 改这里</span><br><span class="line">  <span class="attribute">color</span>: highlight-foreground</span><br><span class="line">  <span class="attribute">line-height</span>:  <span class="variable">$line</span>-height-code-block</span><br></pre></td></tr></table></figure>
 <p>deploy之后生效.</p>
-<h2 id="设置阅读全文">设置阅读全文</h2>
+<h2 id="设置阅读全文"><a class="header-anchor" href="#设置阅读全文"></a>设置阅读全文</h2>
 <ul>
 <li>在文中加入<code>&lt;!-- more --&gt;</code>手动进行截断</li>
 </ul>

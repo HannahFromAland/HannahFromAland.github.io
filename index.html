@@ -369,11 +369,13 @@
 <li><strong>Interface inheritance</strong> (what): Simply tells what the subclasses should be able to do.
 <ul>
 <li>EX) all lists should be able to print themselves, how they do it is up to them.</li>
-</ul></li>
+</ul>
+</li>
 <li><strong>Implementation inheritance</strong> (how): Tells the subclasses how they should behave.
 <ul>
 <li>EX) Lists should print themselves exactly this way: by getting each element in order and then printing them.</li>
-</ul></li>
+</ul>
+</li>
 </ul>
           <!--noindex-->
             <div class="post-button">
@@ -449,7 +451,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="definition">Definition</h3>
+          <h3 id="Definition"><a class="header-anchor" href="#Definition"></a>Definition</h3>
 <p>目的是在海量语料库/文章中发现固定窗口（如5词以内、一句话内甚至一段内）单词a和单词b共同出现的频率，并以此构建单词共现矩阵。（矩阵可对称也可不对称（强调顺序），取决于具体应用）.</p>
           <!--noindex-->
             <div class="post-button">
@@ -525,11 +527,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="definition">Definition</h2>
+          <h2 id="Definition"><a class="header-anchor" href="#Definition"></a>Definition</h2>
 <p>二级排序的目的是实现key-value对对键排序之后继续按值排序的功能.</p>
 <ul>
-<li><strong>解决方案1：</strong>思路完全为Java算法. 在Reducer内直接对给定key的所有值进行排序(例如: 把一个<code>key</code>对应的所有<code>value</code>放到一个<code>Array</code>或<code>List</code>中,再排序)，因此可能会出现数据量过大，Reducer内存溢出的情况.</li>
-<li><strong>解决方案2：</strong>方案2通过MapReduce思路进行实现，因为在<code>MapReduce</code>程序中，Mapper输出的键值对会经过<code>shuffle</code>过程再交给Reducer，在 shuffle 阶段，Mapper 输出的键值对会经过 <code>partition(分区)-&gt;sort(排序)-&gt;group(分组)</code>三个阶段，在MapReduce中可以通过重写<code>sort</code>来实现，因此只需要对key的格式进行修改，加入需要二级考虑的值并修改key类的<code>compareTo</code>或<code>Comparator class</code>即可.</li>
+<li>**解决方案1：**思路完全为Java算法. 在Reducer内直接对给定key的所有值进行排序(例如: 把一个<code>key</code>对应的所有<code>value</code>放到一个<code>Array</code>或<code>List</code>中,再排序)，因此可能会出现数据量过大，Reducer内存溢出的情况.</li>
+<li>**解决方案2：**方案2通过MapReduce思路进行实现，因为在<code>MapReduce</code>程序中，Mapper输出的键值对会经过<code>shuffle</code>过程再交给Reducer，在 shuffle 阶段，Mapper 输出的键值对会经过 <code>partition(分区)-&gt;sort(排序)-&gt;group(分组) </code>三个阶段，在MapReduce中可以通过重写<code>sort</code>来实现，因此只需要对key的格式进行修改，加入需要二级考虑的值并修改key类的<code>compareTo</code>或<code>Comparator class</code>即可.</li>
 </ul>
           <!--noindex-->
             <div class="post-button">
@@ -686,13 +688,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="definition">Definition</h3>
-<p>任意矩阵<span class="math inline">\(M\)</span>和<span class="math inline">\(N\)</span>,若<span class="math inline">\(M\)</span>列数等于<span class="math inline">\(N\)</span>的列数，则记M和N的乘积<span class="math inline">\(P=M \cdot N\)</span>,且乘积矩阵<span class="math inline">\(P\)</span>中元素均可表示为： <span class="math display">\[
-p_{ik} = (M\cdot N)_{ik} = \sum_j{m_{ij}n_{jk}}
-\]</span></p>
+          <h3 id="Definition"><a class="header-anchor" href="#Definition"></a>Definition</h3>
+<p>任意矩阵$M$和$N$,若$M$列数等于$N$的列数，则记M和N的乘积$P=M \cdot N$,且乘积矩阵$P$中元素均可表示为：<br>
+$$<br>
+p_{ik} = (M\cdot N)<em>{ik} = \sum_j{m</em>{ij}n_{jk}}<br>
+$$</p>
 <ul>
-<li>最终决定<span class="math inline">\(p_{ik}\)</span>位置的元素为<span class="math inline">\(i,k\)</span>，因此将其作为Reduce的输出key值；</li>
-<li>为记录<span class="math inline">\(m_{ij}\)</span>和<span class="math inline">\(n_{jk}\)</span>，需要对矩阵名称及元素所在行列进行记录，这些属性将通过Mapper处理得到.</li>
+<li>最终决定$p_{ik}$位置的元素为$i,k$，因此将其作为Reduce的输出key值；</li>
+<li>为记录$m_{ij}$和$n_{jk}$，需要对矩阵名称及元素所在行列进行记录，这些属性将通过Mapper处理得到.</li>
 </ul>
           <!--noindex-->
             <div class="post-button">
@@ -774,8 +777,9 @@ p_{ik} = (M\cdot N)_{ik} = \sum_j{m_{ij}n_{jk}}
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="problem-description">Problem Description</h2>
-<p>一个背包的总容量为<strong>W</strong>,现在有<strong>N</strong>个物品且<strong>物品不可分</strong>,第<strong>i</strong>个物品的重量为<strong>weight[i]</strong>,价值为<strong>val[i]</strong>； 往该背包里装东西,怎样装才能使得最终包内物品的总价值最大。</p>
+          <h2 id="Problem-Description"><a class="header-anchor" href="#Problem-Description"></a>Problem Description</h2>
+<p>一个背包的总容量为<strong>W</strong>,现在有<strong>N</strong>个物品且<strong>物品不可分</strong>,第<strong>i</strong>个物品的重量为<strong>weight[i]</strong>,价值为<strong>val[i]</strong>；<br>
+往该背包里装东西,怎样装才能使得最终包内物品的总价值最大。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/12/22/%E3%80%90Dynamic-Programming%E3%80%91Knapsack-Problem/#more" rel="contents">
