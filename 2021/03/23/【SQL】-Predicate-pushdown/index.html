@@ -29,7 +29,7 @@
 <meta property="og:description" content="什么是谓词下推（ Predicate pushdown）  对SQL语句来说，就是将外层查询块中的where子句过滤条件移入所包含的较低层查询块（即下推至离数据源更近的地方）； 对于Hive或Spark QL来说，在不影响结果的情况下提前执行过滤语句，可以减少Map端输出的数据量，降低集群的传输资源同时减少Reduce端的工作量，最终提升任务的性能">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-03-23T01:03:11.000Z">
-<meta property="article:modified_time" content="2021-03-27T08:43:53.891Z">
+<meta property="article:modified_time" content="2021-03-27T08:54:28.652Z">
 <meta property="article:author" content="Hannah">
 <meta property="article:tag" content="Hive">
 <meta property="article:tag" content="SQL">
@@ -197,7 +197,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-27 16:43:53" itemprop="dateModified" datetime="2021-03-27T16:43:53+08:00">2021-03-27</time>
+                <time title="Modified: 2021-03-27 16:54:28" itemprop="dateModified" datetime="2021-03-27T16:54:28+08:00">2021-03-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -206,10 +206,6 @@
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Data-Analysis/" itemprop="url" rel="index"><span itemprop="name">Data Analysis</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Data-Analysis/Big-Data-Processing/" itemprop="url" rel="index"><span itemprop="name">Big Data Processing</span></a>
                 </span>
             </span>
 
@@ -259,6 +255,10 @@
 <li>大多数表存储行为都是列存，列之间独立存储，扫描过滤只需要扫描join列数据（而不是所有列），如果某一列被过滤掉了，其他对应的同一行的列就不需要扫描了，减少了IO扫描次数</li>
 <li>减少了数据从存储层通过socket发送到计算层的开销（正常情况下执行会将所有数据从存储进程加载到计算进程，再进行过滤计算；谓词下推后存储进程将直接过滤无效数据，减少后续一系列开销，提升性能</li>
 </ul>
+<p><strong>Reference</strong></p>
+<p><a target="_blank" rel="noopener" href="https://csy99.github.io/Blog/2020/05/10/predicate-pushdown/">predicate pushdown</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/129026235">sql优化中join 条件谓词下推</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/78266517">从一个sql引发的hive谓词下推的全面复盘及源码分析(上)</a></p>
 
     </div>
 
@@ -363,7 +363,7 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
