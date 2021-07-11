@@ -162,6 +162,162 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/11/%E3%80%90LeetCode%E3%80%915809-Unique-Length-3-Palindromic-Subsequences/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
+      <meta itemprop="name" content="Hannah">
+      <meta itemprop="description" content="宇宙自有她的浪漫。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hanniverse！">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/11/%E3%80%90LeetCode%E3%80%915809-Unique-Length-3-Palindromic-Subsequences/" class="post-title-link" itemprop="url">【LeetCode】5809 Unique Length-3 Palindromic Subsequences</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-07-11 21:31:00 / Modified: 21:38:35" itemprop="dateCreated datePublished" datetime="2021-07-11T21:31:00+08:00">2021-07-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>整理周赛中超时的题目😢，核心是需要用到26个字母对暴力法进行剪枝~</p>
+<p>题目地址：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/unique-length-3-palindromic-subsequences/">长度为 3 的不同回文子序列</a></p>
+<p><strong>## 首先想到的暴力解法</strong></p>
+<p>对字符串中所有元素进行遍历，寻找与其相同的回文串尾部（即第三个字符），之后对头尾之间的元素进行判断加入回文字串的set，最后返回set大小即可。</p>
+<p>- 时间复杂度：为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>N</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>,因此会超时 （具体傻瓜代码就不放出来影响大家阅读体验了🤣）</p>
+<p><strong>## 对前后缀进行优化</strong></p>
+<p>由于前后缀只可能出现26个小写字母，因此对所有出现次数超过两次（或恰好两次）的字母进行维护，再返回字符串中对头尾元素之间能出现的不同种类回文串进行判定即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countPalindromicSubsequence</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">if</span>(s == <span class="keyword">null</span> || s.length()&lt;<span class="number">3</span>) &#123;</span><br><span class="line"></span><br><span class="line">​      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">​    &#125;</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">int</span>[] alpha = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">26</span>];</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">char</span>[] arrs = s.toCharArray();</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">for</span>(<span class="keyword">char</span> arr:arrs) &#123;</span><br><span class="line"></span><br><span class="line">​      alpha[arr-<span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line"></span><br><span class="line">​    &#125;</span><br><span class="line"></span><br><span class="line">​    Set&lt;String&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ;i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line"></span><br><span class="line">​      <span class="keyword">if</span>(alpha[i] &lt; <span class="number">2</span>)&#123;</span><br><span class="line"></span><br><span class="line">​        <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">​      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">​        <span class="keyword">int</span> first = s.indexOf(<span class="string">&#x27;a&#x27;</span>+i);</span><br><span class="line"></span><br><span class="line">​        <span class="keyword">int</span> last = s.indexOf(<span class="string">&#x27;a&#x27;</span>+i,first+<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">​        <span class="keyword">while</span>(last != -<span class="number">1</span>) &#123;</span><br><span class="line"></span><br><span class="line">​          String curr = Character.toString(<span class="string">&#x27;a&#x27;</span>+i);</span><br><span class="line"></span><br><span class="line">​          <span class="keyword">if</span>(last-first ==<span class="number">1</span>) &#123;</span><br><span class="line"></span><br><span class="line">​            last = s.indexOf(<span class="string">&#x27;a&#x27;</span>+i,last+<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">​          &#125;<span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">​            <span class="keyword">for</span>(<span class="keyword">int</span> j = first+<span class="number">1</span>; j&lt;last ;j++)&#123;</span><br><span class="line"></span><br><span class="line">​            String fin = curr + s.substring(j,j+<span class="number">1</span>)+ curr;</span><br><span class="line"></span><br><span class="line">​            set.add(fin);</span><br><span class="line"></span><br><span class="line">​        &#125;</span><br><span class="line"></span><br><span class="line">​        last = s.indexOf(<span class="string">&#x27;a&#x27;</span>+i,last+<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">​          &#125;</span><br><span class="line"></span><br><span class="line">​          </span><br><span class="line"></span><br><span class="line">​        &#125;</span><br><span class="line"></span><br><span class="line">​        </span><br><span class="line"></span><br><span class="line">​      &#125;</span><br><span class="line"></span><br><span class="line">​    &#125;</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">return</span> set.size();</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>## 通过对回文子串的构造本质进行优化</strong></p>
+<ul>
+<li>方法2虽然时间复杂度比暴力解法优化了，但还是会出现超时的算例。。后来发现对于出现次数大于2的字母不需要逐个进行判断，只需要取最头和<strong>最尾</strong>的字符就可以包括所有可能的回文字串了（也就是成功优化掉了子结构里的while循环），最终的ac结果也十分喜人 XD</li>
+</ul>
+<p><img src="https://pic.leetcode-cn.com/1625983960-oHZgVr-image.png" alt="image.png" /></p>
+<ul>
+<li>用到<code>java</code>中和<code>indexOf</code>相对的<code>lastIndexOf</code>方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countPalindromicSubsequence</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">if</span>(s == <span class="keyword">null</span> || s.length()&lt;<span class="number">3</span>) &#123;</span><br><span class="line"></span><br><span class="line">​      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">​    &#125;</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">int</span>[] alpha = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">26</span>];</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">char</span>[] arrs = s.toCharArray();</span><br><span class="line"></span><br><span class="line">​    <span class="comment">//构造26个字母的出现次数存储结构</span></span><br><span class="line"></span><br><span class="line">​    <span class="keyword">for</span>(<span class="keyword">char</span> arr:arrs) &#123;</span><br><span class="line"></span><br><span class="line">​      alpha[arr-<span class="string">&#x27;a&#x27;</span>]++; </span><br><span class="line"></span><br><span class="line">​    &#125;</span><br><span class="line"></span><br><span class="line">​    Set&lt;String&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ;i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line"></span><br><span class="line">​      <span class="keyword">if</span>(alpha[i] &lt; <span class="number">2</span>)&#123;</span><br><span class="line"></span><br><span class="line">​        <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">​      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">​        <span class="keyword">int</span> first = s.indexOf(<span class="string">&#x27;a&#x27;</span>+i); <span class="comment">//判断头元素位置</span></span><br><span class="line"></span><br><span class="line">​        <span class="keyword">int</span> last = s.lastIndexOf(<span class="string">&#x27;a&#x27;</span>+i); <span class="comment">// 判断尾元素位置</span></span><br><span class="line"></span><br><span class="line">​          String curr = Character.toString(<span class="string">&#x27;a&#x27;</span>+i);</span><br><span class="line"></span><br><span class="line">​          <span class="keyword">for</span>(<span class="keyword">int</span> j = first+<span class="number">1</span>; j&lt;last ;j++)&#123;</span><br><span class="line"></span><br><span class="line">​            String fin = curr + s.substring(j,j+<span class="number">1</span>)+ curr;</span><br><span class="line"></span><br><span class="line">​            set.add(fin);</span><br><span class="line"></span><br><span class="line">​            &#125;    </span><br><span class="line"></span><br><span class="line">​        &#125;</span><br><span class="line"></span><br><span class="line">​      &#125;</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">return</span> set.size();</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/16/%E3%80%90Data-Structure%E3%80%91HashMap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
+      <meta itemprop="name" content="Hannah">
+      <meta itemprop="description" content="宇宙自有她的浪漫。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hanniverse！">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/16/%E3%80%90Data-Structure%E3%80%91HashMap/" class="post-title-link" itemprop="url">【Data Structure】HashMap</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-06-16 18:23:32" itemprop="dateCreated datePublished" datetime="2021-06-16T18:23:32+08:00">2021-06-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-06-18 10:23:27" itemprop="dateModified" datetime="2021-06-18T10:23:27+08:00">2021-06-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>试图通过整理解决目前遇到过的HashMap全部问题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/16/%E3%80%90Data-Structure%E3%80%91HashMap/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/10/%E3%80%90LeetCode%E3%80%91203-Remove-Linked-List-Elements/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -865,169 +1021,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/02/%E3%80%90BDP%E3%80%91MapReduce-RelationAlgebra/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
-      <meta itemprop="name" content="Hannah">
-      <meta itemprop="description" content="宇宙自有她的浪漫。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hanniverse！">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/02/%E3%80%90BDP%E3%80%91MapReduce-RelationAlgebra/" class="post-title-link" itemprop="url">【BDP】MapReduce-RelationAlgebra</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-01-02 10:06:07 / Modified: 14:33:07" itemprop="dateCreated datePublished" datetime="2021-01-02T10:06:07+08:00">2021-01-02</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Big-Data-Processing/" itemprop="url" rel="index"><span itemprop="name">Big Data Processing</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>利用MapReduce并行化实现选择、投影、并、交、差及自然连接的关系代数操作。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/01/02/%E3%80%90BDP%E3%80%91MapReduce-RelationAlgebra/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/01/%E3%80%90BDP%E3%80%91MapReduce-MatrixMultiply/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
-      <meta itemprop="name" content="Hannah">
-      <meta itemprop="description" content="宇宙自有她的浪漫。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hanniverse！">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/01/%E3%80%90BDP%E3%80%91MapReduce-MatrixMultiply/" class="post-title-link" itemprop="url">【BDP】MapReduce-MatrixMultiply</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-01 16:12:03" itemprop="dateCreated datePublished" datetime="2021-01-01T16:12:03+08:00">2021-01-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-03 16:56:25" itemprop="dateModified" datetime="2021-01-03T16:56:25+08:00">2021-01-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Big-Data-Processing/" itemprop="url" rel="index"><span itemprop="name">Big Data Processing</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="definition"><a class="markdownIt-Anchor" href="#definition"></a> Definition</h3>
-<p>任意矩阵<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span></span></span></span>,若<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span></span></span></span>列数等于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span></span></span></span>的列数，则记M和N的乘积<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo>=</mo><mi>M</mi><mo>⋅</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">P=M \cdot N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span></span></span></span>,且乘积矩阵<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span></span>中元素均可表示为：</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo>=</mo><mo stretchy="false">(</mo><mi>M</mi><mo>⋅</mo><mi>N</mi><msub><mo stretchy="false">)</mo><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo>=</mo><munder><mo>∑</mo><mi>j</mi></munder><mrow><msub><mi>m</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><msub><mi>n</mi><mrow><mi>j</mi><mi>k</mi></mrow></msub></mrow></mrow><annotation encoding="application/x-tex">p_{ik} = (M\cdot N)_{ik} = \sum_j{m_{ij}n_{jk}}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.463782em;vertical-align:-1.413777em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.050005em;"><span style="top:-1.8723309999999997em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.413777em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">m</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span></span></span></p>
-<ul>
-<li>最终决定<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub></mrow><annotation encoding="application/x-tex">p_{ik}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>位置的元素为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo separator="true">,</mo><mi>k</mi></mrow><annotation encoding="application/x-tex">i,k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>，因此将其作为Reduce的输出key值；</li>
-<li>为记录<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>m</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">m_{ij}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">m</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>n</mi><mrow><mi>j</mi><mi>k</mi></mrow></msub></mrow><annotation encoding="application/x-tex">n_{jk}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>，需要对矩阵名称及元素所在行列进行记录，这些属性将通过Mapper处理得到.</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/01/01/%E3%80%90BDP%E3%80%91MapReduce-MatrixMultiply/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1099,7 +1092,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1112,7 +1105,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
