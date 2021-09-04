@@ -162,6 +162,120 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/04/%E3%80%90SQL%E3%80%91Salary-Table/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
+      <meta itemprop="name" content="Hannah">
+      <meta itemprop="description" content="宇宙自有她的浪漫。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hanniverse！">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/04/%E3%80%90SQL%E3%80%91Salary-Table/" class="post-title-link" itemprop="url">【SQL】Salary Table</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-09-04 19:44:54" itemprop="dateCreated datePublished" datetime="2021-09-04T19:44:54+08:00">2021-09-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-09-05 00:14:28" itemprop="dateModified" datetime="2021-09-05T00:14:28+08:00">2021-09-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Analysis/" itemprop="url" rel="index"><span itemprop="name">Data Analysis</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="salary-table"><a class="markdownIt-Anchor" href="#salary-table"></a> Salary Table</h1>
+<p>记录截至目前遇到的最难的SQL题！😼</p>
+<p><img src="https://i.loli.net/2021/09/04/tzbJw1A48olkn9d.png" alt="" /></p>
+<p><img src="https://i.loli.net/2021/09/04/H1KLqyaV98X32eJ.jpg" alt="" /></p>
+<ul>
+<li>
+<p>大致思路：按照<code>position</code> 进行分组后按工资正序进行rank（为了hire尽可能多的员工，优先从工资最少的开始），并返回截止目前该分类内的<code>salary</code>总和</p>
+</li>
+<li>
+<p>中间表构造：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">position</span>, salary, row_number()<span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> <span class="keyword">position</span> <span class="keyword">order</span> <span class="keyword">by</span> salary) <span class="keyword">as</span> rnk</span><br><span class="line"><span class="keyword">from</span> candidates </span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">position</span> <span class="keyword">DESC</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>截止目前该分类内的<code>salary</code>总和</strong>：</p>
+<ul>
+<li>方法一：实现连接</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span></span><br><span class="line"> a.position,</span><br><span class="line"> a.rnk,</span><br><span class="line"> <span class="keyword">sum</span>(j.salary) </span><br><span class="line"> <span class="keyword">from</span>(<span class="keyword">select</span> <span class="keyword">id</span>,<span class="keyword">position</span>, salary, row_number()<span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> <span class="keyword">position</span> <span class="keyword">order</span> <span class="keyword">by</span> salary) <span class="keyword">as</span> rnk  </span><br><span class="line"> <span class="keyword">from</span> candidates  <span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">position</span> <span class="keyword">DESC</span>) <span class="keyword">as</span> a  </span><br><span class="line"> <span class="keyword">join</span> (<span class="keyword">select</span> <span class="keyword">id</span>,<span class="keyword">position</span>, salary, row_number()<span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> <span class="keyword">position</span> <span class="keyword">order</span> <span class="keyword">by</span> salary) <span class="keyword">as</span> rnk  <span class="keyword">from</span> candidates  <span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">position</span> <span class="keyword">DESC</span>)  <span class="keyword">as</span> j <span class="keyword">on</span> </span><br><span class="line"> a.position = j.position <span class="keyword">and</span> a.rnk &gt;= j.rnk <span class="keyword">group</span> <span class="keyword">by</span> a.position,a.rnk;</span><br></pre></td></tr></table></figure>
+<p>也可以通过将sum子查询放在select中进行简化：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span></span><br><span class="line"> a.position,</span><br><span class="line"> a.rnk,</span><br><span class="line">(<span class="keyword">select</span> <span class="keyword">sum</span>(j.salary) </span><br><span class="line"> <span class="keyword">from</span> (<span class="keyword">select</span> </span><br><span class="line">       <span class="keyword">id</span></span><br><span class="line">       ,<span class="keyword">position</span></span><br><span class="line">       ,salary</span><br><span class="line">       ,row_number()<span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> <span class="keyword">position</span> <span class="keyword">order</span> <span class="keyword">by</span> salary) <span class="keyword">as</span> rnk  </span><br><span class="line">       <span class="keyword">from</span> candidates  </span><br><span class="line">       <span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">position</span> <span class="keyword">DESC</span>) <span class="keyword">as</span> j </span><br><span class="line"> 	<span class="keyword">where</span>  a.position = j.position <span class="keyword">and</span> a.rnk &gt;= j.rnk ) <span class="keyword">as</span> cumulative_salary</span><br><span class="line"> 	<span class="comment">-- select中直接进行两表连接和聚合查询</span></span><br><span class="line"> <span class="keyword">from</span>(<span class="keyword">select</span> <span class="keyword">id</span>,<span class="keyword">position</span>, salary, row_number()<span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> <span class="keyword">position</span> <span class="keyword">order</span> <span class="keyword">by</span> salary) <span class="keyword">as</span> rnk  </span><br><span class="line"> <span class="keyword">from</span> candidates  <span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">position</span> <span class="keyword">DESC</span>) <span class="keyword">as</span> a  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>方法二： 使用<code>rows between unbounded preceding and current row</code>实现到当前行的聚合累加</p>
+<ul>
+<li><code>unbounded preceding</code> 表示最开始的行记录</li>
+<li><code>current</code>为截止当前行</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">id</span>,<span class="keyword">position</span>, salary, row_number()<span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> <span class="keyword">position</span> <span class="keyword">order</span> <span class="keyword">by</span> salary) <span class="keyword">as</span> rnk,</span><br><span class="line"><span class="keyword">sum</span>(salary) <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> <span class="keyword">position</span> <span class="keyword">order</span> <span class="keyword">by</span> salary <span class="keyword">rows</span> <span class="keyword">between</span> <span class="keyword">unbounded</span> <span class="keyword">preceding</span> <span class="keyword">and</span> <span class="keyword">current</span> <span class="keyword">row</span>) <span class="keyword">as</span> cumulative_salary</span><br><span class="line"><span class="keyword">from</span> candidates </span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">position</span> <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Notes: 发现<code>order by</code>中可以对所有参数进行单独的<code>ASC/DESC</code>指令</p>
+</blockquote>
+<p>最终解：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> junior,senior</span><br><span class="line"><span class="keyword">from</span>(<span class="keyword">select</span> b.position, b.rnk <span class="keyword">as</span> junior, b.cumulative_budget <span class="keyword">as</span> j_budget,sen.rnk <span class="keyword">as</span> senior,sen.cumulative_budget <span class="keyword">as</span> s_budget</span><br><span class="line"><span class="keyword">from</span>(<span class="keyword">select</span> <span class="keyword">position</span>, row_number()<span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> <span class="keyword">position</span> <span class="keyword">order</span> <span class="keyword">by</span> salary) <span class="keyword">as</span> rnk ,</span><br><span class="line"><span class="keyword">sum</span>(salary) <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> <span class="keyword">position</span> <span class="keyword">order</span> <span class="keyword">by</span> salary <span class="keyword">rows</span> <span class="keyword">between</span> <span class="keyword">unbounded</span> <span class="keyword">preceding</span> <span class="keyword">and</span> <span class="keyword">current</span> <span class="keyword">row</span>) <span class="keyword">as</span> cumulative_budget</span><br><span class="line"><span class="keyword">from</span> candidates</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">position</span> = <span class="string">&#x27;junior&#x27;</span> <span class="keyword">and</span> salary &lt;=<span class="number">50000</span></span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> salary ) b </span><br><span class="line">     <span class="comment">-- 表内为所有小于50000的junior按工资数额正序排列，</span></span><br><span class="line">     <span class="comment">-- 并返回各雇佣数目的累计所需budget</span></span><br><span class="line"><span class="keyword">full</span> <span class="keyword">join</span> </span><br><span class="line">     <span class="comment">-- mysql居然不支持full join...</span></span><br><span class="line">     <span class="comment">-- 可以将left outer join 和right outer join的结果再进行union</span></span><br><span class="line">(<span class="keyword">select</span> <span class="keyword">position</span>,rnk,cumulative_budget</span><br><span class="line"> <span class="keyword">from</span> (<span class="keyword">select</span> <span class="keyword">position</span>, salary,row_number()<span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> <span class="keyword">position</span> <span class="keyword">order</span> <span class="keyword">by</span> salary) <span class="keyword">as</span> rnk,</span><br><span class="line"> 	<span class="keyword">sum</span>(salary) <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> <span class="keyword">position</span> <span class="keyword">order</span> <span class="keyword">by</span> salary <span class="keyword">rows</span> <span class="keyword">between</span> <span class="keyword">unbounded</span> <span class="keyword">preceding</span> <span class="keyword">and</span> <span class="keyword">current</span> <span class="keyword">row</span>) <span class="keyword">as</span> cumulative_budget</span><br><span class="line"> <span class="keyword">from</span> candidates</span><br><span class="line"> <span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">position</span> <span class="keyword">DESC</span>, cumulative_budget <span class="keyword">DESC</span>) a</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">position</span> = <span class="string">&#x27;senior&#x27;</span> <span class="keyword">and</span> cumulative_budget &lt;= <span class="number">50000</span></span><br><span class="line"><span class="keyword">limit</span> <span class="number">1</span>) sen <span class="comment">-- 表内为实现预算内最大化的senior雇佣花费和雇佣senior的人数</span></span><br><span class="line"><span class="keyword">on</span> b.cumulative_budget + sen.cumulative_budget &lt;= <span class="number">50000</span></span><br><span class="line">     <span class="comment">-- 使用join实现雇佣senior的remains最大化的junior雇佣数量</span></span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> b.rnk </span><br><span class="line"><span class="keyword">limit</span> <span class="number">1</span>)<span class="keyword">final</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 另：union后的结果作为新的母表进行嵌套查询的语法为</span></span><br><span class="line"><span class="keyword">select</span> </span><br><span class="line"><span class="keyword">from</span>(</span><br><span class="line">	(<span class="keyword">select</span> A <span class="keyword">from</span> A)</span><br><span class="line">	<span class="keyword">union</span></span><br><span class="line">	(<span class="keyword">select</span> B <span class="keyword">from</span> B)) <span class="keyword">as</span> <span class="keyword">alias</span> <span class="comment">-- 即内部需要括号但不需要alias</span></span><br></pre></td></tr></table></figure>
+<p>（写了一早上才写完… 😢</p>
+<p>Reference：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wushanyun1989/article/details/9265019">MySQL全连接(Full Join）实现</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/oppo62258801/article/details/103060420">SQL统计字段值的累加和</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/11/%E3%80%90LeetCode%E3%80%915809-Unique-Length-3-Palindromic-Subsequences/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -937,96 +1051,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/03/%E3%80%90BDP%E3%80%91MapReduce-Secondary-Sort/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
-      <meta itemprop="name" content="Hannah">
-      <meta itemprop="description" content="宇宙自有她的浪漫。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hanniverse！">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/03/%E3%80%90BDP%E3%80%91MapReduce-Secondary-Sort/" class="post-title-link" itemprop="url">【BDP】MapReduce-Secondary Sort</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-03 15:36:26" itemprop="dateCreated datePublished" datetime="2021-01-03T15:36:26+08:00">2021-01-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-27 15:40:51" itemprop="dateModified" datetime="2021-03-27T15:40:51+08:00">2021-03-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Big-Data-Processing/" itemprop="url" rel="index"><span itemprop="name">Big Data Processing</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="definition"><a class="markdownIt-Anchor" href="#definition"></a> Definition</h2>
-<p>二级排序的目的是实现key-value对对键排序之后继续按值排序的功能.</p>
-<ul>
-<li><strong>解决方案1：</strong> 思路完全为Java算法. 在Reducer内直接对给定key的所有值进行排序(例如: 把一个<code>key</code>对应的所有<code>value</code>放到一个<code>Array</code>或<code>List</code>中,再排序)，因此可能会出现数据量过大，Reducer内存溢出的情况.</li>
-<li><strong>解决方案2：</strong> 方案2通过MapReduce思路进行实现，因为在<code>MapReduce</code>程序中，Mapper输出的键值对会经过<code>shuffle</code>过程再交给Reducer，在 shuffle 阶段，Mapper 输出的键值对会经过 <code>partition(分区)-&gt;sort(排序)-&gt;group(分组)</code>三个阶段，在MapReduce中可以通过重写<code>sort</code>来实现，因此只需要对key的格式进行修改，加入需要二级考虑的值并修改key类的<code>compareTo</code>或<code>Comparator class</code>即可.</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/01/03/%E3%80%90BDP%E3%80%91MapReduce-Secondary-Sort/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1094,7 +1122,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
