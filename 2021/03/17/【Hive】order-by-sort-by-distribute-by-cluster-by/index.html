@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+<meta name="google-site-verification" content="gviRZx4JT59KHx8JGiTRkTsPg6s92Efbpv-OrJPYKDM" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/big.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/big.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/big.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="对Hive中四种排序方式进行整理和区分。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Hive】order by, sort by, distribute by, cluster by">
+<meta property="og:url" content="http://example.com/2021/03/17/%E3%80%90Hive%E3%80%91order-by-sort-by-distribute-by-cluster-by/index.html">
+<meta property="og:site_name" content="Hanniverse！">
+<meta property="og:description" content="对Hive中四种排序方式进行整理和区分。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/03/17/Qy13xmCwWYUViGA.png">
+<meta property="og:image" content="https://i.loli.net/2021/03/17/nFIL5ZMCdYpyl8O.png">
+<meta property="og:image" content="https://i.loli.net/2021/03/17/9SoRf1MQYuWhJyc.png">
+<meta property="og:image" content="https://i.loli.net/2021/03/17/kvUAbh4S7MHNKBo.png">
+<meta property="og:image" content="https://i.loli.net/2021/03/17/aNI3vc4FeKVAjpE.png">
+<meta property="article:published_time" content="2021-03-17T13:28:14.000Z">
+<meta property="article:modified_time" content="2021-09-05T13:45:09.894Z">
+<meta property="article:author" content="Hannah">
+<meta property="article:tag" content="BigData">
+<meta property="article:tag" content="Hive">
+<meta property="article:tag" content="SQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/03/17/Qy13xmCwWYUViGA.png">
+
+<link rel="canonical" href="http://example.com/2021/03/17/%E3%80%90Hive%E3%80%91order-by-sort-by-distribute-by-cluster-by/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>【Hive】order by, sort by, distribute by, cluster by | Hanniverse！</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hanniverse！</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/17/%E3%80%90Hive%E3%80%91order-by-sort-by-distribute-by-cluster-by/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
+      <meta itemprop="name" content="Hannah">
+      <meta itemprop="description" content="宇宙自有她的浪漫。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hanniverse！">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【Hive】order by, sort by, distribute by, cluster by
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-17 09:28:14" itemprop="dateCreated datePublished" datetime="2021-03-17T09:28:14-04:00">2021-03-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-09-05 09:45:09" itemprop="dateModified" datetime="2021-09-05T09:45:09-04:00">2021-09-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Big-Data-Processing/" itemprop="url" rel="index"><span itemprop="name">Big Data Processing</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>对Hive中四种排序方式进行整理和区分。</p>
+<a id="more"></a>
+<h3 id="order-by"><a class="markdownIt-Anchor" href="#order-by"></a> Order by</h3>
+<p>与传统SQL中的Order by效果一致，即对查询结果进行全局排序。由于Hive通过MapReduce实现数据查询，因此全局排序要求所有数据必须集中在<strong>一个Reducer</strong>上进行处理。</p>
+<ul>
+<li>除此之外，如果指定了<code>hive.mapred.mode=strict</code>（默认是<code>nonstrict</code>）时，就必须指定limit来限制输出条数。</li>
+</ul>
+<p>示例如下，表中列为<code>id</code>  ，<code>group</code>， <code>grade</code>，共20条数据</p>
+<p>直接进行order by操作：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> user_id,<span class="string">`group`</span>,grade</span><br><span class="line">    &gt; <span class="keyword">from</span> test_log</span><br><span class="line">    &gt; <span class="keyword">order</span> <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
+<h3 id=""><a class="markdownIt-Anchor" href="#"></a> <img src="https://i.loli.net/2021/03/17/Qy13xmCwWYUViGA.png" alt="" /></h3>
+<ul>
+<li>数据结果按照grade正序排列。</li>
+</ul>
+<h3 id="sort-by"><a class="markdownIt-Anchor" href="#sort-by"></a> Sort by</h3>
+<p>Sort by的数据是局部有序的，其排序作用发挥在数据分别进入各个Reducer之前，因此只会对每个Reducer上的数据进行局部排序。</p>
+<ul>
+<li>使用sort by时，可以通过指定执行的reducer个数（<code>set mapred.reduce.tasks=n</code>），对输出的数据再执行归并排序，即可得到全部结果。</li>
+<li>sort by排序顺序将取决于列类型。如果该列是数字类型，那么排序顺序也是按数字顺序排列的。如果该列是字符串类型，那么排序顺序将是字典顺序。</li>
+<li>sort by不保证相同参数被分配到同一reducer（即若某个参数的数据量较大，可能会被分配到不同的reducer，且只能保证各个reducer的结果是有序的）</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> mapreduce.job.reduces=<span class="number">3</span>;</span><br><span class="line"><span class="keyword">set</span> hive.cli.print.header=<span class="literal">true</span>;</span><br><span class="line"><span class="comment">-- 将reducer个数设为3，观察各个分区上的排序结果</span></span><br><span class="line"><span class="keyword">select</span> *</span><br><span class="line">    &gt; <span class="keyword">from</span> test_log</span><br><span class="line">    &gt; <span class="keyword">sort</span> <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/17/nFIL5ZMCdYpyl8O.png" alt="" /></p>
+<ul>
+<li>在三个分区中的数据记录均按照升序排列，但对于相同参数可能存在重合的排序区间</li>
+</ul>
+<h3 id="distribute-by"><a class="markdownIt-Anchor" href="#distribute-by"></a> Distribute by</h3>
+<p>Distribute by控制map端数据如何拆分和分发给reduce端。Distribute by指定的参数相同的数据将被分配到同一个Reducer上。</p>
+<ul>
+<li>
+<p>分发Reducer采用的是Hash算法，因此相同参数的记录只会被分发到一个reducer，但同一reducer上可能会出现多个参数的记录。</p>
+</li>
+<li>
+<p>在各个reducer中的数据不保证有序排列</p>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> *</span><br><span class="line">    &gt; <span class="keyword">from</span> test_log</span><br><span class="line">    &gt; <span class="keyword">distribute</span> <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/17/9SoRf1MQYuWhJyc.png" alt="" /></p>
+<ul>
+<li>
+<p>grade为9的数据全部进入reducer1，5和8的数据均在reducer2，而1、4、7分布在reducer3上，但是各个reducer内并没有按照grade大小进行排序</p>
+</li>
+<li>
+<p>将distribute by和sort by连用，即可将指定字段的记录分发到不同的reduce中，且在每个reduce内部会根据指定字段值来排序</p>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> *</span><br><span class="line">    &gt; <span class="keyword">from</span> test_log</span><br><span class="line">    &gt; <span class="keyword">distribute</span> <span class="keyword">by</span> grade</span><br><span class="line">    &gt; <span class="keyword">sort</span> <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/17/kvUAbh4S7MHNKBo.png" alt="" /></p>
+<h3 id="cluster-by"><a class="markdownIt-Anchor" href="#cluster-by"></a> Cluster by</h3>
+<p>CLUSTER BY与DISTRIBUTE BY和SORT BY连用的执行结果相同。即当distribute by的字段与sort by字段相同时，使用cluster by与其等价。</p>
+<p>Notice：cluster by 不能指定升降序排列，默认升序。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; select *</span><br><span class="line">    &gt; from test_log</span><br><span class="line">    &gt; cluster by grade;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/17/aNI3vc4FeKVAjpE.png" alt="" /></p>
+<h4 id="reference"><a class="markdownIt-Anchor" href="#reference"></a> Reference</h4>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u012369535/article/details/89639434?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control">Hive的Order by、Sort by、Distribute by和Cluster by的区别</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUyMDA4OTY3MQ==&amp;mid=2247487481&amp;idx=1&amp;sn=1f707a3cada10e06f6d4c4f4293e752b&amp;source=41#wechat_redirect">Hive : SORT BY vs ORDER BY vs DISTRIBUTE BY vs CLUSTER BY</a></p>
+<p>鸣谢：CYS Macbook</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/BigData/" rel="tag"># BigData</a>
+              <a href="/tags/Hive/" rel="tag"># Hive</a>
+              <a href="/tags/SQL/" rel="tag"># SQL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/13/%E3%80%90Java%E3%80%91Interface-Inheritance-Implementation-Inheritance/" rel="prev" title="【Java】Interface Inheritance & Implementation Inheritance">
+      <i class="fa fa-chevron-left"></i> 【Java】Interface Inheritance & Implementation Inheritance
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/22/%E3%80%90LeetCode%E3%80%91-102-Binary-Tree-Level-Order-Traversal/" rel="next" title="【LeetCode】 102.Binary Tree Level Order Traversal">
+      【LeetCode】 102.Binary Tree Level Order Traversal <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#order-by"><span class="nav-number">1.</span> <span class="nav-text"> Order by</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sort-by"><span class="nav-number">3.</span> <span class="nav-text"> Sort by</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#distribute-by"><span class="nav-number">4.</span> <span class="nav-text"> Distribute by</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cluster-by"><span class="nav-number">5.</span> <span class="nav-text"> Cluster by</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#reference"><span class="nav-number">5.1.</span> <span class="nav-text"> Reference</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hannah"
+      src="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
+  <p class="site-author-name" itemprop="name">Hannah</p>
+  <div class="site-description" itemprop="description">宇宙自有她的浪漫。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hannah</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  <!-- 页面点击小心心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+<!--崩溃欺骗-->
+<script type="text/javascript" src="/js/crash_cheat.js"></script>
+</body>
+</html>
