@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
 <meta name="google-site-verification" content="gviRZx4JT59KHx8JGiTRkTsPg6s92Efbpv-OrJPYKDM" />
   <link rel="apple-touch-icon" sizes="180x180" href="/images/big.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/big.png">
@@ -174,7 +174,7 @@
       <meta itemprop="name" content="Hannah">
       <meta itemprop="description" content="宇宙自有她的浪漫。">
     </span>
-
+    
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Hanniverse！">
     </span>
@@ -182,14 +182,14 @@
         <h1 class="post-title" itemprop="name headline">
           【BDP】MapReduce-RelationAlgebra
         </h1>
-
+    
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-
+    
               <time title="Created: 2021-01-02 10:06:07" itemprop="dateCreated datePublished" datetime="2021-01-02T10:06:07-05:00">2021-01-02</time>
             </span>
               <span class="post-meta-item">
@@ -208,20 +208,20 @@
                   <a href="/categories/Big-Data-Processing/" itemprop="url" rel="index"><span itemprop="name">Big Data Processing</span></a>
                 </span>
             </span>
-
+    
           
-
+    
         </div>
       </header>
-
+    
     
     
     
     <div class="post-body" itemprop="articleBody">
-
+    
       
         <p>利用MapReduce并行化实现选择、投影、并、交、差及自然连接的关系代数操作。</p>
-<a id="more"></a>
+<span id="more"></span>
 <h3 id="selection"><a class="markdownIt-Anchor" href="#selection"></a> Selection</h3>
 <p>**Description：**获得某属性满足某一条件的所有记录</p>
 <ul>
@@ -259,7 +259,7 @@
 <ul>
 <li>**Reducer操作：**合并键相同的元素值，若value=2则为交集，将该条记录输出</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">IntersectionReduce</span> </span></span><br><span class="line"><span class="class"><span class="keyword">extends</span> <span class="title">Reducer</span>&lt;<span class="title">RelationA</span>, <span class="title">IntWritable</span>, <span class="title">RelationA</span>, <span class="title">NullWritable</span>&gt;</span>&#123;</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reduce</span><span class="params">(RelationA key, </span></span></span><br><span class="line"><span class="function"><span class="params">		Iterable&lt;IntWritable&gt; value, Context context)</span> <span class="keyword">throws</span> </span></span><br><span class="line"><span class="function">		IOException,InterruptedException</span>&#123;</span><br><span class="line">			<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">for</span>(IntWritable val : value)&#123;</span><br><span class="line">				sum += val.get();</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(sum == <span class="number">2</span>)</span><br><span class="line">				context.write(key, NullWritable.get());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">IntersectionReduce</span> </span></span><br><span class="line"><span class="class"><span class="keyword">extends</span> <span class="title">Reducer</span>&lt;<span class="title">RelationA</span>, <span class="title">IntWritable</span>, <span class="title">RelationA</span>, <span class="title">NullWritable</span>&gt;</span>&#123;</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reduce</span><span class="params">(RelationA key, </span></span></span><br><span class="line"><span class="params"><span class="function">		Iterable&lt;IntWritable&gt; value, Context context)</span> <span class="keyword">throws</span> </span></span><br><span class="line"><span class="function">		IOException,InterruptedException</span>&#123;</span><br><span class="line">			<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">for</span>(IntWritable val : value)&#123;</span><br><span class="line">				sum += val.get();</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(sum == <span class="number">2</span>)</span><br><span class="line">				context.write(key, NullWritable.get());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>
 <p>Reducer处理的关键在于：必须保证R和T表中相同的元素记录被发送到了相同的Reducer</p>
@@ -291,20 +291,20 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">NaturalJoinReduce</span> <span class="keyword">extends</span> <span class="title">Reducer</span>&lt;<span class="title">Text</span>,<span class="title">Text</span>,<span class="title">Text</span>,<span class="title">NullWritable</span>&gt;</span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String relationNameA;</span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">setup</span><span class="params">(Context context)</span> <span class="keyword">throws</span> IOException,InterruptedException</span>&#123;</span><br><span class="line">		relationNameA = context.getConfiguration().get(<span class="string">&quot;relationNameA&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reduce</span><span class="params">(Text key, Iterable&lt;Text&gt; value, Context context)</span><span class="keyword">throws</span> </span></span><br><span class="line"><span class="function">	IOException,InterruptedException</span>&#123;</span><br><span class="line">		ArrayList&lt;Text&gt; setR = <span class="keyword">new</span> ArrayList&lt;Text&gt;();</span><br><span class="line">		ArrayList&lt;Text&gt; setS = <span class="keyword">new</span> ArrayList&lt;Text&gt;();</span><br><span class="line">		<span class="comment">//按照来源分为两组然后做笛卡尔乘积</span></span><br><span class="line">		<span class="keyword">for</span>(Text val : value)&#123;</span><br><span class="line">			String[] recordInfo = val.toString().split(<span class="string">&quot; &quot;</span>);</span><br><span class="line">			<span class="keyword">if</span>(recordInfo[<span class="number">0</span>].equalsIgnoreCase(relationNameA))</span><br><span class="line">				setR.add(<span class="keyword">new</span> Text(recordInfo[<span class="number">1</span>]));</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				setS.add(<span class="keyword">new</span> Text(recordInfo[<span class="number">1</span>]));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; setR.size(); i++)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; setS.size(); j++)&#123;</span><br><span class="line">				Text t = <span class="keyword">new</span> Text(setR.get(i).toString() + <span class="string">&quot;,&quot;</span></span><br><span class="line">                   + key.toString() + <span class="string">&quot;,&quot;</span> + </span><br><span class="line">                   + setS.get(j).toString());</span><br><span class="line">				context.write(t, NullWritable.get());</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
-
     
     
     
-
+    
+    
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/MapReduce/" rel="tag"># MapReduce</a>
-              <a href="/tags/BigData/" rel="tag"># BigData</a>
+              <a href="/tags/MapReduce/" rel="tag"></i># MapReduce</a>
+              <a href="/tags/BigData/" rel="tag"></i># BigData</a>
           </div>
-
+    
         
 
-
+    
         
     <div class="post-nav">
       <div class="post-nav-item">

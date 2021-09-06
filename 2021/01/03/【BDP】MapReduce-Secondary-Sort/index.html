@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
 <meta name="google-site-verification" content="gviRZx4JT59KHx8JGiTRkTsPg6s92Efbpv-OrJPYKDM" />
   <link rel="apple-touch-icon" sizes="180x180" href="/images/big.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/big.png">
@@ -176,7 +176,7 @@
       <meta itemprop="name" content="Hannah">
       <meta itemprop="description" content="宇宙自有她的浪漫。">
     </span>
-
+    
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Hanniverse！">
     </span>
@@ -184,14 +184,14 @@
         <h1 class="post-title" itemprop="name headline">
           【BDP】MapReduce-Secondary Sort
         </h1>
-
+    
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-
+    
               <time title="Created: 2021-01-03 15:36:26" itemprop="dateCreated datePublished" datetime="2021-01-03T15:36:26-05:00">2021-01-03</time>
             </span>
               <span class="post-meta-item">
@@ -210,17 +210,17 @@
                   <a href="/categories/Big-Data-Processing/" itemprop="url" rel="index"><span itemprop="name">Big Data Processing</span></a>
                 </span>
             </span>
-
+    
           
-
+    
         </div>
       </header>
-
+    
     
     
     
     <div class="post-body" itemprop="articleBody">
-
+    
       
         <h2 id="definition"><a class="markdownIt-Anchor" href="#definition"></a> Definition</h2>
 <p>二级排序的目的是实现key-value对对键排序之后继续按值排序的功能.</p>
@@ -228,7 +228,7 @@
 <li><strong>解决方案1：</strong> 思路完全为Java算法. 在Reducer内直接对给定key的所有值进行排序(例如: 把一个<code>key</code>对应的所有<code>value</code>放到一个<code>Array</code>或<code>List</code>中,再排序)，因此可能会出现数据量过大，Reducer内存溢出的情况.</li>
 <li><strong>解决方案2：</strong> 方案2通过MapReduce思路进行实现，因为在<code>MapReduce</code>程序中，Mapper输出的键值对会经过<code>shuffle</code>过程再交给Reducer，在 shuffle 阶段，Mapper 输出的键值对会经过 <code>partition(分区)-&gt;sort(排序)-&gt;group(分组)</code>三个阶段，在MapReduce中可以通过重写<code>sort</code>来实现，因此只需要对key的格式进行修改，加入需要二级考虑的值并修改key类的<code>compareTo</code>或<code>Comparator class</code>即可.</li>
 </ul>
-<a id="more"></a>
+<span id="more"></span>
 <p>方案2的具体流程如下图所示，其中虚线框表示<code>shuffle</code>过程：</p>
 <p><img src="https://i.loli.net/2021/01/03/zKHGbFpdWmnRorP.png" alt="" /></p>
 <h2 id="实现"><a class="markdownIt-Anchor" href="#实现"></a> 实现</h2>
@@ -243,7 +243,7 @@
 <ul>
 <li>实现方式：继承<code>partitioner</code></li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IntWritable;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.Partitioner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FirstPartitioner</span> </span></span><br><span class="line"><span class="class">    <span class="keyword">extends</span> <span class="title">Partitioner</span>&lt;<span class="title">PairWritable</span>, <span class="title">IntWritable</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPartition</span><span class="params">(PairWritable key, IntWritable value, </span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">int</span> numPartitions)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//default: (key.hashcode() &amp; Integer_MAX_VALUE) % numPartitions</span></span><br><span class="line">        <span class="keyword">return</span> ((String.valueOf(key.getFirst()).hashCode() &amp; Integer_MAX_VALUE) </span><br><span class="line">                % numPartitions;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.IntWritable;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.Partitioner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FirstPartitioner</span> </span></span><br><span class="line"><span class="class">    <span class="keyword">extends</span> <span class="title">Partitioner</span>&lt;<span class="title">PairWritable</span>, <span class="title">IntWritable</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPartition</span><span class="params">(PairWritable key, IntWritable value, </span></span></span><br><span class="line"><span class="params"><span class="function">            <span class="keyword">int</span> numPartitions)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//default: (key.hashcode() &amp; Integer_MAX_VALUE) % numPartitions</span></span><br><span class="line">        <span class="keyword">return</span> ((String.valueOf(key.getFirst()).hashCode() &amp; Integer_MAX_VALUE) </span><br><span class="line">                % numPartitions;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>之后需要在<code>main</code>中自定义分区器:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.mapreduce.Job;</span><br><span class="line">...</span><br><span class="line">Job job = ...;</span><br><span class="line">...</span><br><span class="line">job.setPartitionerClass(FirstPartitioner.class);</span><br></pre></td></tr></table></figure>
 <h3 id="自定义comparator分组类"><a class="markdownIt-Anchor" href="#自定义comparator分组类"></a> <strong>自定义Comparator（分组）类：</strong></h3>
@@ -267,20 +267,20 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> IOException, ClassNotFoundException, InterruptedException </span>&#123;</span><br><span class="line">        Configuration configuration = <span class="keyword">new</span> Configuration();</span><br><span class="line">        Job job = Job.getInstance(configuration, <span class="string">&quot;secondarysort&quot;</span>);</span><br><span class="line">        ···</span><br><span class="line">        <span class="comment">// shuffle settings</span></span><br><span class="line">        job.setPartitionerClass(FirstPartitioner.class);</span><br><span class="line">        job.setGroupingComparatorClass(FirstGroupingComparator.class);</span><br><span class="line">        ···</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
     </div>
-
     
     
     
-
+    
+    
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/MapReduce/" rel="tag"># MapReduce</a>
-              <a href="/tags/BigData/" rel="tag"># BigData</a>
+              <a href="/tags/MapReduce/" rel="tag"></i># MapReduce</a>
+              <a href="/tags/BigData/" rel="tag"></i># BigData</a>
           </div>
-
+    
         
 
-
+    
         
     <div class="post-nav">
       <div class="post-nav-item">

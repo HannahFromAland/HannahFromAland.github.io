@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
 <meta name="google-site-verification" content="gviRZx4JT59KHx8JGiTRkTsPg6s92Efbpv-OrJPYKDM" />
   <link rel="apple-touch-icon" sizes="180x180" href="/images/big.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/big.png">
@@ -174,7 +174,7 @@
       <meta itemprop="name" content="Hannah">
       <meta itemprop="description" content="宇宙自有她的浪漫。">
     </span>
-
+    
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Hanniverse！">
     </span>
@@ -182,14 +182,14 @@
         <h1 class="post-title" itemprop="name headline">
           【BDP】MapReduce WordConCurrence
         </h1>
-
+    
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-
+    
               <time title="Created: 2021-01-03 20:27:21" itemprop="dateCreated datePublished" datetime="2021-01-03T20:27:21-05:00">2021-01-03</time>
             </span>
               <span class="post-meta-item">
@@ -208,31 +208,31 @@
                   <a href="/categories/Big-Data-Processing/" itemprop="url" rel="index"><span itemprop="name">Big Data Processing</span></a>
                 </span>
             </span>
-
+    
           
-
+    
         </div>
       </header>
-
+    
     
     
     
     <div class="post-body" itemprop="articleBody">
-
+    
       
         <h3 id="definition"><a class="markdownIt-Anchor" href="#definition"></a> Definition</h3>
 <p>目的是在海量语料库/文章中发现固定窗口（如5词以内、一句话内甚至一段内）单词a和单词b共同出现的频率，并以此构建单词共现矩阵。（矩阵可对称也可不对称（强调顺序），取决于具体应用）.</p>
-<a id="more"></a>
+<span id="more"></span>
 <h3 id="单词共现算法实现"><a class="markdownIt-Anchor" href="#单词共现算法实现"></a> 单词共现算法实现</h3>
 <p>利用MapReduce实现单词共现算法的伪代码如下：</p>
 <ul>
 <li>Mapper：对窗口中的单词对进行遍历并输出，当窗口到达文档尾部时通过头部向后缩进来实现滑动，直到窗口大小为2时停止.</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Mapper </span><br><span class="line">    method Map(dociddid, doc d)</span><br><span class="line">    for all word w in d</span><br><span class="line">for all word u in Window(w)</span><br><span class="line">&#x2F;&#x2F;发射出现计数 1</span><br><span class="line">        Emit(pair (w, u), 1)</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Mapper </span><br><span class="line">    method Map(dociddid, doc d)</span><br><span class="line">    for all word w in d</span><br><span class="line">for all word u in Window(w)</span><br><span class="line">//发射出现计数 1</span><br><span class="line">        Emit(pair (w, u), 1)</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
 <ul>
 <li>Reducer：对相同单词对的出现次数进行汇总</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class Reducer</span><br><span class="line">    method Reduce(pair p; countlist [c1, c2,..])</span><br><span class="line">        s &#x3D; 0</span><br><span class="line">for all count c in countlist [c1, c2, ...]</span><br><span class="line">sum +&#x3D; c</span><br><span class="line">Emit(pair p, count sum)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class Reducer</span><br><span class="line">    method Reduce(pair p; countlist [c1, c2,..])</span><br><span class="line">        s = 0</span><br><span class="line">for all count c in countlist [c1, c2, ...]</span><br><span class="line">sum += c</span><br><span class="line">Emit(pair p, count sum)</span><br></pre></td></tr></table></figure>
 <h3 id="java-mapreduce实现"><a class="markdownIt-Anchor" href="#java-mapreduce实现"></a> Java MapReduce实现</h3>
 <h4 id="自定义key"><a class="markdownIt-Anchor" href="#自定义key"></a> 自定义Key</h4>
 <ul>
@@ -253,20 +253,20 @@
 <p>因为需要统计各文章中单词之间的关系，因此需要实现单个文件读入以保证一个文本不被拆分地将内部单词对传入Map节点（具体实现待更新…）</p>
 
     </div>
-
     
     
     
-
+    
+    
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/MapReduce/" rel="tag"># MapReduce</a>
-              <a href="/tags/BigData/" rel="tag"># BigData</a>
+              <a href="/tags/MapReduce/" rel="tag"></i># MapReduce</a>
+              <a href="/tags/BigData/" rel="tag"></i># BigData</a>
           </div>
-
+    
         
 
-
+    
         
     <div class="post-nav">
       <div class="post-nav-item">

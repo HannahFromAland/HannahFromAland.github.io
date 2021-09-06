@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
 <meta name="google-site-verification" content="gviRZx4JT59KHx8JGiTRkTsPg6s92Efbpv-OrJPYKDM" />
   <link rel="apple-touch-icon" sizes="180x180" href="/images/big.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/big.png">
@@ -173,7 +173,7 @@
       <meta itemprop="name" content="Hannah">
       <meta itemprop="description" content="宇宙自有她的浪漫。">
     </span>
-
+    
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Hanniverse！">
     </span>
@@ -181,7 +181,7 @@
         <h1 class="post-title" itemprop="name headline">
           【Hexo】Multi-devices Control of my blog
         </h1>
-
+    
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -189,7 +189,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
               
-
+    
               <time title="Created: 2021-09-05 09:48:40 / Modified: 10:14:17" itemprop="dateCreated datePublished" datetime="2021-09-05T09:48:40-04:00">2021-09-05</time>
             </span>
             <span class="post-meta-item">
@@ -201,23 +201,23 @@
                   <a href="/categories/Hexo-Optimization/" itemprop="url" rel="index"><span itemprop="name">Hexo Optimization</span></a>
                 </span>
             </span>
-
+    
           
-
+    
         </div>
       </header>
-
+    
     
     
     
     <div class="post-body" itemprop="articleBody">
-
+    
       
         <h2 id="使用github分支对hexo实现多设备管理"><a class="markdownIt-Anchor" href="#使用github分支对hexo实现多设备管理"></a> 使用github分支对Hexo实现多设备管理</h2>
 <p>试图对hexo进行双设备的更新和同步，（在找教程的时候遇到许多和我排版一致的伙伴们x），记录一下自己实践的过程（同时，本文也是来自新设备的更新测试v1✋</p>
-<a id="more"></a>
+<span id="more"></span>
 <h3 id="hexo项目的目录结构"><a class="markdownIt-Anchor" href="#hexo项目的目录结构"></a> Hexo项目的目录结构</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">HEXO</span><br><span class="line">├──.deploy_git&#x2F;</span><br><span class="line">├──node_modules&#x2F;</span><br><span class="line">├──public&#x2F;</span><br><span class="line">├──scaffolds&#x2F;</span><br><span class="line">├──source&#x2F;</span><br><span class="line">├──themes&#x2F;</span><br><span class="line">├──_config.yml</span><br><span class="line">├──.gitignore</span><br><span class="line">├──db.json</span><br><span class="line">├──debug.log</span><br><span class="line">└──package.json</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">HEXO</span><br><span class="line">├──.deploy_git/</span><br><span class="line">├──node_modules/</span><br><span class="line">├──public/</span><br><span class="line">├──scaffolds/</span><br><span class="line">├──source/</span><br><span class="line">├──themes/</span><br><span class="line">├──_config.yml</span><br><span class="line">├──.gitignore</span><br><span class="line">├──db.json</span><br><span class="line">├──debug.log</span><br><span class="line">└──package.json</span><br></pre></td></tr></table></figure>
 <p>本地的文件是这样的，但hexo deploy上传的github端的文件只有<code>.deploy_git/</code>文件夹。具体解释如下：</p>
 <blockquote>
 <p>ithub pages托管的只是由hexo生成的静态文件，hexo的全部的框架和环境配置文件是只保留在本地的。</p>
@@ -258,24 +258,24 @@
 <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/fceaf373d797">hexo博客同步管理及迁移</a></p>
 
     </div>
-
     
     
     
-
+    
+    
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+              <a href="/tags/Hexo/" rel="tag"></i># Hexo</a>
           </div>
-
+    
         
 
-
+    
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/09/05/%E3%80%90Hexo%E3%80%91Hello-world,%20Keep%20tracking/" rel="prev" title="Hello World">
-      <i class="fa fa-chevron-left"></i> Hello World
+    <a href="/2021/09/04/%E3%80%90SQL%E3%80%91Salary-Table/" rel="prev" title="【SQL】Salary Table">
+      <i class="fa fa-chevron-left"></i> 【SQL】Salary Table
     </a></div>
       <div class="post-nav-item"></div>
     </div>

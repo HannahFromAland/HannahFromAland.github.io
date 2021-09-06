@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
 <meta name="google-site-verification" content="gviRZx4JT59KHx8JGiTRkTsPg6s92Efbpv-OrJPYKDM" />
   <link rel="apple-touch-icon" sizes="180x180" href="/images/big.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/big.png">
@@ -37,8 +37,8 @@
 <meta property="article:modified_time" content="2021-09-05T13:45:09.894Z">
 <meta property="article:author" content="Hannah">
 <meta property="article:tag" content="BigData">
-<meta property="article:tag" content="Hive">
 <meta property="article:tag" content="SQL">
+<meta property="article:tag" content="Hive">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.loli.net/2021/03/17/Qy13xmCwWYUViGA.png">
 
@@ -181,7 +181,7 @@
       <meta itemprop="name" content="Hannah">
       <meta itemprop="description" content="宇宙自有她的浪漫。">
     </span>
-
+    
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Hanniverse！">
     </span>
@@ -189,14 +189,14 @@
         <h1 class="post-title" itemprop="name headline">
           【Hive】order by, sort by, distribute by, cluster by
         </h1>
-
+    
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-
+    
               <time title="Created: 2021-03-17 09:28:14" itemprop="dateCreated datePublished" datetime="2021-03-17T09:28:14-04:00">2021-03-17</time>
             </span>
               <span class="post-meta-item">
@@ -215,20 +215,20 @@
                   <a href="/categories/Big-Data-Processing/" itemprop="url" rel="index"><span itemprop="name">Big Data Processing</span></a>
                 </span>
             </span>
-
+    
           
-
+    
         </div>
       </header>
-
+    
     
     
     
     <div class="post-body" itemprop="articleBody">
-
+    
       
         <p>对Hive中四种排序方式进行整理和区分。</p>
-<a id="more"></a>
+<span id="more"></span>
 <h3 id="order-by"><a class="markdownIt-Anchor" href="#order-by"></a> Order by</h3>
 <p>与传统SQL中的Order by效果一致，即对查询结果进行全局排序。由于Hive通过MapReduce实现数据查询，因此全局排序要求所有数据必须集中在<strong>一个Reducer</strong>上进行处理。</p>
 <ul>
@@ -236,7 +236,7 @@
 </ul>
 <p>示例如下，表中列为<code>id</code>  ，<code>group</code>， <code>grade</code>，共20条数据</p>
 <p>直接进行order by操作：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> user_id,<span class="string">`group`</span>,grade</span><br><span class="line">    &gt; <span class="keyword">from</span> test_log</span><br><span class="line">    &gt; <span class="keyword">order</span> <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> user_id,`<span class="keyword">group</span>`,grade</span><br><span class="line">    <span class="operator">&gt;</span> <span class="keyword">from</span> test_log</span><br><span class="line">    <span class="operator">&gt;</span> <span class="keyword">order</span> <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
 <h3 id=""><a class="markdownIt-Anchor" href="#"></a> <img src="https://i.loli.net/2021/03/17/Qy13xmCwWYUViGA.png" alt="" /></h3>
 <ul>
 <li>数据结果按照grade正序排列。</li>
@@ -248,7 +248,7 @@
 <li>sort by排序顺序将取决于列类型。如果该列是数字类型，那么排序顺序也是按数字顺序排列的。如果该列是字符串类型，那么排序顺序将是字典顺序。</li>
 <li>sort by不保证相同参数被分配到同一reducer（即若某个参数的数据量较大，可能会被分配到不同的reducer，且只能保证各个reducer的结果是有序的）</li>
 </ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> mapreduce.job.reduces=<span class="number">3</span>;</span><br><span class="line"><span class="keyword">set</span> hive.cli.print.header=<span class="literal">true</span>;</span><br><span class="line"><span class="comment">-- 将reducer个数设为3，观察各个分区上的排序结果</span></span><br><span class="line"><span class="keyword">select</span> *</span><br><span class="line">    &gt; <span class="keyword">from</span> test_log</span><br><span class="line">    &gt; <span class="keyword">sort</span> <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> mapreduce.job.reduces<span class="operator">=</span><span class="number">3</span>;</span><br><span class="line"><span class="keyword">set</span> hive.cli.print.header<span class="operator">=</span><span class="literal">true</span>;</span><br><span class="line"><span class="comment">-- 将reducer个数设为3，观察各个分区上的排序结果</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span></span><br><span class="line">    <span class="operator">&gt;</span> <span class="keyword">from</span> test_log</span><br><span class="line">    <span class="operator">&gt;</span> sort <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
 <p><img src="https://i.loli.net/2021/03/17/nFIL5ZMCdYpyl8O.png" alt="" /></p>
 <ul>
 <li>在三个分区中的数据记录均按照升序排列，但对于相同参数可能存在重合的排序区间</li>
@@ -263,7 +263,7 @@
 <p>在各个reducer中的数据不保证有序排列</p>
 </li>
 </ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> *</span><br><span class="line">    &gt; <span class="keyword">from</span> test_log</span><br><span class="line">    &gt; <span class="keyword">distribute</span> <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span></span><br><span class="line">    <span class="operator">&gt;</span> <span class="keyword">from</span> test_log</span><br><span class="line">    <span class="operator">&gt;</span> distribute <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
 <p><img src="https://i.loli.net/2021/03/17/9SoRf1MQYuWhJyc.png" alt="" /></p>
 <ul>
 <li>
@@ -273,12 +273,12 @@
 <p>将distribute by和sort by连用，即可将指定字段的记录分发到不同的reduce中，且在每个reduce内部会根据指定字段值来排序</p>
 </li>
 </ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> *</span><br><span class="line">    &gt; <span class="keyword">from</span> test_log</span><br><span class="line">    &gt; <span class="keyword">distribute</span> <span class="keyword">by</span> grade</span><br><span class="line">    &gt; <span class="keyword">sort</span> <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span></span><br><span class="line">    <span class="operator">&gt;</span> <span class="keyword">from</span> test_log</span><br><span class="line">    <span class="operator">&gt;</span> distribute <span class="keyword">by</span> grade</span><br><span class="line">    <span class="operator">&gt;</span> sort <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
 <p><img src="https://i.loli.net/2021/03/17/kvUAbh4S7MHNKBo.png" alt="" /></p>
 <h3 id="cluster-by"><a class="markdownIt-Anchor" href="#cluster-by"></a> Cluster by</h3>
 <p>CLUSTER BY与DISTRIBUTE BY和SORT BY连用的执行结果相同。即当distribute by的字段与sort by字段相同时，使用cluster by与其等价。</p>
 <p>Notice：cluster by 不能指定升降序排列，默认升序。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; select *</span><br><span class="line">    &gt; from test_log</span><br><span class="line">    &gt; cluster by grade;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="operator">*</span></span><br><span class="line">    <span class="operator">&gt;</span> <span class="keyword">from</span> test_log</span><br><span class="line">    <span class="operator">&gt;</span> cluster <span class="keyword">by</span> grade;</span><br></pre></td></tr></table></figure>
 <p><img src="https://i.loli.net/2021/03/17/aNI3vc4FeKVAjpE.png" alt="" /></p>
 <h4 id="reference"><a class="markdownIt-Anchor" href="#reference"></a> Reference</h4>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u012369535/article/details/89639434?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control">Hive的Order by、Sort by、Distribute by和Cluster by的区别</a></p>
@@ -286,21 +286,21 @@
 <p>鸣谢：CYS Macbook</p>
 
     </div>
-
     
     
     
-
+    
+    
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/BigData/" rel="tag"># BigData</a>
-              <a href="/tags/Hive/" rel="tag"># Hive</a>
-              <a href="/tags/SQL/" rel="tag"># SQL</a>
+              <a href="/tags/BigData/" rel="tag"></i># BigData</a>
+              <a href="/tags/SQL/" rel="tag"></i># SQL</a>
+              <a href="/tags/Hive/" rel="tag"></i># Hive</a>
           </div>
-
+    
         
 
-
+    
         
     <div class="post-nav">
       <div class="post-nav-item">
