@@ -355,14 +355,14 @@ codeblock:
   # Code Highlight theme
   # Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic
   # See: https://github.com/chriskempson/tomorrow-theme
-  highlight_theme: galactic //night eighties
+  highlight_theme: night eighties
   # Add copy button on codeblock
   copy_button:
     enable: true
     # Show text copy result.
     show_result: false
     # Available values: default | flat | mac
-    style: flat
+    style: mac
 
 back2top:
   enable: true
@@ -447,7 +447,7 @@ font:
   codes:
     external: true
     family: Roboto Mono
-    size: 8px
+    size: 10px
 
 
 # ---------------------------------------------------------------
