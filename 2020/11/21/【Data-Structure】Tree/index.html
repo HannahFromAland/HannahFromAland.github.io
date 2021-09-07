@@ -18,7 +18,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="定义及名词解释  树 1.节点的度：   树的度是各节点度的最大值   节点的度是节点拥有的子树个数   树中的叶子结点的个数计算方法： 若一棵度为4的树中度为1、2、3、4的节点的个数分别为4、3、2、2，则该树叶子节点的个数是多少？总节点个数是多少？ 设树T中的结点个数为n，度为0的结点的个数为n0，度为1的结点的个数为n1，度为2的结点的个数为n2，度为3的结点的个数为n3，度为4的结点的">
@@ -120,22 +120,22 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+    <a href="/home/" rel="section"><i class="fas fa-landmark fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
+    <a href="/tags/" rel="section"><i class="fas fa-tags fa-fw"></i>Tags</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
+    <a href="/categories/" rel="section"><i class="fas fa-bookmark fa-fw"></i>Categories</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="fas fa-archive fa-fw"></i>Archives</a>
 
   </li>
   </ul>
@@ -152,6 +152,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -375,8 +376,9 @@
     
     
       <footer class="post-footer">
+          
           <div class="post-tags">
-              <a href="/tags/Tree/" rel="tag"></i># Tree</a>
+              <a href="/tags/Tree/" rel="tag"></i><i class="fa fa-tag"></i> Tree</a>
           </div>
     
         
@@ -385,12 +387,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/10/31/%E3%80%90DFS-BFS%E3%80%91P1596-Lake-Counting/" rel="prev" title="【DFS&BFS】P1596 Lake Counting">
-      <i class="fa fa-chevron-left"></i> 【DFS&BFS】P1596 Lake Counting
+    <a href="/2020/12/02/%E3%80%90Data-Structure%E3%80%91Graph-Minimum%20Spanning%20Trees/" rel="prev" title="【Data Structure】Graph- Minimum Spanning Trees">
+      <i class="fa fa-chevron-left"></i> 【Data Structure】Graph- Minimum Spanning Trees
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/12/02/%E3%80%90Data-Structure%E3%80%91Graph-Minimum%20Spanning%20Trees/" rel="next" title="【Data Structure】Graph- Minimum Spanning Trees">
-      【Data Structure】Graph- Minimum Spanning Trees <i class="fa fa-chevron-right"></i>
+    <a href="/2020/10/31/%E3%80%90DFS-BFS%E3%80%91P1596-Lake-Counting/" rel="next" title="【DFS&BFS】P1596 Lake Counting">
+      【DFS&BFS】P1596 Lake Counting <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>

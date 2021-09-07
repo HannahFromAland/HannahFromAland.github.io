@@ -18,7 +18,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="Interface Inheritance and Implementation Inheritance are two different type of Interface method definition.  Interface inheritance (what): Simply tells what the subclasses should be able to do.  EX) a">
@@ -120,22 +120,22 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+    <a href="/home/" rel="section"><i class="fas fa-landmark fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
+    <a href="/tags/" rel="section"><i class="fas fa-tags fa-fw"></i>Tags</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
+    <a href="/categories/" rel="section"><i class="fas fa-bookmark fa-fw"></i>Categories</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="fas fa-archive fa-fw"></i>Archives</a>
 
   </li>
   </ul>
@@ -152,6 +152,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -273,8 +274,9 @@
     
     
       <footer class="post-footer">
+          
           <div class="post-tags">
-              <a href="/tags/Java/" rel="tag"></i># Java</a>
+              <a href="/tags/Java/" rel="tag"></i><i class="fa fa-tag"></i> Java</a>
           </div>
     
         
@@ -283,12 +285,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/01/03/%E3%80%90BDP%E3%80%91MapReduce-WordConCurrence/" rel="prev" title="【BDP】MapReduce WordConCurrence">
-      <i class="fa fa-chevron-left"></i> 【BDP】MapReduce WordConCurrence
+    <a href="/2021/03/17/%E3%80%90Hive%E3%80%91order-by-sort-by-distribute-by-cluster-by/" rel="prev" title="【Hive】order by, sort by, distribute by, cluster by">
+      <i class="fa fa-chevron-left"></i> 【Hive】order by, sort by, distribute by, cluster by
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/03/17/%E3%80%90Hive%E3%80%91order-by-sort-by-distribute-by-cluster-by/" rel="next" title="【Hive】order by, sort by, distribute by, cluster by">
-      【Hive】order by, sort by, distribute by, cluster by <i class="fa fa-chevron-right"></i>
+    <a href="/2021/01/03/%E3%80%90BDP%E3%80%91MapReduce-WordConCurrence/" rel="next" title="【BDP】MapReduce WordConCurrence">
+      【BDP】MapReduce WordConCurrence <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>

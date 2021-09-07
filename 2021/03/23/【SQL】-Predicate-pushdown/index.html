@@ -18,7 +18,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="什么是谓词下推（ Predicate pushdown）  对SQL语句来说，就是将外层查询块中的where子句过滤条件移入所包含的较低层查询块（即下推至离数据源更近的地方）； 对于Hive或Spark QL来说，在不影响结果的情况下提前执行过滤语句，可以减少Map端输出的数据量，降低集群的传输资源同时减少Reduce端的工作量，最终提升任务的性能">
@@ -121,22 +121,22 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+    <a href="/home/" rel="section"><i class="fas fa-landmark fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
+    <a href="/tags/" rel="section"><i class="fas fa-tags fa-fw"></i>Tags</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
+    <a href="/categories/" rel="section"><i class="fas fa-bookmark fa-fw"></i>Categories</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="fas fa-archive fa-fw"></i>Archives</a>
 
   </li>
   </ul>
@@ -153,6 +153,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -267,9 +268,10 @@
     
     
       <footer class="post-footer">
+          
           <div class="post-tags">
-              <a href="/tags/SQL/" rel="tag"></i># SQL</a>
-              <a href="/tags/Hive/" rel="tag"></i># Hive</a>
+              <a href="/tags/SQL/" rel="tag"></i><i class="fa fa-tag"></i> SQL</a>
+              <a href="/tags/Hive/" rel="tag"></i><i class="fa fa-tag"></i> Hive</a>
           </div>
     
         
@@ -278,12 +280,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/03/22/%E3%80%90LeetCode%E3%80%91-102-Binary-Tree-Level-Order-Traversal/" rel="prev" title="【LeetCode】 102.Binary Tree Level Order Traversal">
-      <i class="fa fa-chevron-left"></i> 【LeetCode】 102.Binary Tree Level Order Traversal
+    <a href="/2021/03/27/%E3%80%90http%E3%80%91Status-Code/" rel="prev" title="【http】Status Code">
+      <i class="fa fa-chevron-left"></i> 【http】Status Code
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/03/27/%E3%80%90http%E3%80%91Status-Code/" rel="next" title="【http】Status Code">
-      【http】Status Code <i class="fa fa-chevron-right"></i>
+    <a href="/2021/03/22/%E3%80%90LeetCode%E3%80%91-102-Binary-Tree-Level-Order-Traversal/" rel="next" title="【LeetCode】 102.Binary Tree Level Order Traversal">
+      【LeetCode】 102.Binary Tree Level Order Traversal <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
