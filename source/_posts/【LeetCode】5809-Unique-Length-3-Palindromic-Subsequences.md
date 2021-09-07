@@ -1,5 +1,4 @@
 ---
-
 title: 【LeetCode】5809 Unique Length-3 Palindromic Subsequences
 date: 2021-07-11 21:31:00
 tags:
@@ -11,7 +10,7 @@ category: Algorithm
 
 题目地址：[长度为 3 的不同回文子序列](https://leetcode-cn.com/problems/unique-length-3-palindromic-subsequences/)
 
-
+<!-- more -->
 
 ## 首先想到的暴力解法
 
