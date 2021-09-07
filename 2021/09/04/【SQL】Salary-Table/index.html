@@ -18,23 +18,23 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Salary Table 记录截至目前遇到的最难的SQL题！😼     大致思路：按照position 进行分组后按工资正序进行rank（为了hire尽可能多的员工，优先从工资最少的开始），并返回截止目前该分类内的salary总和   中间表构造： 123select position, salary, row_number()over(partition by position order">
+  <meta name="description" content="Salary Table 记录截至目前遇到的最难的SQL题！😼">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【SQL】Salary Table">
 <meta property="og:url" content="http://example.com/2021/09/04/%E3%80%90SQL%E3%80%91Salary-Table/index.html">
 <meta property="og:site_name" content="Hanniverse！">
-<meta property="og:description" content="Salary Table 记录截至目前遇到的最难的SQL题！😼     大致思路：按照position 进行分组后按工资正序进行rank（为了hire尽可能多的员工，优先从工资最少的开始），并返回截止目前该分类内的salary总和   中间表构造： 123select position, salary, row_number()over(partition by position order">
+<meta property="og:description" content="Salary Table 记录截至目前遇到的最难的SQL题！😼">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.loli.net/2021/09/04/tzbJw1A48olkn9d.png">
 <meta property="og:image" content="https://i.loli.net/2021/09/04/H1KLqyaV98X32eJ.jpg">
 <meta property="article:published_time" content="2021-09-04T23:44:54.000Z">
-<meta property="article:modified_time" content="2021-09-05T13:45:09.895Z">
+<meta property="article:modified_time" content="2021-09-07T00:23:06.881Z">
 <meta property="article:author" content="Hannah">
-<meta property="article:tag" content="SQL">
 <meta property="article:tag" content="Hive">
+<meta property="article:tag" content="SQL">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.loli.net/2021/09/04/tzbJw1A48olkn9d.png">
 
@@ -201,7 +201,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-05 09:45:09" itemprop="dateModified" datetime="2021-09-05T09:45:09-04:00">2021-09-05</time>
+                <time title="Modified: 2021-09-06 20:23:06" itemprop="dateModified" datetime="2021-09-06T20:23:06-04:00">2021-09-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -226,6 +226,7 @@
       
         <h1 id="salary-table"><a class="markdownIt-Anchor" href="#salary-table"></a> Salary Table</h1>
 <p>记录截至目前遇到的最难的SQL题！😼</p>
+<span id="more"></span>s
 <p><img src="https://i.loli.net/2021/09/04/tzbJw1A48olkn9d.png" alt="" /></p>
 <p><img src="https://i.loli.net/2021/09/04/H1KLqyaV98X32eJ.jpg" alt="" /></p>
 <ul>
@@ -275,8 +276,8 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/SQL/" rel="tag"></i><i class="fa fa-tag"></i> SQL</a>
               <a href="/tags/Hive/" rel="tag"></i><i class="fa fa-tag"></i> Hive</a>
+              <a href="/tags/SQL/" rel="tag"></i><i class="fa fa-tag"></i> SQL</a>
           </div>
     
         
