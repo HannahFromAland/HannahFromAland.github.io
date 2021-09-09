@@ -117,10 +117,10 @@ darkmode: true
 # When running the site in a subdirectory (e.g. yoursite.com/blog), remove the leading slash from link value (/archives -> archives).
 # External url should start with http:// or https://
 menu:
-  home: /home/ || fas fa-landmark
-  tags: /tags/ || fas fa-tags
-  categories: /categories/ || fas fa-bookmark
-  archives: /archives/ || fas fa-archive
+  home: /|| fas fa-landmark
+  tags: /tags/|| fas fa-tags
+  categories: /categories/|| fas fa-bookmark
+  archives: /archives/|| fas fa-archive
   #about: /about/ || user
   #schedule: /schedule/ || calendar
   #sitemap: /sitemap.xml || sitemap
