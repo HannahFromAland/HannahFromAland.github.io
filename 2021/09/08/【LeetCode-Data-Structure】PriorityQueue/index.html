@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+<meta name="google-site-verification" content="gviRZx4JT59KHx8JGiTRkTsPg6s92Efbpv-OrJPYKDM" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/big.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/big.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/big.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="每日一题之重写比较器，是九月遇到的第一个Hard题目，用PriorityQueue实现可以事半功倍！🌟 题目链接：502.IPO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【LeetCode &amp; Data Structure】PriorityQueue">
+<meta property="og:url" content="http://example.com/2021/09/08/%E3%80%90LeetCode-Data-Structure%E3%80%91PriorityQueue/index.html">
+<meta property="og:site_name" content="Hanniverse！">
+<meta property="og:description" content="每日一题之重写比较器，是九月遇到的第一个Hard题目，用PriorityQueue实现可以事半功倍！🌟 题目链接：502.IPO">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-09T01:17:15.000Z">
+<meta property="article:modified_time" content="2021-09-09T02:15:14.653Z">
+<meta property="article:author" content="Hannah">
+<meta property="article:tag" content="LinkedList">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/09/08/%E3%80%90LeetCode-Data-Structure%E3%80%91PriorityQueue/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>【LeetCode & Data Structure】PriorityQueue | Hanniverse！</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hanniverse！</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/home/" rel="section"><i class="fas fa-landmark fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fas fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fas fa-bookmark fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fas fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/08/%E3%80%90LeetCode-Data-Structure%E3%80%91PriorityQueue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
+      <meta itemprop="name" content="Hannah">
+      <meta itemprop="description" content="宇宙自有她的浪漫。">
+    </span>
+    
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hanniverse！">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【LeetCode & Data Structure】PriorityQueue
+        </h1>
+    
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+    
+              <time title="Created: 2021-09-08 21:17:15 / Modified: 22:15:14" itemprop="dateCreated datePublished" datetime="2021-09-08T21:17:15-04:00">2021-09-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Structure/" itemprop="url" rel="index"><span itemprop="name">Data Structure</span></a>
+                </span>
+            </span>
+    
+          
+    
+        </div>
+      </header>
+    
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+    
+      
+        <p>每日一题之重写比较器，是九月遇到的第一个<code>Hard</code>题目，用<code>PriorityQueue</code>实现可以事半功倍！🌟</p>
+<p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/ipo/">502.IPO</a></p>
+<span id="more"></span>
+<h3 id="伪题解"><a class="markdownIt-Anchor" href="#伪题解"></a> （伪）题解</h3>
+<p>解题：</p>
+<ul>
+<li>看到利润和资本首先想到的是<a target="_blank" rel="noopener" href="https://hannahfromaland.github.io/2020/12/22/%E3%80%90Dynamic-Programming%E3%80%91Knapsack-Problem/">背包问题</a>，然而题目给出了要求投资的项目个数，进而放弃背包转为<strong>贪心</strong>思路</li>
+<li>该题特殊之处在于对资本和利润的处理，在完成项目后可以获得纯利润，同时利润也可以增加在资本中作为启动之后项目的资本（因此可以实现一个滚雪球</li>
+<li>每个项目最多被选择一次（如果使用朴素数组实现的话需要记录其是否被选过，但<code>PriorityQueue</code>可以直接将选过的元素抛出，从另一方面完美符合要求</li>
+</ul>
+<p>具体思路：</p>
+<ul>
+<li>构建二元数组实现capital的排序（为了使profits能够与之对应进行维护），需要自定义<code>Comparator</code>，实现按照项目所需资本实现升序排列</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(pack, <span class="keyword">new</span> Comparator&lt;<span class="keyword">int</span>[]&gt;() &#123;</span><br><span class="line">       <span class="meta">@Override</span></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(<span class="keyword">int</span>[] o1, <span class="keyword">int</span>[] o2)</span> </span>&#123;</span><br><span class="line">           <span class="keyword">return</span> o1[<span class="number">0</span>] - o2[<span class="number">0</span>]; <span class="comment">// capital asc           </span></span><br><span class="line">       &#125;</span><br><span class="line">       &#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>该题中选取资本采用的是“滚雪球”方式，需要保证每个项目均为当前没有被启动过的项目里符合资本要求且<strong>利润最大</strong>的，可以通过PriorityQueue+自定义Comparator实现。</p>
+<blockquote>
+<p>引用<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1252599548343744/1265120632401152">廖雪峰老师的使用PriorityQueue</a>: <code>PriorityQueue</code>和<code>Queue</code>的区别在于，它的出队顺序与元素的优先级有关，对<code>PriorityQueue</code>调用<code>remove()</code>或<code>poll()</code>方法，返回的总是优先级最高的元素。要使用<code>PriorityQueue</code>，我们就必须给每个元素定义“优先级”。</p>
+</blockquote>
+<p>在本题中，“优先级”为所有当前资本条件可以启动的项目的利润，因此利用priorityqueue可以实现每次均返回利润最大的可启动项目，且启动过的项目会退出队列，不用继续参与比较。</p>
+</li>
+</ul>
+<h3 id="priorityqueue的基本操作"><a class="markdownIt-Anchor" href="#priorityqueue的基本操作"></a> PriorityQueue的基本操作：</h3>
+<ul>
+<li><code>add() &amp; offer()</code>：都是向优先队列中插入元素，只是<code>Queue</code>接口规定二者对插入失败时的处理不同，前者在插入失败时抛出异常，后者则会返回<code>false</code>；</li>
+<li><code>element()</code>和<code>peek()</code>：都是获取但不删除队首元素，也就是队列中权值最小的那个元素，二者唯一的区别是当方法失败时前者抛出异常，后者返回<code>null</code></li>
+<li><code>remove()</code>和<code>poll()</code>：获取并删除队首元素，区别是当方法失败时前者抛出异常，后者返回<code>null</code></li>
+<li>重写比较器：类似于Array中的Comparator重写</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PriorityQueue&lt;Integer&gt; pq = <span class="keyword">new</span> PriorityQueue&lt;&gt;(<span class="keyword">new</span> Comparator&lt;Integer&gt;()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span> <span class="params">(Integer o1, Integer o2)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> o2 - o1; <span class="comment">//实现倒序排列</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="代码实现"><a class="markdownIt-Anchor" href="#代码实现"></a> 代码实现：</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> n;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[][] pack;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findMaximizedCapital</span><span class="params">(<span class="keyword">int</span> k, <span class="keyword">int</span> w, <span class="keyword">int</span>[] profits, <span class="keyword">int</span>[] capital)</span> </span>&#123;</span><br><span class="line">        n = profits.length;</span><br><span class="line">        pack = <span class="keyword">new</span> <span class="keyword">int</span>[capital.length][<span class="number">2</span>];    </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            pack[i][<span class="number">0</span>] = capital[i];</span><br><span class="line">            pack[i][<span class="number">1</span>] = profits[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// redefine the comparator</span></span><br><span class="line">        Arrays.sort(pack, <span class="keyword">new</span> Comparator&lt;<span class="keyword">int</span>[]&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(<span class="keyword">int</span>[] o1, <span class="keyword">int</span>[] o2)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> o1[<span class="number">0</span>] - o2[<span class="number">0</span>]; <span class="comment">// capital asc           </span></span><br><span class="line">        &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        PriorityQueue&lt;Integer&gt; pq = <span class="keyword">new</span> PriorityQueue&lt;&gt;(<span class="keyword">new</span> Comparator&lt;Integer&gt;()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span> <span class="params">(Integer o1, Integer o2)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> o2 - o1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">int</span> curr = <span class="number">0</span>; <span class="comment">//维护当前在pack中遍历到的节点索引</span></span><br><span class="line">        <span class="keyword">while</span> (k &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span> (curr &lt; n &amp;&amp; pack[curr][<span class="number">0</span>] &lt;= w) &#123;</span><br><span class="line">                pq.add(pack[curr][<span class="number">1</span>]);</span><br><span class="line">                curr++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!pq.isEmpty()) &#123;</span><br><span class="line">                w += pq.poll();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            k--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> w;</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>开学前最后一更，希望开学也能保持健康的生活习惯和勤劳的更新频率(不这不是一个flag)😿</p>
+
+    </div>
+    
+    
+    
+    
+    
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/LinkedList/" rel="tag"></i><i class="fa fa-tag"></i> LinkedList</a>
+          </div>
+    
+        
+
+    
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/09/05/%E3%80%90Hexo%E3%80%91Multi-devices-Control-of-my-blog/" rel="next" title="【Hexo】Multi-devices Control of my blog">
+      【Hexo】Multi-devices Control of my blog <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%AA%E9%A2%98%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text"> （伪）题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#priorityqueue%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text"> PriorityQueue的基本操作：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text"> 代码实现：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hannah"
+      src="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
+  <p class="site-author-name" itemprop="name">Hannah</p>
+  <div class="site-description" itemprop="description">宇宙自有她的浪漫。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hannah</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  <!-- 页面点击小心心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+<!--崩溃欺骗-->
+<script type="text/javascript" src="/js/crash_cheat.js"></script>
+</body>
+</html>
