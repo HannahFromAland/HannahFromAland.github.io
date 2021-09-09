@@ -14,13 +14,12 @@ category: Data Structure
 
 ### （伪）题解
 
-解题：
 - 看到利润和资本首先想到的是[背包问题](https://hannahfromaland.github.io/2020/12/22/%E3%80%90Dynamic-Programming%E3%80%91Knapsack-Problem/)，然而题目给出了要求投资的项目个数，进而放弃背包转为**贪心**思路
 - 该题特殊之处在于对资本和利润的处理，在完成项目后可以获得纯利润，同时利润也可以增加在资本中作为启动之后项目的资本（因此可以实现一个滚雪球
 - 每个项目最多被选择一次（如果使用朴素数组实现的话需要记录其是否被选过，但`PriorityQueue`可以直接将选过的元素抛出，从另一方面完美符合要求
 
 具体思路：
-- 构建二元数组实现capital的排序（为了使profits能够与之对应进行维护），需要自定义`Comparator`，实现按照项目所需资本实现升序排列
+- 构建二元数组实现capital的排序（为了使profits能够与之对应进行维护），需要自定义`Comparator`，实现按照项目所需资本升序排列
 
 ```java
  Arrays.sort(pack, new Comparator<int[]>() {
@@ -37,7 +36,7 @@ category: Data Structure
 
   在本题中，“优先级”为所有当前资本条件可以启动的项目的利润，因此利用priorityqueue可以实现每次均返回利润最大的可启动项目，且启动过的项目会退出队列，不用继续参与比较。
 
-### PriorityQueue的基本操作：
+### PriorityQueue的基本操作
 
 - `add() & offer()`：都是向优先队列中插入元素，只是`Queue`接口规定二者对插入失败时的处理不同，前者在插入失败时抛出异常，后者则会返回`false`；
 - `element()`和`peek()`：都是获取但不删除队首元素，也就是队列中权值最小的那个元素，二者唯一的区别是当方法失败时前者抛出异常，后者返回`null`
@@ -55,7 +54,7 @@ PriorityQueue<Integer> pq = new PriorityQueue<>(new Comparator<Integer>(){
 
 
 
-### 代码实现：
+### 题目代码实现
 
 ```java
 class Solution {
