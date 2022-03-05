@@ -21,21 +21,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="什么是谓词下推（ Predicate pushdown）  对SQL语句来说，就是将外层查询块中的where子句过滤条件移入所包含的较低层查询块（即下推至离数据源更近的地方）； 对于Hive或Spark QL来说，在不影响结果的情况下提前执行过滤语句，可以减少Map端输出的数据量，降低集群的传输资源同时减少Reduce端的工作量，最终提升任务的性能">
+  <meta name="description" content="两天速成Applied Machine Learning （不是）  What is and why Machine Learning? 两个lecture中出现的定义：  Machine learning (ML) is the study of computer algorithms that can improve automatically through experience and b">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【SQL】 Predicate pushdown">
-<meta property="og:url" content="http://example.com/2021/03/23/%E3%80%90SQL%E3%80%91-Predicate-pushdown/index.html">
+<meta property="og:title" content="【AML】Intro-and-EDA">
+<meta property="og:url" content="http://example.com/2022/03/05/%E3%80%90AML%E3%80%91Intro-and-EDA/index.html">
 <meta property="og:site_name" content="Hanniverse！">
-<meta property="og:description" content="什么是谓词下推（ Predicate pushdown）  对SQL语句来说，就是将外层查询块中的where子句过滤条件移入所包含的较低层查询块（即下推至离数据源更近的地方）； 对于Hive或Spark QL来说，在不影响结果的情况下提前执行过滤语句，可以减少Map端输出的数据量，降低集群的传输资源同时减少Reduce端的工作量，最终提升任务的性能">
+<meta property="og:description" content="两天速成Applied Machine Learning （不是）  What is and why Machine Learning? 两个lecture中出现的定义：  Machine learning (ML) is the study of computer algorithms that can improve automatically through experience and b">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-03-23T13:03:11.000Z">
-<meta property="article:modified_time" content="2021-09-05T13:45:09.895Z">
+<meta property="article:published_time" content="2022-03-05T20:27:39.000Z">
+<meta property="article:modified_time" content="2022-03-05T22:30:47.879Z">
 <meta property="article:author" content="Hannah">
-<meta property="article:tag" content="Hive">
-<meta property="article:tag" content="SQL">
+<meta property="article:tag" content="AML">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021/03/23/%E3%80%90SQL%E3%80%91-Predicate-pushdown/">
+<link rel="canonical" href="http://example.com/2022/03/05/%E3%80%90AML%E3%80%91Intro-and-EDA/">
 
 
 <script id="page-configurations">
@@ -48,7 +47,7 @@
   };
 </script>
 
-  <title>【SQL】 Predicate pushdown | Hanniverse！</title>
+  <title>【AML】Intro-and-EDA | Hanniverse！</title>
   
 
 
@@ -168,7 +167,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/23/%E3%80%90SQL%E3%80%91-Predicate-pushdown/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/05/%E3%80%90AML%E3%80%91Intro-and-EDA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
@@ -181,7 +180,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          【SQL】 Predicate pushdown
+          【AML】Intro-and-EDA
         </h1>
     
         <div class="post-meta">
@@ -190,23 +189,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
     
-              <time title="Created: 2021-03-23 09:03:11" itemprop="dateCreated datePublished" datetime="2021-03-23T09:03:11-04:00">2021-03-23</time>
+              <time title="Created: 2022-03-05 15:27:39 / Modified: 17:30:47" itemprop="dateCreated datePublished" datetime="2022-03-05T15:27:39-05:00">2022-03-05</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-05 09:45:09" itemprop="dateModified" datetime="2021-09-05T09:45:09-04:00">2021-09-05</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Data-Analysis/" itemprop="url" rel="index"><span itemprop="name">Data Analysis</span></a>
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
                 </span>
             </span>
     
@@ -221,45 +214,71 @@
     <div class="post-body" itemprop="articleBody">
     
       
-        <h2 id="什么是谓词下推-predicate-pushdown"><a class="markdownIt-Anchor" href="#什么是谓词下推-predicate-pushdown"></a> 什么是谓词下推（ Predicate pushdown）</h2>
+        <p>两天速成Applied Machine Learning （不是）</p>
+<h3 id="what-is-and-why-machine-learning"><a class="markdownIt-Anchor" href="#what-is-and-why-machine-learning"></a> What is and why Machine Learning?</h3>
+<p>两个lecture中出现的定义：</p>
 <ul>
-<li>对SQL语句来说，就是将外层查询块中的where子句过滤条件移入所包含的较低层查询块（即下推至离数据源更近的地方）；</li>
-<li>对于Hive或Spark QL来说，在不影响结果的情况下提前执行过滤语句，可以减少Map端输出的数据量，降低集群的传输资源同时减少Reduce端的工作量，最终提升任务的性能</li>
+<li>Machine learning (ML) is the study of computer algorithms that can improve automatically through <strong>experience</strong> and by the use of <strong>data</strong>.</li>
+<li>Machine learning involves computers discovering how they can perform tasks without being explicitly programmed to do so.</li>
+</ul>
+<p>总结几个个人感觉比较能够凸显ML特质的关键点：</p>
+<ul>
+<li>
+<p>Machine learning和传统system的区别在于没有hardcoded rules，即不通过人为筛选出来的判断条件做决定。</p>
+</li>
+<li>
+<p>传统规则定义存在的两个明显缺点：</p>
+<ul>
+<li>定义或系统一旦出现更新，整个判定逻辑可能会面临推翻重做的重大变化。即使是很小部分的新特性加入也可能会造成整个系统的调整或重写</li>
+<li>规则的建立是高度依赖因果关系，经验和专家决策的，可能存在片面性或主观性，并且不能触及仅存在相关性的决策因素</li>
 </ul>
 <span id="more"></span>
-<h3 id="sql中join条件谓词下推"><a class="markdownIt-Anchor" href="#sql中join条件谓词下推"></a> SQL中join条件谓词下推</h3>
-<h4 id="几个概念"><a class="markdownIt-Anchor" href="#几个概念"></a> 几个概念</h4>
-<ul>
-<li>Preserved Row table（保留表）</li>
+</li>
+<li>
+<p>人脸识别的例子：</p>
+<blockquote>
+<p>One example of where this handcoded approach will fail is in detecting faces in images. Today, every smartphone can detect a face in an image. However, face detection was an unsolved problem until as recently as 2001. The main problem is that the way in which pixels (which make up an image in a computer) are “perceived” by the computer is very different from how humans perceive a face. This difference in representation makes it basically impossible for a human to come up with a good set of rules to describe whatconstitutes a face in a digital image.</p>
+</blockquote>
+</li>
+<li>
+<p>机器学习可以分为监督学习和无监督学习。区别来源于所提供给算法的数据集的不同，监督学习的数据集含有特征和预期结果，如广为人知的信用卡诈骗和借贷违约风险；而无监督学习的数据集只包含输入的特征数据，没有期望或实际的输出数据或标签</p>
+</li>
 </ul>
-<p>在<code>outer join</code>中需要返回所有数据的表叫做保留表，也就是说在<code>left outer join</code>中，左表需要返回所有数据，则左表是保留表；<code>right outer join中</code>右表则是保留表；在<code>full outer join</code>中左表和右表都要返回所有数据，则左右表都是保留表。</p>
+<h3 id="exploratory-data-analysis-visualization"><a class="markdownIt-Anchor" href="#exploratory-data-analysis-visualization"></a> Exploratory Data Analysis – Visualization</h3>
+<p>上学期被5702折磨了一学期，现在放在特征工程之前看这个话题莫名觉得还是有些收获的。结合AML的关注点和我自己对于EDA的理解写一些在进行exploratory analysis时需要注意的地方。</p>
+<h4 id="visualizing-distributions"><a class="markdownIt-Anchor" href="#visualizing-distributions"></a> Visualizing Distributions</h4>
 <ul>
-<li>Null Supplying table（空表）</li>
-</ul>
-<p>在<code>outer join</code>中对于没有匹配到的行需要用<code>null</code>来填充的表称为<code>Null Supplying table</code>。在<code>left outer join</code>中，左表的数据全返回，对于左表在右表中无法匹配的数据的相应列用<code>null</code>表示，则此时右表是<code>Null Supplying table</code>，相应的如果是<code>right outer join</code>的话，左表是<code>Null Supplying table</code>。但是在<code>full outer join</code>中左表和右表都是<code>Null Supplying table</code>，因为左表和右表都会用<code>null</code>来填充无法匹配的数据。</p>
+<li>histogram &amp; kernel density plots
 <ul>
-<li>During Join predicate（Join中的谓词）</li>
+<li>首先，直方图只有一个变量即x轴，展示的是整个数据集中变量的分布特征。y轴可以是频数也可以是频率，只有scale上的变化，整体的趋势并不会发生改变。</li>
+<li>histogram的趋势可能会因为bin width的选择发生变化，如果区间太大可能会模糊掉具体的分布特征，但区间过小也可能导致趋势被异常值影响而不明显。此外，区间边界选择的不同也可能会导致图像发生较大的变化（左开右闭区间和左闭右开区间因为临界值个数的不同而不同），一般来讲当变量的值全部为整数时可以选择小数作为临界值来避免该问题。</li>
+<li>存在两个变量，既有x轴和y轴的图像不叫histogram！（hist在python和R语言中的命令都仅有一个输入变量，所以当遇到x和y轴是两个变量的<em>pseudo histogram</em>时…尝试把barplot的间距调成0吧)</li>
+<li>在EDA中可以将kernel density plots理解为histogram的曲线图，更适合通过曲线形式表示出连续变量的分布和波动趋势。当需要同时探索多个变量的分布时（或同一变量的不同分类），kernel density plots更加清晰直观。</li>
+<li>一般来说随机样本的分布在大样本情况下都会近似于正态分布（credits to CLT），但可能会出现左偏/右偏的情况，此时可以通过对样本取对数来判断其分布是否遵循对数正态分布</li>
 </ul>
-<p><code>Join</code>中的谓词是指 <code>Join On</code>语句中的谓词。如：<code>R1 join R2 on R1.x = 5 the predicate R1.x = 5</code>是<code>Join</code>中的谓词</p>
+</li>
+<li>box plot, violin plot and ridge plot
 <ul>
-<li>After Join predicate（Join之后的谓词）</li>
+<li>同一变量的不同分类分布同样常用box plot 或violin plot，同时也有将kernel density plot进行横向排列形成的ridge plot （在使用ridge plot时，尽量按照分布中位数的值进行排序以实现aesthetic effect）</li>
 </ul>
-<p><code>where</code>语句中的谓词称之为<code>Join</code>之后的谓词</p>
-<h4 id="innerjoin"><a class="markdownIt-Anchor" href="#innerjoin"></a> InnerJoin</h4>
-<p><code>inner join</code>中及<code>join</code> 后的谓词均可以下推，二者是等价的（即内连接要求左右表均要满足条件，无空表）</p>
-<h4 id="outerjoin包含left和right两种情形"><a class="markdownIt-Anchor" href="#outerjoin包含left和right两种情形"></a> OuterJoin（包含left和right两种情形）</h4>
-<p>以<code>left outer join</code>为例，执行时左表为保留表，因此<code>Join</code>中左表的谓词不能进行下推，<code>Join</code>中右表谓词可以下推；<code>Join</code>后谓词均可以下推</p>
-<h4 id="fulljoin"><a class="markdownIt-Anchor" href="#fulljoin"></a> FullJoin</h4>
-<p><code>full join</code>中左右表均属于<code>Null Supplying tables</code>，因此在<code>Join</code>中的谓词均不能下推；同<code>outer join</code>，<code>Join</code>后的谓词均可以下推</p>
-<h3 id="谓词下推的意义"><a class="markdownIt-Anchor" href="#谓词下推的意义"></a> 谓词下推的意义</h3>
+</li>
+</ul>
+<h4 id="visualizing-relationships"><a class="markdownIt-Anchor" href="#visualizing-relationships"></a> Visualizing relationships</h4>
 <ul>
-<li>大多数表存储行为都是列存，列之间独立存储，扫描过滤只需要扫描join列数据（而不是所有列），如果某一列被过滤掉了，其他对应的同一行的列就不需要扫描了，减少了IO扫描次数</li>
-<li>减少了数据从存储层通过socket发送到计算层的开销（正常情况下执行会将所有数据从存储进程加载到计算进程，再进行过滤计算；谓词下推后存储进程将直接过滤无效数据，减少后续一系列开销，提升性能</li>
+<li>最常用的相关性探索图非scatter plot莫属
+<ul>
+<li>scatter plot需要两个变量实现x和y轴变量之间的相关性交互。（因此出现仅有一个变量的<em>pesudo scatter</em>…尝试把histogram的柱子变成点的形式吧）</li>
+<li>散点图最直观的用处即为判断x和y是否存在线性关系，当然也可以拓展为其他具有特殊图像特征的关系或对数线性关系。</li>
 </ul>
-<p><strong>Reference</strong></p>
-<p><a target="_blank" rel="noopener" href="https://csy99.github.io/Blog/2020/05/10/predicate-pushdown/">predicate pushdown</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/129026235">sql优化中join 条件谓词下推</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/78266517">从一个sql引发的hive谓词下推的全面复盘及源码分析(上)</a></p>
+</li>
+</ul>
+<h4 id="visualizing-proportions"><a class="markdownIt-Anchor" href="#visualizing-proportions"></a> Visualizing proportions</h4>
+<p>广为流传的EDA冷笑话 <code>i hate pie chart</code>即为可视化比例的一个（反）例。除此之外，经常使用的还有stacked bar chart和side-by-side bar chart（懒得配图hhh）</p>
+<ul>
+<li>饼图的问题即在于仅能对各个比例的大小进行定性的感知（并且当各分类的比例差不多/分类过多的时候，定性的感知能力会大幅下降），因此个人觉得只适用于某一类特征存在<em>overwhelmingly priority</em>且确实需要表现这一压倒性优势时才考虑采用。在EDA语境下，探索性分析需要利用图像挖掘信息，因此饼图基本没有什么合适的用武之地。</li>
+<li>Stacked bar chart相比饼图的优势在于人对长度和宽度的感知能力是优于角度或面积的。缺点是在分类进行横向比较时（比如不同stacks之间需要比较相同颜色的占比），感知能力会下降。因此，stacked barplot的适用于在分类较少的情况下，观察整体的比例随x轴变量变动的情况。</li>
+<li>side-by-side bar chart可以用于解决stacked barplot的分类比较问题，适用于需要突出各部分比例变化的场景。</li>
+</ul>
 
     </div>
     
@@ -270,8 +289,7 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/Hive/" rel="tag"></i><i class="fa fa-tag"></i> Hive</a>
-              <a href="/tags/SQL/" rel="tag"></i><i class="fa fa-tag"></i> SQL</a>
+              <a href="/tags/AML/" rel="tag"></i><i class="fa fa-tag"></i> AML</a>
           </div>
     
         
@@ -279,13 +297,10 @@
     
         
     <div class="post-nav">
+      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2021/03/27/%E3%80%90http%E3%80%91Status-Code/" rel="prev" title="【http】Status Code">
-      <i class="fa fa-chevron-left"></i> 【http】Status Code
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/03/22/%E3%80%90LeetCode%E3%80%91-102-Binary-Tree-Level-Order-Traversal/" rel="next" title="【LeetCode】 102.Binary Tree Level Order Traversal">
-      【LeetCode】 102.Binary Tree Level Order Traversal <i class="fa fa-chevron-right"></i>
+    <a href="/2021/09/08/%E3%80%90LeetCode-Data-Structure%E3%80%91PriorityQueue/" rel="next" title="【LeetCode & Data Structure】PriorityQueue">
+      【LeetCode & Data Structure】PriorityQueue <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -345,7 +360,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%B0%93%E8%AF%8D%E4%B8%8B%E6%8E%A8-predicate-pushdown"><span class="nav-number">1.</span> <span class="nav-text"> 什么是谓词下推（ Predicate pushdown）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sql%E4%B8%ADjoin%E6%9D%A1%E4%BB%B6%E8%B0%93%E8%AF%8D%E4%B8%8B%E6%8E%A8"><span class="nav-number">1.1.</span> <span class="nav-text"> SQL中join条件谓词下推</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.1.</span> <span class="nav-text"> 几个概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#innerjoin"><span class="nav-number">1.1.2.</span> <span class="nav-text"> InnerJoin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#outerjoin%E5%8C%85%E5%90%ABleft%E5%92%8Cright%E4%B8%A4%E7%A7%8D%E6%83%85%E5%BD%A2"><span class="nav-number">1.1.3.</span> <span class="nav-text"> OuterJoin（包含left和right两种情形）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fulljoin"><span class="nav-number">1.1.4.</span> <span class="nav-text"> FullJoin</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%93%E8%AF%8D%E4%B8%8B%E6%8E%A8%E7%9A%84%E6%84%8F%E4%B9%89"><span class="nav-number">1.2.</span> <span class="nav-text"> 谓词下推的意义</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#what-is-and-why-machine-learning"><span class="nav-number">1.</span> <span class="nav-text"> What is and why Machine Learning?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#exploratory-data-analysis-visualization"><span class="nav-number">2.</span> <span class="nav-text"> Exploratory Data Analysis – Visualization</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#visualizing-distributions"><span class="nav-number">2.1.</span> <span class="nav-text"> Visualizing Distributions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#visualizing-relationships"><span class="nav-number">2.2.</span> <span class="nav-text"> Visualizing relationships</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#visualizing-proportions"><span class="nav-number">2.3.</span> <span class="nav-text"> Visualizing proportions</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
