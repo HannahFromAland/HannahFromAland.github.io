@@ -163,7 +163,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/05/%E3%80%90AML%E3%80%91Supervised-learning-Preprocessing/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/06/%E3%80%90AML%E3%80%91Linear-Regression/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
@@ -177,7 +177,82 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/03/05/%E3%80%90AML%E3%80%91Supervised-learning-Preprocessing/" class="post-title-link" itemprop="url">【AML】Supervised Learning & Preprocessing</a>
+            <a href="/2022/03/06/%E3%80%90AML%E3%80%91Linear-Regression/" class="post-title-link" itemprop="url">【AML】Linear Regression</a>
+        </h2>
+    
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+    
+              <time title="Created: 2022-03-06 14:53:27 / Modified: 17:06:41" itemprop="dateCreated datePublished" datetime="2022-03-06T14:53:27-05:00">2022-03-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+            </span>
+    
+          
+    
+        </div>
+      </header>
+    
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+    
+      
+          <p>总结线性回归的基本要点及正则化的方法和改进。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/06/%E3%80%90AML%E3%80%91Linear-Regression/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/05/%E3%80%90AML%E3%80%91Data-Preprocessing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
+      <meta itemprop="name" content="Hannah">
+      <meta itemprop="description" content="宇宙自有她的浪漫。">
+    </span>
+    
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hanniverse！">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/05/%E3%80%90AML%E3%80%91Data-Preprocessing/" class="post-title-link" itemprop="url">【AML】Data Preprocessing</a>
         </h2>
     
         <div class="post-meta">
@@ -187,14 +262,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
     
-              <time title="Created: 2022-03-05 18:09:26" itemprop="dateCreated datePublished" datetime="2022-03-05T18:09:26-05:00">2022-03-05</time>
+              <time title="Created: 2022-03-05 19:00:41" itemprop="dateCreated datePublished" datetime="2022-03-05T19:00:41-05:00">2022-03-05</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-06 14:32:23" itemprop="dateModified" datetime="2022-03-06T14:32:23-05:00">2022-03-06</time>
+                <time title="Modified: 2022-03-06 17:04:59" itemprop="dateModified" datetime="2022-03-06T17:04:59-05:00">2022-03-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -217,8 +292,88 @@
     <div class="post-body" itemprop="articleBody">
     
       
-          <h3 id="supervised-learning"><a class="markdownIt-Anchor" href="#supervised-learning"></a> Supervised Learning</h3>
-<p>监督学习内部分为分类问题（classification）和回归问题（regression）两类。分类问题的输出标签为离散值，回归问题可以理解为连续问题。</p>
+          <p>对数据集进行预处理时，首先根据数据类型将特征分为连续特征和分类特征。其中，针对连续特征最关键的预处理即为归一化（regularity），而针对分类特征最关键的预处理为编码（encoding）处理。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/05/%E3%80%90AML%E3%80%91Data-Preprocessing/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/05/%E3%80%90AML%E3%80%91Supervised-learning-Preprocessing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
+      <meta itemprop="name" content="Hannah">
+      <meta itemprop="description" content="宇宙自有她的浪漫。">
+    </span>
+    
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hanniverse！">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/05/%E3%80%90AML%E3%80%91Supervised-learning-Preprocessing/" class="post-title-link" itemprop="url">【AML】Supervised Learning</a>
+        </h2>
+    
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+    
+              <time title="Created: 2022-03-05 18:09:26" itemprop="dateCreated datePublished" datetime="2022-03-05T18:09:26-05:00">2022-03-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-06 17:07:36" itemprop="dateModified" datetime="2022-03-06T17:07:36-05:00">2022-03-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+            </span>
+    
+          
+    
+        </div>
+      </header>
+    
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+    
+      
+          <p>监督学习内部分为分类问题（classification）和回归问题（regression）两类。分类问题的输出标签为离散值，回归问题可以理解为连续问题。</p>
 <p>监督学习的关键在于得到一般化的（generalized）的模型，因为监督学习的目的是为了利用已知的训练集特征和标签/输出值来获得对未知的测试集进行尽可能准确的预测。因此会存在欠拟合或过拟合的问题。</p>
           <!--noindex-->
             <div class="post-button">
@@ -277,7 +432,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-06 12:26:21" itemprop="dateModified" datetime="2022-03-06T12:26:21-05:00">2022-03-06</time>
+                <time title="Modified: 2022-03-06 17:05:04" itemprop="dateModified" datetime="2022-03-06T17:05:04-05:00">2022-03-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -833,209 +988,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/27/%E3%80%90http%E3%80%91Status-Code/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
-      <meta itemprop="name" content="Hannah">
-      <meta itemprop="description" content="宇宙自有她的浪漫。">
-    </span>
-    
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hanniverse！">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/27/%E3%80%90http%E3%80%91Status-Code/" class="post-title-link" itemprop="url">【http】Status Code</a>
-        </h2>
-    
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-    
-              <time title="Created: 2021-03-27 20:35:24" itemprop="dateCreated datePublished" datetime="2021-03-27T20:35:24-04:00">2021-03-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-05 09:45:09" itemprop="dateModified" datetime="2021-09-05T09:45:09-04:00">2021-09-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Computer-Network/" itemprop="url" rel="index"><span itemprop="name">Computer Network</span></a>
-                </span>
-            </span>
-    
-          
-    
-        </div>
-      </header>
-    
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-    
-      
-          <h3 id="你对-http-状态码有了解吗"><a class="markdownIt-Anchor" href="#你对-http-状态码有了解吗"></a> 你对 HTTP 状态码有了解吗？😵</h3>
-<p>服务器返回的  <strong>响应报文</strong>  中第一行为状态行，包含了状态码以及原因短语，用来告知客户端请求的结果。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">状态码</th>
-<th style="text-align:center">类别</th>
-<th style="text-align:center">原因短语</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">100-199</td>
-<td style="text-align:center">Informational(信息性状态码)</td>
-<td style="text-align:center">接收的请求正在处理</td>
-</tr>
-<tr>
-<td style="text-align:center">200-299</td>
-<td style="text-align:center">Success(成功状态码)</td>
-<td style="text-align:center">请求正常处理完毕</td>
-</tr>
-<tr>
-<td style="text-align:center">300-399</td>
-<td style="text-align:center">Redirection(重定向状态码)</td>
-<td style="text-align:center">需要进行附加操作以完成请求</td>
-</tr>
-<tr>
-<td style="text-align:center">400-499</td>
-<td style="text-align:center">Client Error(客户端错误状态码)</td>
-<td style="text-align:center">服务器无法处理请求</td>
-</tr>
-<tr>
-<td style="text-align:center">500-599</td>
-<td style="text-align:center">Server Error(服务器错误状态码)</td>
-<td style="text-align:center">服务器处理请求出错</td>
-</tr>
-</tbody>
-</table>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/27/%E3%80%90http%E3%80%91Status-Code/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/23/%E3%80%90SQL%E3%80%91-Predicate-pushdown/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
-      <meta itemprop="name" content="Hannah">
-      <meta itemprop="description" content="宇宙自有她的浪漫。">
-    </span>
-    
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hanniverse！">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/23/%E3%80%90SQL%E3%80%91-Predicate-pushdown/" class="post-title-link" itemprop="url">【SQL】 Predicate pushdown</a>
-        </h2>
-    
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-    
-              <time title="Created: 2021-03-23 09:03:11" itemprop="dateCreated datePublished" datetime="2021-03-23T09:03:11-04:00">2021-03-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-05 09:45:09" itemprop="dateModified" datetime="2021-09-05T09:45:09-04:00">2021-09-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Data-Analysis/" itemprop="url" rel="index"><span itemprop="name">Data Analysis</span></a>
-                </span>
-            </span>
-    
-          
-    
-        </div>
-      </header>
-    
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-    
-      
-          <h2 id="什么是谓词下推-predicate-pushdown"><a class="markdownIt-Anchor" href="#什么是谓词下推-predicate-pushdown"></a> 什么是谓词下推（ Predicate pushdown）</h2>
-<ul>
-<li>对SQL语句来说，就是将外层查询块中的where子句过滤条件移入所包含的较低层查询块（即下推至离数据源更近的地方）；</li>
-<li>对于Hive或Spark QL来说，在不影响结果的情况下提前执行过滤语句，可以减少Map端输出的数据量，降低集群的传输资源同时减少Reduce端的工作量，最终提升任务的性能</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/23/%E3%80%90SQL%E3%80%91-Predicate-pushdown/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1107,7 +1059,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1120,7 +1072,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
