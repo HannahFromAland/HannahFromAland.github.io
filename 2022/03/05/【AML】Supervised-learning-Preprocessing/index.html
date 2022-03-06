@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+<meta name="google-site-verification" content="gviRZx4JT59KHx8JGiTRkTsPg6s92Efbpv-OrJPYKDM" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/big.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/big.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/big.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Supervised Learning 监督学习内部分为分类问题（classification）和回归问题（regression）两类。分类问题的输出标签为离散值，回归问题可以理解为连续问题。 监督学习的关键在于得到一般化的（generalized）的模型，因为监督学习的目的是为了利用已知的训练集特征和标签&#x2F;输出值来获得对未知的测试集进行尽可能准确的预测。因此会存在欠拟合或过拟合的问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【AML】Supervised Learning &amp; Preprocessing">
+<meta property="og:url" content="http://example.com/2022/03/05/%E3%80%90AML%E3%80%91Supervised-learning-Preprocessing/index.html">
+<meta property="og:site_name" content="Hanniverse！">
+<meta property="og:description" content="Supervised Learning 监督学习内部分为分类问题（classification）和回归问题（regression）两类。分类问题的输出标签为离散值，回归问题可以理解为连续问题。 监督学习的关键在于得到一般化的（generalized）的模型，因为监督学习的目的是为了利用已知的训练集特征和标签&#x2F;输出值来获得对未知的测试集进行尽可能准确的预测。因此会存在欠拟合或过拟合的问题。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s2.loli.net/2022/03/06/QMycfnUvRXjP27x.png">
+<meta property="og:image" content="https://s2.loli.net/2022/03/07/6WTMPG3Vmh7ujSn.png">
+<meta property="article:published_time" content="2022-03-05T23:09:26.000Z">
+<meta property="article:modified_time" content="2022-03-06T19:23:15.231Z">
+<meta property="article:author" content="Hannah">
+<meta property="article:tag" content="AML">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/03/06/QMycfnUvRXjP27x.png">
+
+<link rel="canonical" href="http://example.com/2022/03/05/%E3%80%90AML%E3%80%91Supervised-learning-Preprocessing/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>【AML】Supervised Learning & Preprocessing | Hanniverse！</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hanniverse！</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fas fa-landmark fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fas fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fas fa-bookmark fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fas fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/05/%E3%80%90AML%E3%80%91Supervised-learning-Preprocessing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
+      <meta itemprop="name" content="Hannah">
+      <meta itemprop="description" content="宇宙自有她的浪漫。">
+    </span>
+    
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hanniverse！">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【AML】Supervised Learning & Preprocessing
+        </h1>
+    
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+    
+              <time title="Created: 2022-03-05 18:09:26" itemprop="dateCreated datePublished" datetime="2022-03-05T18:09:26-05:00">2022-03-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-06 14:23:15" itemprop="dateModified" datetime="2022-03-06T14:23:15-05:00">2022-03-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+            </span>
+    
+          
+    
+        </div>
+      </header>
+    
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+    
+      
+        <h3 id="supervised-learning"><a class="markdownIt-Anchor" href="#supervised-learning"></a> Supervised Learning</h3>
+<p>监督学习内部分为分类问题（classification）和回归问题（regression）两类。分类问题的输出标签为离散值，回归问题可以理解为连续问题。</p>
+<p>监督学习的关键在于得到一般化的（generalized）的模型，因为监督学习的目的是为了利用已知的训练集特征和标签/输出值来获得对未知的测试集进行尽可能准确的预测。因此会存在欠拟合或过拟合的问题。</p>
+<span id="more"></span>
+<h4 id="framework-of-supervised-learning"><a class="markdownIt-Anchor" href="#framework-of-supervised-learning"></a> Framework of Supervised Learning</h4>
+<p><img src="https://s2.loli.net/2022/03/06/QMycfnUvRXjP27x.png" alt="" /></p>
+<ul>
+<li>Validation data 和 test data的区别？
+<ul>
+<li>Validation data是development data的一部分，必须是带有样本输出标签的数据。Validation data的主要作用是进行超参数调整以选出最佳模型参数，在调整参数的过程中用于不同参数表现的评估</li>
+<li>Test data是在选定最终模型之后进行模型评估的数据集。Test data用于评估被选中的模型在真实数据集上的表现，即上文提到的generalize的能力。</li>
+</ul>
+</li>
+<li>无监督学习能否使用该流程？
+<ul>
+<li>不能。因为无监督学习没有带输出标签的数据，无法实现上述的调参模式。</li>
+</ul>
+</li>
+</ul>
+<h4 id="development-test-split"><a class="markdownIt-Anchor" href="#development-test-split"></a> Development-test split</h4>
+<p>主要有三种划分测试集的方法：</p>
+<ul>
+<li>Random Splitting: 直接从数据集中抽取所需比例的随机数据作为测试集</li>
+<li>Stratified Splitting: 从不同的输出标签集合中等比例进行测试数据的抽取。较为不平衡的数据可以通过分层抽样实现测试集的样本平衡</li>
+<li>Structured Splitting: 按照某一顺序对数据进行分类，适用于时间序列数据。防止使用时间靠后的数据进行训练而“预测&quot;过去发生的事情出现数据泄漏的情况（data leakage）</li>
+</ul>
+<h4 id="hyperparameter-tuning"><a class="markdownIt-Anchor" href="#hyperparameter-tuning"></a> Hyperparameter tuning</h4>
+<p>超参数指的是在开始学习过程之前设置值的参数，而不是通过训练得到的参数数据。通常情况下，需要对超参数进行优化，给学习机选择一组最优超参数，以提高学习的性能和效果。比如决策树模型中数的最大深度，KNN模型中k的值。超参数的选取和模型的复杂程度有直接的关系。同样以决策树为例，如果设定的最大深度过大以实现叶节点的purity，则可能会使模型出现过拟合的现象。</p>
+<p>常用的选择超参数/超参数组合的方法有Grid Search &amp; Random Search （网格搜索或随机搜索）及Bayesian Optimization （贝叶斯优化）（见下一小节）</p>
+<p>进行超参数调整的最终目的是为了实现模型的优化和选择。主要的模型选择及验证集构建的方法有如下几种：</p>
+<ul>
+<li>Three-way holdout: 最朴素的将数据集拆分为构建集和测试集，再将构建集拆分为训练集和验证集的方法。利用训练集和验证集进行超参数调整和模型选择</li>
+<li>K-fold CV （K折交叉验证）：将构建集随机等分成k份，每次选取1份作为验证集并用剩余k-1份进行训练，输出的训练结果为k次验证的平均表现。结合前述数据集划分的不同方式，k折交叉验证也可以适用于stratified sampling。</li>
+<li>Leave-one-out CV ：即k折交叉验证中K=构建集数据总数n的特例。相当于每次拿n-1的数据进行训练并使用1条数据进行验证，以最大化训练集的数目。</li>
+</ul>
+<h4 id="grid-search-random-search"><a class="markdownIt-Anchor" href="#grid-search-random-search"></a> Grid Search &amp; Random Search</h4>
+<p><strong>网格搜索（Grid Search）</strong>：本质上是穷举法，即预先给出各个参数的有限集/取值列表进行组合训练，选出验证集误差最小的超参数作为最好的超参数。方法的弊端十分明显，即当超参数备选集取值增加时复杂度是指数级别增长的，因此一般只能适用于优化三个或者更少数量的超参数；此外网格搜索针对非凸问题易得到局部最优解。</p>
+<p><strong>随机搜索（Random Search）</strong>：随机搜索会尝试 n 次的随机猜测，每次尝试的过程如下：</p>
+<ul>
+<li>在超参数的预设区间内生成一个随机解</li>
+<li>随后使用成本函数评估成本</li>
+<li>与目前为止的最优解比较成本，如果成本更低则更新最优解及最优成本。</li>
+<li>虽然随机搜索得到的结果互相之间差异较大，但是实验证明随机搜索的确比网格搜索效果要好。</li>
+</ul>
+<p>在实际操作中可以通过组合两种搜索算法的方式来获得更优表现：首先使用随机搜索确定表现较好的超参数区间，在缩小范围内进行网格搜索以快速获得最优解</p>
+<h4 id="bayesian-optimization"><a class="markdownIt-Anchor" href="#bayesian-optimization"></a> Bayesian Optimization</h4>
+<p>假设一组超参数组合是$𝑋=x_1, x_2, x…x_n <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo></mrow><annotation encoding="application/x-tex">(</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span></span></span></span>x_n<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">表</mi><mi mathvariant="normal">示</mi><mi mathvariant="normal">某</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">超</mi><mi mathvariant="normal">参</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">值</mi><mo stretchy="false">)</mo><mi mathvariant="normal">，</mi><mi mathvariant="normal">不</mi><mi mathvariant="normal">同</mi><mi mathvariant="normal">超</mi><mi mathvariant="normal">参</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">会</mi><mi mathvariant="normal">得</mi><mi mathvariant="normal">到</mi><mi mathvariant="normal">不</mi><mi mathvariant="normal">同</mi><mi mathvariant="normal">效</mi><mi mathvariant="normal">果</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">贝</mi><mi mathvariant="normal">叶</mi><mi mathvariant="normal">斯</mi><mi mathvariant="normal">优</mi><mi mathvariant="normal">化</mi><mi mathvariant="normal">假</mi><mi mathvariant="normal">设</mi><mi mathvariant="normal">超</mi><mi mathvariant="normal">参</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">与</mi><mi mathvariant="normal">最</mi><mi mathvariant="normal">后</mi><mi mathvariant="normal">我</mi><mi mathvariant="normal">们</mi><mi mathvariant="normal">需</mi><mi mathvariant="normal">要</mi><mi mathvariant="normal">优</mi><mi mathvariant="normal">化</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">损</mi><mi mathvariant="normal">失</mi><mi mathvariant="normal">函</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">存</mi><mi mathvariant="normal">在</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">函</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">关</mi><mi mathvariant="normal">系</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">而</mi><mi mathvariant="normal">我</mi><mi mathvariant="normal">们</mi><mi mathvariant="normal">需</mi><mi mathvariant="normal">要</mi><mi mathvariant="normal">找</mi><mi mathvariant="normal">到</mi><mi mathvariant="normal">使</mi><mi mathvariant="normal">得</mi><mi mathvariant="normal">该</mi><mi mathvariant="normal">函</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">取</mi><mi mathvariant="normal">值</mi><mi mathvariant="normal">最</mi><mi mathvariant="normal">大</mi><mi mathvariant="normal">的</mi></mrow><annotation encoding="application/x-tex">表示某一个超参数的值)，不同超参数会得到不同效果，贝叶斯优化假设超参数与最后我们需要优化的损失函数存在一个函数关系，而我们需要找到使得该函数取值最大的</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord cjk_fallback">表</span><span class="mord cjk_fallback">示</span><span class="mord cjk_fallback">某</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">超</span><span class="mord cjk_fallback">参</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">值</span><span class="mclose">)</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">不</span><span class="mord cjk_fallback">同</span><span class="mord cjk_fallback">超</span><span class="mord cjk_fallback">参</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">会</span><span class="mord cjk_fallback">得</span><span class="mord cjk_fallback">到</span><span class="mord cjk_fallback">不</span><span class="mord cjk_fallback">同</span><span class="mord cjk_fallback">效</span><span class="mord cjk_fallback">果</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">贝</span><span class="mord cjk_fallback">叶</span><span class="mord cjk_fallback">斯</span><span class="mord cjk_fallback">优</span><span class="mord cjk_fallback">化</span><span class="mord cjk_fallback">假</span><span class="mord cjk_fallback">设</span><span class="mord cjk_fallback">超</span><span class="mord cjk_fallback">参</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">与</span><span class="mord cjk_fallback">最</span><span class="mord cjk_fallback">后</span><span class="mord cjk_fallback">我</span><span class="mord cjk_fallback">们</span><span class="mord cjk_fallback">需</span><span class="mord cjk_fallback">要</span><span class="mord cjk_fallback">优</span><span class="mord cjk_fallback">化</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">损</span><span class="mord cjk_fallback">失</span><span class="mord cjk_fallback">函</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">存</span><span class="mord cjk_fallback">在</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">函</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">关</span><span class="mord cjk_fallback">系</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">而</span><span class="mord cjk_fallback">我</span><span class="mord cjk_fallback">们</span><span class="mord cjk_fallback">需</span><span class="mord cjk_fallback">要</span><span class="mord cjk_fallback">找</span><span class="mord cjk_fallback">到</span><span class="mord cjk_fallback">使</span><span class="mord cjk_fallback">得</span><span class="mord cjk_fallback">该</span><span class="mord cjk_fallback">函</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">取</span><span class="mord cjk_fallback">值</span><span class="mord cjk_fallback">最</span><span class="mord cjk_fallback">大</span><span class="mord cjk_fallback">的</span></span></span></span>x^*$。<br />
+与上面的两种方法相比，贝叶斯优化最大的不同点是考虑了之前的参数信息并不断更新先验。</p>
+<h3 id="preprocessing"><a class="markdownIt-Anchor" href="#preprocessing"></a> Preprocessing</h3>
+<p>对数据集进行预处理时将特征分为连续特征和分类特征。针对连续特征最关键的预处理即为归一化（regularity）。</p>
+<h4 id="continuous-feature-scaler"><a class="markdownIt-Anchor" href="#continuous-feature-scaler"></a> Continuous Feature: Scaler</h4>
+<ul>
+<li>为什么需要进行归一化？
+<ul>
+<li>一些分类器需要计算样本之间的 <strong>距离</strong> （如欧氏距离），例如KNN。如果一个特征值域范围非常大，那么距离计算就主要 <strong>取决于这个特征</strong> ，从而与实际情况相悖（比如这时实际情况是值域范围小的特征更重要）<br />
+<img src="https://s2.loli.net/2022/03/07/6WTMPG3Vmh7ujSn.png" alt="image.png" /></li>
+</ul>
+</li>
+</ul>
+<p>蓝色代表特征的等高线。在未归一化的情况下左图的两特征等高线相差较大，在进行度下降法寻求最优解时，很有可能走“之字型”路线（垂直等高线走），从而导致需要迭代很多次才能收敛； 而右图对两个原始特征进行了归一化，其对应的等高线显得很圆，在梯度下降进行求解时能较快的收敛。因此如果机器学习模型使用梯度下降法求最优解时，归一化往往非常有必要，否则很难收敛甚至不能收敛。</p>
+<ul>
+<li>
+<p>归一化的类型</p>
+<ul>
+<li>Standard scaler：转化函数为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><mi>x</mi><mo>−</mo><mi>μ</mi></mrow><mi>θ</mi></mfrac></mrow><annotation encoding="application/x-tex">\frac{x-\mu}{\theta}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.199439em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.854439em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">θ</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.446108em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="mbin mtight">−</span><span class="mord mathdefault mtight">μ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>, 经过处理的数据符合标准正态分布，即均值为0，标准差为1.</li>
+<li>Min-max scaler: 转化函数为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><mi>x</mi><mo>−</mo><mi>m</mi><mi>i</mi><mi>n</mi></mrow><mrow><mi>m</mi><mi>a</mi><mi>x</mi><mo>−</mo><mi>m</mi><mi>i</mi><mi>n</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{x - min}{max - min}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.258995em;vertical-align:-0.403331em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.855664em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">m</span><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight">x</span><span class="mbin mtight">−</span><span class="mord mathdefault mtight">m</span><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight">n</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="mbin mtight">−</span><span class="mord mathdefault mtight">m</span><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.403331em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>,适用在数值比较集中的情况。该方法的缺陷在于如果max和min不稳定，很容易使得归一化结果不稳定，使得后续使用效果也不稳定。实际使用中可以用经验常量值来替代max和min</li>
+<li>Max-absolute scaler: 转化函数为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mi>x</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi><mo stretchy="false">(</mo><mi>a</mi><mi>b</mi><mi>s</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{x}{max(abs(x))}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.215392em;vertical-align:-0.52em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.695392em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">m</span><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight">x</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight">b</span><span class="mord mathdefault mtight">s</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">x</span><span class="mclose mtight">)</span><span class="mclose mtight">)</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>.将值缩放到[-1,1]区间内, 不会破坏矩阵的稀疏性，因此比较适合稀疏矩阵和均值在0附近的值</li>
+<li>Non-linear scaler: 经常用在数据分化比较大的场景，有些数值很大，有些很小。通过一些数学函数，将原始值进行映射。该方法包括 log、指数，正切等</li>
+</ul>
+</li>
+<li>
+<p>归一化使用注意事项：在实际预处理中，为了防止数据泄露，应使用训练集数据构建Scaler，在验证集/测试集上进行归一化。</p>
+</li>
+<li>
+<p>面试相关问题：</p>
+<ul>
+<li>
+<p>Q: 哪些机器学习算法不需要做归一化处理？<br />
+A: 树模型不需要归一化。更广义地说，概率模型不需要归一化。因为它们不关心变量的值，而是关心变量的分布和变量之间的条件概率。而像svm、KNN、KMeans之类的最优化问题就需要归一化。</p>
+<p>树模型不需要归一化的原因是数值缩放不影响分裂点位置。因为当树的一个节点分裂时，都是按照特征的值进行排序的。如果排序的顺序不变，那么分裂点就不会有不同。但是对于线性模型，比如说LR，有两个特征，一个是(0,1)的，一个是(0,10000)的，这样运用梯度下降时候，损失等高线是一个椭圆的形状，这样想迭代到最优点，就需要很多次迭代，但是如果进行了归一化，那么等高线就是圆形的，那么SGD就会往原点迭代，需要的迭代次数较少。 另外，注意树模型是不能进行梯度下降的，因为树模型是阶跃的，阶跃点是不可导的，并且求导没意义，所以树模型（回归树）寻找最优点是通过寻找最优分裂点完成的。</p>
+</li>
+<li>
+<p>Q: SVM和LR需要不需要归一化？<br />
+A: 有些模型在各维度进行了不均匀的伸缩后，最优解与原来不等价（如SVM）需要归一化。有些模型伸缩有与原来等价，比如LR。但是实际中往往通过迭代求解模型参数，如果目标函数太扁（想象一下很扁的高斯模型）迭代算法会发生不收敛的情况，所以最好进行数据归一化。 补充：其实本质是由于loss函数不同造成的，SVM用了欧拉距离，如果一个特征很大就会把其他的维度dominated。而LR可以通过权重调整使得损失函数不变。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="categorial-feature-encoding"><a class="markdownIt-Anchor" href="#categorial-feature-encoding"></a> Categorial Feature: encoding</h4>
+<p>常用的encoding方式有以下三种：</p>
+<ul>
+<li>Ordinal Encoding（序数编码）: 即将分类编码为数值，适用于二元的变量或分类本身有定性排序的情况。</li>
+<li>One-hot Encoding（独热编码）: One-Hot 编码会创建新列，指示原始数据中每个可能值的存在（或不存在）。与序数编码相比，one-hot 编码不假设类别的排序。
+<ul>
+<li><code>OHE</code>的缺陷也很明显，编码后会使得空间维度大大增加，尤其是在类别很多的时候，这大大地扩展特征空间，使得训练难以进行。</li>
+<li>对数值大小不敏感的模型（如树模型）不建议使用。一般这类模型为树模型。如果分类类别特别多，那么<code>OHE</code>会分裂出很多特征变量。这时候，如果我们限制了树模型的深度而不能向下分裂的话，一些特征变量可能就因为模型无法继续分裂而被舍弃损失掉了。</li>
+<li><code>OHE</code> 在对n个分类进行n维稀疏的同时会导致多重共线性的出现，实际只需要n-1个编码即可表示。因此也会在实际操作中先删去一维变量再进行编码</li>
+</ul>
+</li>
+<li>Target Encoding(目标编码):当定性特征的维度（Cardinality）很大时，上述两种方法都不能实现很好的编码效果。此时需要通过Target encoding进行编码。以二分类数据集为例，target encoding对于某一特征取值的编码是在该取值的全部观测值中标签1出现的占比。对回归数据来说，encoding可以是在该分类取值下的目标均值。
+<ul>
+<li>当极端情况出现时，该编码方法可能会导致数据泄露。如各个分类取值的比例和目标标签的相关性为1时可能会过拟合训练集输出的情况。</li>
+</ul>
+</li>
+</ul>
+<h3 id="reference"><a class="markdownIt-Anchor" href="#reference"></a> Reference：</h3>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/53826787">贝叶斯优化深入理解</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lryou/p/14627564.html">[数据分析] target encoding </a></p>
+
+    </div>
+    
+    
+    
+    
+    
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/AML/" rel="tag"></i><i class="fa fa-tag"></i> AML</a>
+          </div>
+    
+        
+
+    
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/05/%E3%80%90AML%E3%80%91Intro-and-EDA/" rel="next" title="【AML】Intro-and-EDA">
+      【AML】Intro-and-EDA <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#supervised-learning"><span class="nav-number">1.</span> <span class="nav-text"> Supervised Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#framework-of-supervised-learning"><span class="nav-number">1.1.</span> <span class="nav-text"> Framework of Supervised Learning</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#development-test-split"><span class="nav-number">1.2.</span> <span class="nav-text"> Development-test split</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hyperparameter-tuning"><span class="nav-number">1.3.</span> <span class="nav-text"> Hyperparameter tuning</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#grid-search-random-search"><span class="nav-number">1.4.</span> <span class="nav-text"> Grid Search &amp; Random Search</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bayesian-optimization"><span class="nav-number">1.5.</span> <span class="nav-text"> Bayesian Optimization</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#preprocessing"><span class="nav-number">2.</span> <span class="nav-text"> Preprocessing</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#continuous-feature-scaler"><span class="nav-number">2.1.</span> <span class="nav-text"> Continuous Feature: Scaler</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#categorial-feature-encoding"><span class="nav-number">2.2.</span> <span class="nav-text"> Categorial Feature: encoding</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text"> Reference：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hannah"
+      src="https://i.loli.net/2020/12/04/2RInFKelqYN3WvH.png">
+  <p class="site-author-name" itemprop="name">Hannah</p>
+  <div class="site-description" itemprop="description">宇宙自有她的浪漫。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hannah</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  <!-- 页面点击小心心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+<!--崩溃欺骗-->
+<script type="text/javascript" src="/js/crash_cheat.js"></script>
+</body>
+</html>
