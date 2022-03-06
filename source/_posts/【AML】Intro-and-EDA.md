@@ -24,7 +24,7 @@ category: Machine Learning
   <!-- more -->
 - 人脸识别的例子：
 
-  > One example of where this handcoded approach will fail is in detecting faces in images. Today, every smartphone can detect a face in an image. However, face detection was an unsolved problem until as recently as 2001. The main problem is that the way in which pixels (which make up an image in a computer) are “perceived” by the computer is very different from how humans perceive a face. This difference in representation makes it basically impossible for a human to come up with a good set of rules to describe whatconstitutes a face in a digital image.
+  > One example of where this handcoded approach will fail is in detecting faces in images. Today, every smartphone can detect a face in an image. However, face detection was an unsolved problem until as recently as 2001. The main problem is that the way in which pixels (which make up an image in a computer) are “perceived” by the computer is very different from how humans perceive a face. This difference in representation makes it basically impossible for a human to come up with a good set of rules to describe what constitutes a face in a digital image.
   >
 - 机器学习可以分为监督学习和无监督学习。区别来源于所提供给算法的数据集的不同，监督学习的数据集含有特征和预期结果，如广为人知的信用卡诈骗和借贷违约风险；而无监督学习的数据集只包含输入的特征数据，没有期望或实际的输出数据或标签
 
