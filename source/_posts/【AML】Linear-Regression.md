@@ -47,7 +47,7 @@ $$
 
 ### Ridge Regression -- L2 normalization
 
-L2正则化即是在最小二乘法的基础上加入*惩罚项* $L2-norm$的平方。Ridge regression同样存在close-form解，其中$\alpha$为超参数，可以进行调整。
+L2正则化即是在最小二乘法的基础上加入$L2-norm$的平方。Ridge regression同样存在close-form解，其中$\alpha$为超参数，可以进行调整。
 
 ![](https://s2.loli.net/2022/03/07/dNUYQcJDgBsuWpb.png)
 
