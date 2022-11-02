@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://s2.loli.net/2022/03/07/HZRLGwJs5le8Itj.png">
 <meta property="og:image" content="https://s2.loli.net/2022/03/07/QFnf3jedZqUOsx1.png">
 <meta property="article:published_time" content="2022-03-06T19:53:27.000Z">
-<meta property="article:modified_time" content="2022-03-07T04:26:28.931Z">
+<meta property="article:modified_time" content="2022-03-15T21:01:00.464Z">
 <meta property="article:author" content="Hannah">
 <meta property="article:tag" content="AML">
 <meta property="article:tag" content="OLS">
@@ -200,10 +200,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
     
-              <time title="Created: 2022-03-06 14:53:27 / Modified: 23:26:28" itemprop="dateCreated datePublished" datetime="2022-03-06T14:53:27-05:00">2022-03-06</time>
+              <time title="Created: 2022-03-06 14:53:27" itemprop="dateCreated datePublished" datetime="2022-03-06T14:53:27-05:00">2022-03-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-15 17:01:00" itemprop="dateModified" datetime="2022-03-15T17:01:00-04:00">2022-03-15</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -274,7 +280,7 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
 简单模型：low variance, high bias</p>
 <p>一般通过<strong>正则化方法</strong>解决模型的过拟合问题。正则化的本质是对权重w的约束。某个特征的权重越小，该特征就越不能起决定作用，无关紧要的特征只能对模型进行微调，扰动较小，可以让模型专注于有决定性的那些特征。</p>
 <h3 id="ridge-regression-l2-normalization"><a class="markdownIt-Anchor" href="#ridge-regression-l2-normalization"></a> Ridge Regression – L2 normalization</h3>
-<p>L2正则化即是在最小二乘法的基础上加入<em>惩罚项</em> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>L</mi><mn>2</mn><mo>−</mo><mi>n</mi><mi>o</mi><mi>r</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">L2-norm</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">L</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">m</span></span></span></span>的平方。Ridge regression同样存在close-form解，其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span></span></span></span>为超参数，可以进行调整。</p>
+<p>L2正则化即是在最小二乘法的基础上加入<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>L</mi><mn>2</mn><mo>−</mo><mi>n</mi><mi>o</mi><mi>r</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">L2-norm</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">L</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">m</span></span></span></span>的平方。Ridge regression同样存在close-form解，其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span></span></span></span>为超参数，可以进行调整。</p>
 <p><img src="https://s2.loli.net/2022/03/07/dNUYQcJDgBsuWpb.png" alt="" /></p>
 <h3 id="lasso-regression-l1-normalization"><a class="markdownIt-Anchor" href="#lasso-regression-l1-normalization"></a> Lasso Regression – L1 normalization</h3>
 <blockquote>
@@ -393,7 +399,7 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -406,7 +412,7 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
